@@ -1,0 +1,21 @@
+@import '~/assets/scss/variables.scss';
+@import '~/assets/scss/mixin.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 17px;
+  color: $font-black;
+  background-color: $background-color;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+}
