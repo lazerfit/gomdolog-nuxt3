@@ -66,10 +66,10 @@ onBeforeUnmount(() => {
       <Transition name="bounce">
         <div class="sidebar" v-show="isSidebarOpen">
           <div class="category-wrapper">
-            <!-- <NuxtLink :to="{ name: 'category', params: { title: item.title } }" class="category"
+            <NuxtLink :to="'/category/' + item.title" @click="isSidebarOpen = false" class="category"
               v-for="(item, index) in filteredCategory" :key="index">
               {{ item.title }}
-            </NuxtLink> -->
+            </NuxtLink>
           </div>
           <div class="login-wrapper">
             <div class="login-btn" v-if="!headerStore.isAdmin" @click="openModal">
@@ -126,11 +126,11 @@ onBeforeUnmount(() => {
 
 <style lang='scss' scoped>
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in .3s;
 }
 
 .bounce-leave-active {
-  animation: bounce-in .5s reverse;
+  animation: bounce-in .3s reverse;
 }
 
 @keyframes bounce-in {

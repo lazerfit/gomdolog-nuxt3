@@ -3,8 +3,7 @@ const searchQuery = ref('');
 const store = usePostStore();
 
 const searchPost = async () => {
-  const data = await useFetch(`/api/post/search/${searchQuery}`);
-  store.postsPage = data.data.value;
+  useRouter().push(`/post/search/${searchQuery.value}`)
 }
 
 </script>

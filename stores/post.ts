@@ -3,8 +3,9 @@ import type { PostPageResponseWithoutTags } from '~/types';
 
 export const usePostStore = defineStore('post', () => {
   const postsPage = ref<PostPageResponseWithoutTags | null>(null);
- 
-  return {postsPage}
+  const pageSize = ref(6);
+
+  return {postsPage, pageSize}
 })
 
 if (import.meta.hot) {

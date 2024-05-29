@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const query = getRouterParam(event,'q');
 
-  const data: PostPageResponseWithoutTags = await $fetch(`${config.public.apiBase}/search?q=${query}`);
+  const data: PostPageResponseWithoutTags = await $fetch(`${config.public.apiBase}/post/search?q=${query}`);
 
   return data;
 });

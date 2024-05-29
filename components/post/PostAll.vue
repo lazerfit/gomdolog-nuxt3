@@ -2,8 +2,6 @@
 import type { PostPageResponseWithoutTags } from '~/types';
 const store = usePostStore();
 
-// const props = defineProps<{ data: PostPageResponseWithoutTags | null }>();
-
 const formatDate = (date: string) => {
   const formattedDate = new Date(date);
   const year = formattedDate.getFullYear();
@@ -11,7 +9,6 @@ const formatDate = (date: string) => {
   const day = String(formattedDate.getDate()).padStart(2, '0');
   return `${year}년 ${month}월 ${day}일`;
 };
-
 
 const post = computed(() => store.postsPage ?? {
   content: [],
@@ -21,7 +18,7 @@ const post = computed(() => store.postsPage ?? {
 </script>
 <template>
   <div class="container">
-    <div class="all-post-title">
+    <div class="container-title">
       <h1>All blog posts</h1>
     </div>
     <div class="post-wrapper">
@@ -101,7 +98,20 @@ const post = computed(() => store.postsPage ?? {
 .container {
 
   width: 1180px;
-  margin: px-to-rem(0) auto 0 auto;
+  margin: rem(25) auto;
+
+  .container-title {
+    h1 {
+      font-weight: 500;
+      font-family: "Playfair Display", serif;
+      font-size: rem(24);
+    }
+
+    @media screen and (max-width: 767px) {
+      text-align: center;
+    }
+
+  }
 
   .all-post-title {
     h1 {
@@ -132,6 +142,7 @@ const post = computed(() => store.postsPage ?? {
   @media screen and (max-width: 767px) {
     width: 100%;
     margin-top: 20px;
+    padding: 0 7px;
   }
 
   @media (min-width:768px) and (max-width: 1024px) {
@@ -236,19 +247,9 @@ const post = computed(() => store.postsPage ?? {
 
         .all-post-text:deep(a) {
           text-decoration: none;
-          color: #fff !important;
-
-          &:link {
-            color: #fff !important;
-          }
-
-          &:visited {
-            color: blueviolet !important;
-          }
-
-          &:hover {
-            color: #2c974b !important;
-          }
+          pointer-events: none;
+          cursor: default;
+          color: $font-black;
         }
 
 
