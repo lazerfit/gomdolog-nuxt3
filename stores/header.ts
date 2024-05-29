@@ -1,14 +1,29 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { ref } from 'vue';
+
+export interface SigninForm {
+  email: string;
+  password: string;
+}
 
 export const useHeaderStore = defineStore('header', () => {
   const isAdmin = ref(false);
   const isModalOpened = ref(false);
   const isAdminMenuOpened = ref(false);
   const isDarkMode = ref(false);
+  const signinForm = ref<SigninForm>({
+    email: '',
+    password: ''
+  });
 
   function darkModeToggle() {
     isDarkMode.value = !isDarkMode.value;
     localStorage.setItem('darkMode', JSON.stringify(isDarkMode.value));
+    if (isDarkMode.value) {
+      document.body.classList.add('darkMode');
+    } else {
+      document.body.classList.remove('darkMode');
+    }
   }
 
   function setDarkMode() {
@@ -22,9 +37,9 @@ export const useHeaderStore = defineStore('header', () => {
 
   function setLoginStatus() {
     if (sessionStorage.getItem('userRole') === null || sessionStorage.getItem('useRole') === 'USER') {
-      isAdmin.value = true;
-    } else {
       isAdmin.value = false;
+    } else {
+      isAdmin.value = true;
     }
   }
 
@@ -36,9 +51,10 @@ export const useHeaderStore = defineStore('header', () => {
     darkModeToggle, 
     setDarkMode, 
     setLoginStatus,
+    signinForm,
   }
 })
 
 if (import.meta.hot) {
- import.meta.hot.accept(acceptHMRUpdate(useHeaderStore, import.meta.hot))
+  import.meta.hot.accept(acceptHMRUpdate(useHeaderStore, import.meta.hot))
 }

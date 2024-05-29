@@ -6,7 +6,7 @@ const openModal = () => {
 }
 </script>
 <template>
-  <div class="wrapper" v-if="!">
+  <div class="wrapper" v-show="!store.isAdmin">
     <button class="button" data-text="Awesome" @click="openModal()">
       <span class="actual-text">&nbsp;login&nbsp;</span>
       <span aria-hidden="true" class="hover-text">&nbsp;login&nbsp;</span>

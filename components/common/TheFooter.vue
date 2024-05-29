@@ -26,15 +26,15 @@
 <style lang='scss' scoped>
 .darkMode {
   .container {
-    border-top: 1px solid $pearl !important;
+    border-top: 1px solid $font-white !important;
 
     .content-wrapper {
-      color: $pearl !important;
+      color: $font-white !important;
 
       .sns {
         span {
           a {
-            color: $pearl !important;
+            color: $font-white !important;
           }
         }
       }
@@ -43,24 +43,27 @@
 }
 
 .container {
+
   width: 100%;
-  height: px-to-rem(120);
+  height: rem(120);
   display: flex;
-  border-top: 1px solid $black-forest;
+  border-top: 1px solid $font-black;
   box-sizing: border-box;
 
   @media screen and (max-width: 767px) {
     height: 100px;
+    box-sizing: border-box;
+    margin: 0;
   }
 
   .content-wrapper {
-    width: $desktop-width;
+    width: 1180px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: auto;
-    color: $black-forest;
+    color: $font-black;
 
     @media screen and (max-width: 767px) {
       width: 100%;
@@ -69,15 +72,15 @@
     .sns {
       span {
         a {
-          margin-right: px-to-rem(5);
-          font-size: px-to-rem(20);
-          color: $black-forest;
+          margin-right: rem(5);
+          font-size: rem(20);
+          color: $font-black;
         }
       }
     }
 
     .copywrite {
-      margin-top: px-to-rem(5);
+      margin-top: rem(5);
     }
   }
 }

@@ -30,6 +30,7 @@ const logout = () => {
 <style lang='scss' scoped>
 .container {
   position: relative;
+  font-size: 0.9rem;
 
   @media screen and (max-width: 767px) {
     display: none;
@@ -38,31 +39,31 @@ const logout = () => {
   .wrapper {
     position: absolute;
     border: 1px solid #000;
-    width: px-to-rem(65);
+    width: rem(65);
     top: 100%;
-    left: px-to-rem(-95);
+    left: rem(-95);
     transform: translateX(35%);
-    margin-top: px-to-rem(10);
+    margin-top: rem(10);
     background-color: #fff;
-    box-shadow: 3px 3px 5px $light-black;
+    box-shadow: 3px 3px 5px #999;
 
     div {
       text-align: center;
-      padding: px-to-rem(5);
+      padding: rem(5);
 
       &:hover {
-        background-color: $black-forest;
+        background-color: $font-black;
 
         a {
-          color: $pearl;
+          color: $font-white;
         }
       }
 
       a {
         font-size: px-to-rem(13);
         cursor: pointer;
-        font-family: $secondary-font;
-        color: $black-forest;
+        font-family: $pretendard;
+        color: $font-black;
       }
     }
   }

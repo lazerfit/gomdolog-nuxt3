@@ -1,15 +1,16 @@
 {
 	// https://nuxt.com/docs/guide/concepts/typescript
-	"extends": "./.nuxt/tsconfig.json",
+	"extends": ["./.nuxt/tsconfig.json"],
 	"compilerOptions": {
-		"target": "ES2018",
+		"target": "ESNext",
 		"module": "ESNext",
 		"baseUrl": ".",
 		"paths": {
 			"~/*": ["./*"],
 			"@/*": ["./*"]
 		},
-		"types": ["vite/client"]
+		"strict": true,
+		"types": ["vite/client", "@types/node"]
 	},
 	"include": [
 		"nuxt.config.ts",
@@ -22,5 +23,5 @@
 		"middleware/**/*.ts",
 		"assets/**/*.ts"
 	],
-	"exclude": ["../dist", "../.output"]
+	"exclude": ["node_modules", "dist"]
 }

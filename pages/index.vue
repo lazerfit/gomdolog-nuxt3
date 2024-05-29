@@ -1,22 +1,14 @@
 <script setup lang=ts>
+import type { PostPageResponseWithoutTags } from '~/types';
+const store = usePostStore();
 
+const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all');
+store.postsPage = data.value;
 </script>
 <template>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <NuxtLink to="/">Home</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink to="/post/1">Post</NuxtLink>
-        </li>
-      </ul>
-    </nav>
-  </header>
-
   <div>
-    <h1>Home</h1>
+    <TheBanner />
+    <PostAll />
   </div>
 </template>
 

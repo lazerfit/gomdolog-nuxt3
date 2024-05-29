@@ -9,6 +9,24 @@ export default defineNuxtConfig({
   alias: {
     'img': "/assets/img"
   },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: true
+    },
+    {
+      path: '~/components/common',
+      pathPrefix: true
+    },
+    {
+      path: '~/components/header',
+      pathPrefix: true
+    },
+    {
+      path: '~/components/post',
+      pathPrefix: true
+    },
+  ],
   app: {
     head: {
       title: 'gomdolog',
@@ -37,11 +55,20 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `
-          @use "~/assets/scss/variables.scss" as *;
+          @import "~/assets/scss/variables.scss";
           @import "~/assets/scss/mixin.scss";
           `
         }
       }
+    }
+  },
+  routeRules: {
+    '/': { prerender: true },
+    '/api/*': { cache: { maxAge: 60 * 60 } },
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: 'http://localhost:8080/api'
     }
   }
 });

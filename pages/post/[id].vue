@@ -1,5 +1,6 @@
 <script setup lang=ts>
-const id = useRoute().params.id as string
+const id = useRoute().params.id
+import type { Post } from '~/types';
 
 useHead({
   title: 'gomdolog | post',
@@ -11,14 +12,26 @@ useHead({
   ]
 })
 
-const { data: post } = useFetch('http://localhost:8080/post/1');
+defineOptions({
+  name: 'post-detail'
+})
+
+const { data: post } = await useFetch<Post>(`/api/post/${id}`, {
+  method: 'GET'
+});
+
 </script>
 <template>
   <div>
-    <h1>Post details for {{ id }}</h1>
-  </div>
-  <div>
-    <NuxtLink to="/">Back</NuxtLink>
+    <div>
+      <h1>Post details for {{ id }}</h1>
+    </div>
+    <div>
+      {{ post?.title }}
+    </div>
+    <div>
+      <NuxtLink to="/">Back</NuxtLink>
+    </div>
   </div>
 </template>
 

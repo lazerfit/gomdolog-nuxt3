@@ -1,4 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import { ref } from 'vue';
 
 export const useCommonStore = defineStore('common', () => {
   const isToastOpened = ref(false);
@@ -14,7 +15,6 @@ export const useCommonStore = defineStore('common', () => {
       toastMessage.value = '';
     }, 3000)
   };
-
 
   return {isToastOpened,toastMessage, toastStatus, setToast }
 })

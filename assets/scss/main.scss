@@ -4,12 +4,19 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
 body {
-  font-size: 17px;
   color: $font-black;
   background-color: $background-color;
+  font-family: $pretendard;
+}
+
+.darkMode {
+  background-color: #121212;
+  color: $font-white;
 }
 
 a {
@@ -18,4 +25,20 @@ a {
 
 button {
   border: none;
+}
+
+input {
+  &:focus {
+    outline: none;
+  }
+}
+
+::selection {
+  background-color: hotpink;
+  color: white;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 20px;
 }

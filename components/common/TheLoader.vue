@@ -14,7 +14,7 @@
   }
 
   .loader {
-    color: $pearl;
+    color: $font-white;
   }
 }
 
@@ -29,7 +29,7 @@
 }
 
 .loader {
-  color: $black-forest;
+  color: $font-black;
   font-family: Consolas, Menlo, Monaco, monospace;
   font-weight: bold;
   font-size: 78px;
