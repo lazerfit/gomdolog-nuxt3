@@ -46,6 +46,15 @@ const linkCopy = () => {
     })
 }
 
+const isVisitedPost = () => {
+  const visitedPost = localStorage.getItem('visitedPost');
+  return visitedPost ? visitedPost.includes(route.params.id as string) : false;
+}
+
+const shareTwitter = () => {
+  window.open('https://twitter.com/intent/tweet?url=' + document.URL + '&text=' + post.value.title, "_blank", "width=450,height=500")
+}
+
 const postId = route.params.id;
 
 const data = await useFetch<Post>(`/api/post/${postId}`, { method: 'GET' })
@@ -65,15 +74,6 @@ if (post.value.title === '') {
 
 const deletePost = async () => {
   await useFetch(`/api/post/delete/${postId}`)
-}
-
-const isVisitedPost = () => {
-  const visitedPost = localStorage.getItem('visitedPost');
-  return visitedPost ? visitedPost.includes(route.params.id as string) : false;
-}
-
-const shareTwitter = () => {
-  window.open('https://twitter.com/intent/tweet?url=' + document.URL + '&text=' + post.value.title, "_blank", "width=450,height=500")
 }
 
 const postContent = computed(() => post.value.content.replace(/(<([^>]+)>)/ig, ""))

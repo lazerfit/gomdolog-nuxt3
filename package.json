@@ -10,7 +10,17 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxtjs/seo": "^2.0.0-rc.10",
     "@pinia/nuxt": "^0.5.1",
+    "@tiptap/extension-code-block-lowlight": "^2.4.0",
+    "@tiptap/extension-image": "^2.4.0",
+    "@tiptap/extension-link": "^2.4.0",
+    "@tiptap/pm": "^2.4.0",
+    "@tiptap/starter-kit": "^2.4.0",
+    "@tiptap/vue-3": "^2.4.0",
+    "@yaireo/tagify": "^4.26.5",
+    "highlight.js": "^11.9.0",
+    "lowlight": "^3.1.0",
     "nuxt": "^3.11.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.27",
@@ -23,6 +33,6 @@
     "sass": "^1.77.2"
   },
   "overrides": {
-    "vue": "latest"
+    "vue": "^3.4.27"
   }
 }

@@ -20,7 +20,7 @@ lowlight.register('ts', ts);
 lowlight.register('html', html);
 lowlight.register('java', java);
 
-const store = usePostSaveStore();
+const store = usePostStore();
 
 const editor = useEditor({
   content: store.postSaveForm.content,
@@ -36,7 +36,6 @@ const editor = useEditor({
     Link.configure({
       openOnClick: 'whenNotEditable',
     }),
-    Dropcursor,
     CodeBlockLowlight.configure({
       lowlight,
     })
@@ -116,31 +115,31 @@ const addImage = () => {
 .tip-tap-buttons {
   display: flex;
   flex-flow: row wrap;
-  border: 1px solid $light-black;
+  border: 1px solid #999;
   border-bottom: none;
-  height: px-to-rem(50);
+  height: rem(50);
   align-items: center;
-  border-radius: px-to-rem(10) px-to-rem(10) 0 0;
+  border-radius: rem(10) rem(10) 0 0;
 
   &:has(.is-active) .is-active {
-    background-color: $black-forest;
-    color: $pearl;
+    background-color: $font-black;
+    color: $font-white;
   }
 
   .menu-btn {
     border: none;
-    background-color: $background-color;
-    color: $black-forest;
-    padding: px-to-rem(5);
-    border-radius: px-to-rem(3);
-    margin-left: px-to-rem(5);
+    background-color: #f9f9f9;
+    color: $font-black;
+    padding: rem(5);
+    border-radius: rem(3);
+    margin-left: rem(5);
 
     i {
       cursor: pointer;
-      font-size: px-to-rem(16);
+      font-size: rem(16);
 
       @media (max-width: 767px) {
-        font-size: px-to-rem(14);
+        font-size: rem(14);
       }
     }
   }
@@ -148,12 +147,12 @@ const addImage = () => {
 
 .tiptap {
 
-  border: 1px solid $light-black;
+  border: 1px solid #999;
   min-height: 30rem;
   max-height: 50rem;
   overflow: auto;
-  padding: px-to-rem(10);
-  border-radius: 0 0 px-to-rem(10) px-to-rem(10);
+  padding: rem(10);
+  border-radius: 0 0 rem(10) rem(10);
 
   &:focus {
     outline: none;
@@ -185,7 +184,9 @@ const addImage = () => {
   pre {
     background: #0D0D0D;
     color: #FFF;
-    font-family: 'JetBrainsMono', monospace;
+    font-family: "Fira Code", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
 
@@ -312,15 +313,15 @@ const addImage = () => {
 .darkMode {
 
   .floating-menu {
-    background-color: $pearl !important;
-    color: $black-forest !important;
+    background-color: $font-white !important;
+    color: $font-black !important;
   }
 
   .bubble-menu {
-    background-color: $pearl !important;
+    background-color: $font-white !important;
 
     button {
-      color: $black-forest !important;
+      color: $font-black !important;
     }
   }
 }

@@ -47,3 +47,21 @@ export interface PostUpdate {
   tags: string[];
   id: string | string[];
 }
+
+export interface CategoryResponse {
+  id: number;
+  title: string;
+  isEditable: boolean;
+}
+
+export interface AdminPopularPosts {
+  title: string,
+  views: number
+}
+
+export interface PostDeleted {
+  id:number,
+  title: string,
+  deletedDate: string
+}
+

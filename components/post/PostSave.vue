@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onBeforeMount, onUnmounted } from 'vue';
 import type { Category } from "~/types";
-import TiptapEditor from './TiptapEditor.vue';
-import TagInput from './TagInput.vue';
+import TiptapEditor from './TiptapEditor.client.vue';
+import TagInput from './TagInput.client.vue';
 
 const store = usePostStore();
 
-const submitSavePost = () => {
+function submitSavePost() {
   localStorage.removeItem('draft')
 }
 
@@ -51,9 +51,9 @@ onUnmounted(() => {
         </select>
       </div>
       <input type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title" v-model="store.postSaveForm.title">
-      <tiptap-editor />
+      <TiptapEditor />
       <div class="tip-tap-tag-submit">
-        <tag-input v-model="store.postSaveForm.tags" />
+        <TagInput v-model="store.postSaveForm.tags" />
         <div class="tip-tap-submit">
           <button @click="submitSavePost">Submit</button>
         </div>
@@ -64,8 +64,9 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .tip-tap-container {
-  width: px-to-rem(900);
-  margin: px-to-rem(60) auto;
+  width: rem(900);
+  margin: rem(60) auto;
+  background-color: #f9f9f9;
 
   @media (max-width: 767px) {
     width: 100%;
@@ -77,27 +78,30 @@ onUnmounted(() => {
   }
 
   #post-category {
-    margin-bottom: px-to-rem(17);
-    border-radius: px-to-rem(8);
-    border: 1px solid $light-black;
-    padding: px-to-rem(5);
-    color: $silver-black;
-    font-family: $secondary-font;
+    margin-bottom: rem(17);
+    border-radius: rem(8);
+    border: 1px solid #999;
+    padding: rem(5);
+    color: #777;
+    font-family: $sans;
+    background-color: transparent;
   }
 
   .tip-tap-post-title {
     width: 100%;
-    margin-bottom: px-to-rem(17);
-    height: px-to-rem(40);
-    border-radius: px-to-rem(10);
-    border: 1px solid $light-black;
-    padding: px-to-rem(10);
+    margin-bottom: rem(17);
+    height: rem(40);
+    border-radius: rem(10);
+    border: 1px solid #999;
+    padding: rem(10);
     box-sizing: border-box;
-    font-family: $secondary-font;
+    font-family: $sans;
+    background-color: transparent;
 
     &::placeholder {
-      padding-left: px-to-rem(1);
+      padding-left: rem(1);
       transition: all .3s ease;
+      font-family: $sans;
     }
 
     &:focus::placeholder {
@@ -112,17 +116,17 @@ onUnmounted(() => {
   .tip-tap-tag-submit {
     display: flex;
     justify-content: space-between;
-    margin-top: px-to-rem(17);
+    margin-top: rem(17);
 
     .tip-tap-submit {
       button {
         border: none;
         background-color: #ff793f;
         cursor: pointer;
-        font-family: $secondary-font;
-        padding: px-to-rem(7);
-        border-radius: px-to-rem(5);
-        color: $pearl;
+        font-family: $sans;
+        padding: rem(7);
+        border-radius: rem(5);
+        color: $font-white;
         transition: all .5s ease;
 
         &:hover {

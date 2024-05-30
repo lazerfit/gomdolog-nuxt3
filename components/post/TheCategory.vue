@@ -1,5 +1,5 @@
 <script setup lang=ts>
-import { computed, onBeforeMount, watchEffect } from 'vue';
+import { computed, watchEffect } from 'vue';
 
 const store = usePostStore();
 

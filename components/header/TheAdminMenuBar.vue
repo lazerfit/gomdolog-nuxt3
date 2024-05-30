@@ -14,10 +14,10 @@ const logout = () => {
     <Transition name="bounce">
       <div class="wrapper" v-show="store.isAdminMenuOpened">
         <div>
-          <RouterLink to="/post/new" @click="store.isAdminMenuOpened = false">글쓰기</RouterLink>
+          <NuxtLink to="/post/new" @click="store.isAdminMenuOpened = false">글쓰기</NuxtLink>
         </div>
         <div>
-          <RouterLink to="/admin" @click="store.isAdminMenuOpened = false">설정</RouterLink>
+          <NuxtLink to="/admin" @click="store.isAdminMenuOpened = false">설정</NuxtLink>
         </div>
         <div>
           <a href="#none" @click="logout">로그아웃</a>

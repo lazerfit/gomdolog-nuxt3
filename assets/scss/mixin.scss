@@ -128,3 +128,24 @@
   margin-bottom: rem(10);
   cursor: pointer;
 }
+
+@mixin basic-input {
+  max-width: rem(150);
+  border: none;
+  border-bottom: 1px solid #555;
+  height: rem(23);
+  transition: all 0.3s ease-in-out;
+  font-family: $sans;
+  padding-left: rem(2);
+
+  &:focus::placeholder {
+    opacity: 0;
+  }
+
+  &::placeholder {
+    font-family: $playfair;
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+  }
+}
