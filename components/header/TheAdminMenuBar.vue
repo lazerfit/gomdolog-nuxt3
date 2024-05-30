@@ -28,6 +28,37 @@ const logout = () => {
 </template>
 
 <style lang='scss' scoped>
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    top: 100%;
+    left: rem(-95);
+    transform: scale(0) translateX(35%);
+    transform-origin: top right;
+  }
+
+  50% {
+    top: 100%;
+    left: rem(-95);
+    transform: scale(1.25) translateX(35%);
+    transform-origin: top right;
+  }
+
+  100% {
+    top: 100%;
+    left: rem(-95);
+    transform: scale(1) translateX(35%);
+    transform-origin: top right;
+  }
+}
+
 .container {
   position: relative;
   font-size: 0.9rem;
@@ -60,9 +91,9 @@ const logout = () => {
       }
 
       a {
-        font-size: px-to-rem(13);
+        font-size: rem(14);
         cursor: pointer;
-        font-family: $pretendard;
+        font-family: $sans;
         color: $font-black;
       }
     }

@@ -28,3 +28,22 @@ export interface PostResopnseWithoutTags {
   thumbnail: string;
   categoryTitle: string;
 }
+
+export interface JWT {
+  token: string
+}
+
+export interface PostSave {
+  title: string;
+  content: string;
+  categoryTitle: string;
+  tags: string[];
+}
+
+export interface PostUpdate {
+  title: string;
+  content: string;
+  categoryTitle: string;
+  tags: string[];
+  id: string | string[];
+}

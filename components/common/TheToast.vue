@@ -15,8 +15,9 @@ const store = useCommonStore();
 
 <style lang='scss' scoped>
 .toast {
+  display: inline-block;
   position: fixed;
-  top: 30px;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
   padding: rem(10) rem(20);
@@ -25,6 +26,7 @@ const store = useCommonStore();
   border-radius: 10px;
   box-shadow: 5px 5px 20px rgba($color: #333, $alpha: .25);
   animation: toast-bounce .2s linear;
+  z-index: 10000;
 
   @media (max-width: 767px) {
     max-width: 90vw;

@@ -103,8 +103,8 @@
 }
 
 @mixin sub-post-title {
-  font-weight: 700;
-  font-size: px-to-rem(24);
+  font-weight: 600;
+  font-size: rem(24);
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -115,4 +115,16 @@
   &:hover {
     text-shadow: 1.3px 1.3px 1px #999;
   }
+}
+
+@mixin post-category {
+  font-family: $sans;
+  font-size: rem(15);
+  background-color: #f5f5f5;
+  width: rem(70);
+  text-align: center;
+  padding: rem(3);
+  border-radius: rem(5);
+  margin-bottom: rem(10);
+  cursor: pointer;
 }

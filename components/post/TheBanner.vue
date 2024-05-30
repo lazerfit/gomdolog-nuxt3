@@ -68,8 +68,16 @@ const searchPost = async () => {
     height: 330px;
   }
 
+  @media (max-width: 380px) {
+    height: 300px;
+  }
+
   .title {
     text-align: center;
+
+    @media (max-width: 361px) {
+      margin-top: 10px;
+    }
 
     p {
       &:first-child {
@@ -107,6 +115,7 @@ const searchPost = async () => {
       background-color: transparent;
       border: none;
       padding: 3px;
+      font-family: "orbit", serif;
 
       &:focus::placeholder {
         opacity: 0;

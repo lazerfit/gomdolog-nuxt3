@@ -1,5 +1,4 @@
 <script setup lang=ts>
-import { RouterLink } from 'vue-router';
 import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import { onBeforeUnmount } from 'vue';
 
@@ -14,7 +13,6 @@ const categories = computed(() => rawCategories.value ?? [])
 const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'))
 
 const isModalOpened = ref(false);
-const isBoxChecked = ref(false);
 const isSidebarOpen = ref(false);
 
 const submitHandler = () => {
@@ -23,7 +21,6 @@ const submitHandler = () => {
 
 const openModal = () => {
   isModalOpened.value = true;
-  isBoxChecked.value = false;
 }
 
 const closeModal = () => {
@@ -72,15 +69,15 @@ onBeforeUnmount(() => {
             </NuxtLink>
           </div>
           <div class="login-wrapper">
-            <div class="login-btn" v-if="!headerStore.isAdmin" @click="openModal">
+            <div class="login-btn" v-show="!headerStore.isAdmin" @click="openModal">
               로그인
             </div>
-            <div class="admin-menu-wrapper" v-else>
+            <div class="admin-menu-wrapper" v-show="headerStore.isAdmin">
               <div>
-                <RouterLink to="/post/new">글쓰기</RouterLink>
+                <NuxtLink to="/post/new">글쓰기</NuxtLink>
               </div>
               <div>
-                <RouterLink to="/admin">설정</RouterLink>
+                <NuxtLink to="/admin">설정</NuxtLink>
               </div>
               <div>
                 <a href="#none" @click="logout">로그아웃</a>
@@ -195,59 +192,6 @@ onBeforeUnmount(() => {
 
   .wrapper {
     @include the-menu;
-
-    input[id=trigger] {
-      @media screen and (max-width: 767px) {
-        display: none;
-
-        &:checked+label[for=trigger] span:nth-child(1) {
-          top: rem(12);
-          transform: rotate(45deg);
-        }
-
-        &:checked+label[for=trigger] span:nth-child(2) {
-          opacity: 0;
-        }
-
-        &:checked+label[for=trigger] span:nth-child(3) {
-          top: rem(12);
-          transform: rotate(-45deg);
-        }
-
-        &:checked~.sidebar {
-          right: 0;
-        }
-      }
-    }
-
-    label[for=trigger] {
-      @media screen and (max-width: 767px) {
-        display: block;
-        margin-right: 5px;
-        cursor: pointer;
-
-        span {
-          position: absolute;
-          height: 2px;
-          width: 100%;
-          left: 17%;
-          background-color: $font-black;
-          transition: all .3s ease;
-
-          &:nth-child(1) {
-            top: rem(5);
-          }
-
-          &:nth-child(2) {
-            top: rem(12);
-          }
-
-          &:nth-child(3) {
-            top: rem(19);
-          }
-        }
-      }
-    }
 
     .sidebar {
       @media screen and (max-width: 767px) {

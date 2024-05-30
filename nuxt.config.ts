@@ -26,11 +26,16 @@ export default defineNuxtConfig({
       path: '~/components/post',
       pathPrefix: true
     },
+    {
+      path: '~/components/admin',
+      pathPrefix: true
+    },
   ],
   app: {
     head: {
       title: 'gomdolog',
       meta: [
+        { name: 'og:title', content:'gomdolog'},
         { name: 'description', content: 'Java/Spring/vue.js 관련 포스팅과 일상/맛집/블록체인을 다루는 개인 블로그입니다.' },
         { name: 'og:description', content: 'Java/Spring/vue.js 관련 포스팅과 일상/맛집/블록체인을 다루는 개인 블로그입니다.' },
         { name: 'og:image', content: "https://drive.google.com/uc?export=download&id=1-UuXrBcNtNBv45PvDGgjffDiKRT0gW7M" },

@@ -1,15 +1,37 @@
 <script setup lang=ts>
 import TheModal from '../common/TheModal.vue';
 import TheToast from '../common/TheToast.vue';
+import type { JWT } from '~/types';
 
 const store = useHeaderStore();
+const toastStore = useCommonStore();
+const config = useRuntimeConfig();
 const signIn = async () => {
-  await useFetch('/api/auth/signin', {
+  await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
     method: 'POST',
     body: JSON.stringify({
       email: store.signinForm.email,
       password: store.signinForm.password
     })
+  }).then((response) => {
+    sessionStorage.setItem('_token', response.token)
+    $fetch<string>(`${config.public.apiBase}/auth/getRole`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${response.token}`,
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      sessionStorage.setItem('userRole', response);
+      store.isModalOpened = false;
+      store.isAdmin = true;
+      toastStore.setToast('로그인에 성공하였습니다.', 'check')
+    }).catch((error) => {
+      console.log(error);
+    })
+  }).catch((error) => {
+    console.log(error);
+    toastStore.setToast('아이디 혹은 비밀번호가 올바르지 않습니다.', 'error');
   })
 }
 

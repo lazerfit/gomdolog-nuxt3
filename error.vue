@@ -26,7 +26,7 @@ const handleClearError = () => clearError({ redirect: '/' })
 
   .content-wrapper {
     width: 400px;
-    height: 400px;
+    height: 600px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -43,7 +43,7 @@ const handleClearError = () => clearError({ redirect: '/' })
       }
 
       &:nth-child(2) {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: 400;
       }
     }

@@ -7,11 +7,32 @@ const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
     size: store.pageSize
   }
 });
+
+const isExpired = () => {
+  if (localStorage.getItem('visitedPostCreatedAt')) {
+    const storedCreatedAt = parseInt(localStorage.getItem('visitedPostCreatedAt') || '0');
+    return Date.now() - storedCreatedAt >= 24 * 60 * 60 * 1000
+  }
+}
+
+onBeforeMount(() => {
+  if (!localStorage.getItem('visitedPost')) {
+    localStorage.setItem('visitedPost', JSON.stringify([]))
+    localStorage.setItem('visitedPostCreatedAt', Date.now().toString())
+  }
+
+  if (isExpired()) {
+    localStorage.removeItem('visitedPost')
+    localStorage.setItem('visitedPostCreatedAt', Date.now().toString())
+  }
+})
+
 store.postsPage = data.value;
 </script>
 <template>
   <div>
     <TheBanner />
+    <PostPopular />
     <PostAll />
     <MoreButton />
   </div>

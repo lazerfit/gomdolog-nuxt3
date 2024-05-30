@@ -5,7 +5,7 @@ const store = usePostStore();
 
 watchEffect(async () => {
   if (store.pageSize > 6) {
-    const data: PostPageResponseWithoutTags = await $fetch('/api/post/all', {
+    const data = await $fetch<PostPageResponseWithoutTags>('/api/post/all', {
       params: {
         size: store.pageSize
       }

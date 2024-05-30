@@ -1,14 +1,5 @@
 <script setup lang=ts>
-import type { PostPageResponseWithoutTags } from '~/types';
 const store = usePostStore();
-
-const formatDate = (date: string) => {
-  const formattedDate = new Date(date);
-  const year = formattedDate.getFullYear();
-  const month = String(formattedDate.getMonth() + 1).padStart(2, '0');
-  const day = String(formattedDate.getDate()).padStart(2, '0');
-  return `${year}년 ${month}월 ${day}일`;
-};
 
 const post = computed(() => store.postsPage ?? {
   content: [],
@@ -40,7 +31,7 @@ const post = computed(() => store.postsPage ?? {
               </div>
             </NuxtLink>
             <div class="all-post-day">
-              {{ formatDate(item.createdDate) }}
+              {{ store.formatDate(item.createdDate) }}
             </div>
           </div>
         </div>
@@ -99,6 +90,10 @@ const post = computed(() => store.postsPage ?? {
 
   width: 1180px;
   margin: rem(25) auto;
+
+  @media (min-width:768px) and (max-width: 1024px) {
+    padding: 0 10px;
+  }
 
   .container-title {
     h1 {
@@ -166,7 +161,7 @@ const post = computed(() => store.postsPage ?? {
     }
 
     @media (min-width:768px) and (max-width: 1024px) {
-      justify-content: center;
+      justify-content: space-around;
     }
 
     .post {
@@ -182,10 +177,6 @@ const post = computed(() => store.postsPage ?? {
         border-radius: 7px;
         background-color: #fffaf036;
         padding-top: 15px;
-      }
-
-      @media (min-width:768px) and (max-width: 1024px) {
-        width: 360px;
       }
 
       img {
