@@ -1,12 +1,11 @@
 <script setup lang=ts>
-import { onBeforeMount } from 'vue';
 import type { PostDeleted } from '~/types';
-import { useStorage } from '@vueuse/core'
 
 const adminStore = useAdminStore();
 const postStore = usePostStore();
 const token = sessionStorage.getItem('_token');
 const config = useRuntimeConfig();
+const toastStore = useCommonStore();
 
 const revertDelete = async (id: number) => {
   await $fetch(`${config.public.apiBase}/post/revertDelete/${id}`, {
@@ -19,13 +18,22 @@ const revertDelete = async (id: number) => {
 }
 
 const deletePermanent = async (id: number) => {
-  await $fetch(`${config.public.apiBase}/post/deletePermanent/${id}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+  const confirmed = window.confirm('삭제하시면 복구하실 수 없습니다.\n정말 삭제하시겠습니까?')
+  try {
+    if (confirmed) {
+      await $fetch(`${config.public.apiBase}/post/deletePermanent/${id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
     }
-  })
+  } catch (error) {
+    console.log(error);
+    toastStore.setToast('삭제에 실패하였습니다.\n다시 시도해주세요.', 'error');
+  }
+
 }
 
 const data = await useFetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
@@ -127,7 +135,7 @@ const postDeleted = computed(() => data.data.value ?? []);
         margin-left: auto;
 
         i {
-          margin-right: px-to-rem(5);
+          margin-right: rem(5);
           cursor: pointer;
           color: $light-black;
           transition: all .3s ease;

@@ -2,17 +2,18 @@ import { useRouter } from "vue-router";
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
-  const id = getRouterParam(event,'id');
   const contentType = getHeader(event,'Content-Type') || 'application/json';
   const authorization = getHeader(event,'Authorization') || '';
+  const body = readBody(event);
 
-  await $fetch(`${config.public.apiBase}/post/delete/${id}`, {
+  $fetch(`${config.public.apiBase}/post/update`,{
     method: 'POST',
     headers: {
       'Authorization': authorization,
       'Content-Type': contentType
-    }
+    },
+    body: body
   }).then(() => {
     useRouter().push('/');
-  }).catch(error => console.log(error));
+  }).catch(error => console.log(error))
 });

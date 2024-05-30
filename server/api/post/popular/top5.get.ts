@@ -4,7 +4,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const contentType = getHeader(event,'Content-Type') || 'application/json';
   const authorization = getHeader(event,'Authorization') || '';
-  event.node.req.headers
 
   const data = await $fetch<AdminPopularPosts[]>(`${config.public.apiBase}/post/popular/top5`, {
     headers: {

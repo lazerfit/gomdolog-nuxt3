@@ -9,6 +9,7 @@ const route = useRoute();
 const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
+const token = sessionStorage.getItem('_token');
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -73,7 +74,22 @@ if (post.value.title === '') {
 }
 
 const deletePost = async () => {
-  await useFetch(`/api/post/delete/${postId}`)
+  try {
+    const confirmed = window.confirm('정말 삭제하시겠습니까?')
+    if (confirmed) {
+      await useFetch(`/api/post/delete/${postId}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+    } else {
+      return
+    }
+  } catch {
+    toastStore.setToast('삭제에 실패하였습니다.', 'error');
+  }
 }
 
 const postContent = computed(() => post.value.content.replace(/(<([^>]+)>)/ig, ""))
@@ -108,8 +124,8 @@ onMounted(() => {
           <div class="created-date">
             {{ postStore.formatDate(post.createdDate) }}
           </div>
-          <!-- <div class="admin-wrapper" v-if="headerStore.isAdmin">
-            <NuxtLink :to="{ name: 'post-update', params: { id: route.params.id } }">
+          <div class="admin-wrapper" v-if="headerStore.isAdmin">
+            <NuxtLink :to="`/post/update/${postId}`">
               <span>
                 <i class="fa-solid fa-pen"></i>
               </span>
@@ -117,7 +133,7 @@ onMounted(() => {
             <span>
               <i class="fa-solid fa-trash" @click="deletePost"></i>
             </span>
-          </div> -->
+          </div>
         </div>
       </div>
       <div class="post-text" v-html="post.content">
