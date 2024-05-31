@@ -1,9 +1,7 @@
 <script setup lang=ts>
 const id = useRoute().params.id
-import type { Post } from '~/types';
 
 useHead({
-  title: 'gomdolog | post',
   meta: [
     { name: 'description', content: 'post description' },
     { name: 'og:description', content: 'post description' },

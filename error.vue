@@ -3,7 +3,10 @@ import { clearError } from 'nuxt/app';
 
 defineProps(['error'])
 
-const handleClearError = () => clearError({ redirect: '/' })
+const handleClearError = () => {
+  clearError();
+  window.location.href = '/';
+}
 </script>
 <template>
   <div class="container">
@@ -22,7 +25,6 @@ const handleClearError = () => clearError({ redirect: '/' })
   height: 100vh;
   justify-content: center;
   align-items: center;
-
 
   .content-wrapper {
     width: 400px;

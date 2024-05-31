@@ -1,6 +1,10 @@
 <script setup lang=ts>
 import type { Category, Post } from '~/types';
 
+definePageMeta({
+  middleware: ['auth']
+})
+
 const store = usePostStore();
 const { id } = useRoute().params;
 const token = sessionStorage.getItem('_token');

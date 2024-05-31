@@ -25,6 +25,7 @@ const signIn = async () => {
       sessionStorage.setItem('userRole', response);
       store.isModalOpened = false;
       store.isAdmin = true;
+      store.signinForm.password = '';
       toastStore.setToast('로그인에 성공하였습니다.', 'check')
     }).catch((error) => {
       console.log(error);

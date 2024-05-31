@@ -21,6 +21,7 @@
 		"plugins/**/*.ts",
 		"stores/**/*.ts",
 		"middleware/**/*.ts",
+		"middleware/*.ts",
 		"assets/**/*.ts"
 	],
 	"exclude": ["node_modules", "dist"]

@@ -20,7 +20,7 @@ const logout = () => {
           <NuxtLink to="/admin" @click="store.isAdminMenuOpened = false">설정</NuxtLink>
         </div>
         <div>
-          <a href="#none" @click="logout">로그아웃</a>
+          <button @click="logout">로그아웃</button>
         </div>
       </div>
     </Transition>
@@ -85,7 +85,8 @@ const logout = () => {
       &:hover {
         background-color: $font-black;
 
-        a {
+        a,
+        button {
           color: $font-white;
         }
       }
@@ -95,6 +96,14 @@ const logout = () => {
         cursor: pointer;
         font-family: $sans;
         color: $font-black;
+      }
+
+      button {
+        font-size: rem(14);
+        cursor: pointer;
+        font-family: $sans;
+        color: $font-black;
+        background-color: transparent;
       }
     }
   }

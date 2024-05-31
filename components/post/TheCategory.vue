@@ -1,7 +1,9 @@
 <script setup lang=ts>
 import { computed, watchEffect } from 'vue';
+import type { PostPageResponseWithoutTags } from "~/types";
 
 const store = usePostStore();
+const config = useRuntimeConfig();
 
 const { data: rawCategories } = useFetch('/api/category/all', {
   method: 'GET'
@@ -10,10 +12,15 @@ const categories = computed(() => rawCategories.value ?? [])
 const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'))
 
 watchEffect(async () => {
-  const categoryQuery = useRoute().params.title;
+  const categoryQuery: string = useRoute().params.title;
   if (categoryQuery) {
-    const { data: post } = await useFetch(`/api/post/category/${categoryQuery}`)
-    store.postsPage = post.value;
+    const data = await $fetch<PostPageResponseWithoutTags>(`${config.public.apiBase}/post/category`, {
+      method: 'GET',
+      params: {
+        title: categoryQuery
+      }
+    })
+    store.postsPage = data;
   }
 })
 </script>
