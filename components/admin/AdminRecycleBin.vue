@@ -14,6 +14,11 @@ const revertDelete = async (id: number) => {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
+  }).then((response) => {
+    fetchAll();
+    toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
+  }).catch((error) => {
+    toastStore.setToast('오류가 발생하였습니다.\n다시 시도해주세요.', 'error');
   })
 }
 
@@ -27,30 +32,38 @@ const deletePermanent = async (id: number) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
-      })
+      }).then((response) => {
+        fetchAll();
+        toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
+      }
+      )
     }
   } catch (error) {
     console.log(error);
     toastStore.setToast('삭제에 실패하였습니다.\n다시 시도해주세요.', 'error');
   }
-
 }
 
-const data = await useFetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
-  method: 'GET',
-  headers: {
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  }
-});
-const postDeleted = computed(() => data.data.value ?? []);
+const fetchAll = async () => {
+  const data = await $fetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }).then(response => {
+    postStore.postsDeleted = response
+  });
+}
+
+fetchAll();
 
 </script>
 <template>
   <div class="recyclebin-container" v-if="adminStore.isRecycleBinShow">
     <h1>Recycle Bin</h1>
-    <div class="posts" v-if="postDeleted.length > 0">
-      <div class="post" v-for="item in postDeleted" :key="item.id">
+    <div class="posts" v-if="postStore.postsDeleted.length > 0">
+      <div class="post" v-for="item in postStore.postsDeleted" :key="item.id">
         <div class="title">
           {{ item.title }}
         </div>

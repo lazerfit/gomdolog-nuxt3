@@ -362,6 +362,7 @@ onMounted(() => {
       .back-btn {
         cursor: pointer;
         color: #999;
+        padding: 10px 15px;
 
         .fa-chevron-left {
           font-size: rem(17);
@@ -375,6 +376,7 @@ onMounted(() => {
       .up-btn {
         cursor: pointer;
         color: #999;
+        padding: 10px 15px;
 
         .fa-chevron-up {
           font-size: rem(17);

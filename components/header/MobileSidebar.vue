@@ -1,16 +1,19 @@
 <script setup lang=ts>
-import { computed, onBeforeMount, ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { onBeforeUnmount } from 'vue';
+import type { JWT } from '~/types';
 
 const headerStore = useHeaderStore();
+const config = useRuntimeConfig();
+const toastStore = useCommonStore();
 
 const { data: rawCategories } = await useFetch('/api/category/all', {
   method: 'GET'
-})
+});
 
-const categories = computed(() => rawCategories.value ?? [])
+const categories = computed(() => rawCategories.value ?? []);
 
-const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'))
+const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'));
 
 const isModalOpened = ref(false);
 const isSidebarOpen = ref(false);
@@ -28,14 +31,37 @@ const closeModal = () => {
 }
 
 const signIn = async () => {
-  await useFetch('/api/auth/signin', {
+  await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
     method: 'POST',
     body: JSON.stringify({
       email: headerStore.signinForm.email,
       password: headerStore.signinForm.password
     })
+  }).then((response) => {
+    sessionStorage.setItem('_token', response.token)
+    $fetch<string>(`${config.public.apiBase}/auth/getRole`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${response.token}`,
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => {
+      sessionStorage.setItem('userRole', response);
+      closeModal();
+      isSidebarOpen.value = false;
+      toastStore.setToast('로그인에 성공하였습니다.', 'check');
+      headerStore.isAdmin = true;
+      toastStore.setToast('로그인에 성공하였습니다.', 'check')
+    }).catch((error) => {
+      console.log(error);
+    })
+  }).catch(error => {
+    if (error.statusCode === 403) {
+      toastStore.setToast('이메일 또는 비밀번호가 잘못되었습니다.', 'error');
+    } else {
+      toastStore.setToast('오류가 발생하였습니다.\n다시 시도해주세요.', 'error');
+    }
   })
-  closeModal();
 }
 
 const logout = () => {
@@ -74,10 +100,10 @@ onBeforeUnmount(() => {
             </div>
             <div class="admin-menu-wrapper" v-show="headerStore.isAdmin">
               <div>
-                <NuxtLink to="/post/new">글쓰기</NuxtLink>
+                <NuxtLink to="/post/new" @click="isSidebarOpen = false">글쓰기</NuxtLink>
               </div>
               <div>
-                <NuxtLink to="/admin">설정</NuxtLink>
+                <NuxtLink to="/admin" @click="isSidebarOpen = false">설정</NuxtLink>
               </div>
               <div>
                 <a href="#none" @click="logout">로그아웃</a>

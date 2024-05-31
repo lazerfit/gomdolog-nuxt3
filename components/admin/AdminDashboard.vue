@@ -35,6 +35,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 5px;
   }
 
   @media (min-width:768px) and (max-width: 1024px) {
