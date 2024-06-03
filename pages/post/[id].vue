@@ -29,9 +29,7 @@ useHead({
 <template>
   <div>
     <PostDetail />
-    <div v-if="pending">
-      <TheLoader />
-    </div>
+    <TheLoader :isPending="pending" />
   </div>
 </template>
 

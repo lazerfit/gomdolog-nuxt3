@@ -1,8 +1,8 @@
 <script setup lang=ts>
-
+const props = defineProps(['isPending'])
 </script>
 <template>
-  <div class="wrapper">
+  <div class="wrapper" v-show="props.isPending">
     <span class="loader"></span>
   </div>
 </template>

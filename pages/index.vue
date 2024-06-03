@@ -33,9 +33,7 @@ store.postsPage = data.value;
 <template>
   <div>
     <TheBanner />
-    <div v-if="pending">
-      <LazyTheLoader />
-    </div>
+    <TheLoader :isPending="pending" />
     <PostPopular />
     <PostAll />
     <LazyMoreButton />
