@@ -9,7 +9,7 @@ const route = useRoute();
 const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
-const token = sessionStorage.getItem('_token');
+
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -66,7 +66,7 @@ const post = computed(() => data.data.value ?? {
   content: '',
   createdDate: '',
   categoryTitle: '',
-  tags: [],
+  tags: [''],
 })
 
 if (post.value.title === '') {
@@ -74,6 +74,7 @@ if (post.value.title === '') {
 }
 
 const deletePost = async () => {
+  const token = sessionStorage.getItem('_token');
   try {
     const confirmed = window.confirm('정말 삭제하시겠습니까?')
     if (confirmed) {
@@ -91,8 +92,6 @@ const deletePost = async () => {
     toastStore.setToast('삭제에 실패하였습니다.', 'error');
   }
 }
-
-const postContent = computed(() => post.value.content.replace(/(<([^>]+)>)/ig, ""))
 
 onBeforeMount(async () => {
   if (!isVisitedPost() && !headerStore.isAdmin) {
