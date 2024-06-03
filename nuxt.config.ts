@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in'}
   },
   site: {
-    url: 'http://localhost:3000',
+    url: 'https://gomdolog.vercel.app',
     name: 'gomdolog',
     description: 'Java/Spring/vue.js 관련 포스팅과 일상/맛집/블록체인을 다루는 개인 블로그입니다.',
     defaultLocale: 'ko_KR'
@@ -72,7 +72,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8080/api'
+      apiBase: 'https://gomdolog.store/api'
     }
   },
   robots:{
