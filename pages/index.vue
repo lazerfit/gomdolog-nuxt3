@@ -3,7 +3,7 @@ import type { PostPageResponseWithoutTags } from '~/types';
 const store = usePostStore();
 const headerStore = useHeaderStore();
 
-const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
+const { data, pending } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
   params: {
     size: store.pageSize
   }
@@ -33,9 +33,12 @@ store.postsPage = data.value;
 <template>
   <div>
     <TheBanner />
+    <div v-if="pending">
+      <LazyTheLoader />
+    </div>
     <PostPopular />
     <PostAll />
-    <MoreButton />
+    <LazyMoreButton />
   </div>
 </template>
 

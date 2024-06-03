@@ -34,7 +34,9 @@ export default defineNuxtConfig({
   app: {
     head: {
       meta: [{name: 'og:image', content: 'https://postfiles.pstatic.net/MjAyNDA2MDNfOTkg/MDAxNzE3NDI1NjUxNzE1.f956G77eUYxu138eglL_fu1iNMEanKED9V3yat0ScZ4g.6pFa0h6ECS8X_DYBP4BmrBg3vkMF79vgp54tNF2gcCwg.PNG/gg.png?type=w966'}],
-      link: [],
+      link: [
+        {rel:'stylesheet', href: '//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'}
+      ],
       script: [
         { src: "https://kit.fontawesome.com/464ec02bb1.js",
           crossorigin: "anonymous"

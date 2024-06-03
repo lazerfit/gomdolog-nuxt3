@@ -5,9 +5,9 @@ const id = useRoute().params.id
 const postStore = usePostStore();
 
 
-const data = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
+const { data, pending } = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
 
-const post = computed(() => data.data.value ?? {
+const post = computed(() => data.value ?? {
   id: 0,
   title: '',
   content: '',
@@ -27,7 +27,12 @@ useHead({
 })
 </script>
 <template>
-  <PostDetail />
+  <div>
+    <PostDetail />
+    <div v-if="pending">
+      <TheLoader />
+    </div>
+  </div>
 </template>
 
 <style lang='scss' scoped></style>
