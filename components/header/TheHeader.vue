@@ -56,9 +56,9 @@ onBeforeUnmount(() => {
         <TheDarkmodeToggle />
         <TheLoginButton />
         <MobileSidebar />
-        <TheAdminMenu />
-        <TheAdminMenuBar />
-        <TheModal :isOpen="store.isModalOpened" @modal-close="store.isModalOpened = false"
+        <LazyTheAdminMenu />
+        <LazyTheAdminMenuBar />
+        <LazyTheModal :isOpen="store.isModalOpened" @modal-close="store.isModalOpened = false"
           @keyup.esc="store.isModalOpened = false">
           <template #header>
             <div class="modal-header-container">
@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
             <div>
             </div>
           </template>
-        </TheModal>
+        </LazyTheModal>
       </div>
     </div>
   </header>

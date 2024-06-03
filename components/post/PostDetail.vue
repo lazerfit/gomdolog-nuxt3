@@ -1,7 +1,7 @@
 <script setup lang=ts>
 import { ref, onBeforeMount, onMounted, computed } from 'vue';
-import type { Post } from '~/types';
-import TheToast from '../common/TheToast.vue';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css'
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const router = useRouter();
@@ -52,26 +52,12 @@ const isVisitedPost = () => {
 }
 
 const shareTwitter = () => {
-  window.open('https://twitter.com/intent/tweet?url=' + document.URL + '&text=' + post.value.title, "_blank", "width=450,height=500")
+  window.open('https://twitter.com/intent/tweet?url=' + document.URL + '&text=' + postStore.post.title, "_blank", "width=450,height=500")
 }
 
 const postId = route.params.id;
 
-const data = await useFetch<Post>(`/api/post/${postId}`, { method: 'GET' })
-
-const post = computed(() => data.data.value ?? {
-  id: 0,
-  title: '',
-  content: '',
-  createdDate: '',
-  categoryTitle: '',
-  tags: [''],
-})
-const tempContent = post.value.content
-postStore.post = post.value
-postStore.post.content = tempContent.replace(/<[^>]*>?/gm, '');
-
-if (post.value.title === '') {
+if (postStore.post.title === '') {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 
@@ -107,6 +93,7 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   addUtterancesScript();
+  hljs.highlightAll();
 });
 </script>
 
@@ -148,7 +135,7 @@ onMounted(() => {
             <i class="fa-brands fa-x-twitter" @click="shareTwitter"></i>
           </span>
           <span>
-            <TheToast />
+            <LazyTheToast />
             <i class="fa-solid fa-paperclip" @click="linkCopy"></i>
           </span>
         </div>
@@ -315,6 +302,11 @@ onMounted(() => {
       @media (max-width: 767px) {
         max-width: 330px;
       }
+    }
+
+    .post-text:deep(pre code) {
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     .post-text:deep(a) {

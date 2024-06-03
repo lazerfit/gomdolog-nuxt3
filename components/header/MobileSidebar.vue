@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
         <span class="actual-text">&nbsp;menu&nbsp;</span>
         <span aria-hidden="true" class="hover-text">&nbsp;menu&nbsp;</span>
       </button>
-      <TheToast />
+      <LazyTheToast />
       <Transition name="bounce">
         <div class="sidebar" v-show="isSidebarOpen">
           <div class="category-wrapper">
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
         </div>
       </Transition>
       <Transition name="fade">
-        <TheModal :isOpen="isModalOpened" @modal-close="closeModal" @submit="submitHandler">
+        <LazyTheModal :isOpen="isModalOpened" @modal-close="closeModal" @submit="submitHandler">
           <template #header>
             <div class="modal-header-container">
               <div class="close-btn">
@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
             <div>
             </div>
           </template>
-        </TheModal>
+        </LazyTheModal>
       </Transition>
     </div>
   </div>

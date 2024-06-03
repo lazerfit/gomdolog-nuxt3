@@ -33,7 +33,9 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
-      link: [],
+      link: [
+        {rel:'stylesheet', href: '//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'}
+      ],
       script: [
         { src: "https://kit.fontawesome.com/464ec02bb1.js",
           crossorigin: "anonymous"
