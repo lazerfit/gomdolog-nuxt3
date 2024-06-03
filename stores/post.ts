@@ -1,5 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import type { PostPageResponseWithoutTags, PostSave, PostDeleted } from '~/types';
+import type { PostPageResponseWithoutTags, PostSave, PostDeleted, Post } from '~/types';
 
 export const usePostStore = defineStore('post', () => {
   const postsPage = ref<PostPageResponseWithoutTags | null>(null);
@@ -10,6 +10,14 @@ export const usePostStore = defineStore('post', () => {
     categoryTitle: '',
     tags: []
   });
+  const post = ref({
+    id: 0,
+    title: '',
+    content: '',
+    createdDate: '',
+    categoryTitle: '',
+    tags: [''],
+  })
   const postsDeleted = ref<PostDeleted[]>([]);
 
   const formatDate = (date: string) => {
@@ -20,7 +28,7 @@ export const usePostStore = defineStore('post', () => {
     return `${year}년 ${month}월 ${day}일`;
   };
 
-  return {postsPage, pageSize, formatDate, postSaveForm, postsDeleted}
+  return {postsPage, pageSize, formatDate, postSaveForm, postsDeleted, post}
 })
 
 if (import.meta.hot) {

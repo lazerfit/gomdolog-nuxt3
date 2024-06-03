@@ -10,7 +10,6 @@ const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
 
-
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
     const script = document.createElement("script");
@@ -68,6 +67,9 @@ const post = computed(() => data.data.value ?? {
   categoryTitle: '',
   tags: [''],
 })
+const tempContent = post.value.content
+postStore.post = post.value
+postStore.post.content = tempContent.replace(/<[^>]*>?/gm, '');
 
 if (post.value.title === '') {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
@@ -113,15 +115,15 @@ onMounted(() => {
     <div class="content-wrapper">
       <div class="post-title">
         <div class="post-title-tags">
-          <span v-for="(tag, index) in (post.tags)" :key="index">#{{ tag
+          <span v-for="(tag, index) in (postStore.post.tags)" :key="index">#{{ tag
             }}</span>
         </div>
         <div class="title">
-          {{ post.title }}
+          {{ postStore.post.title }}
         </div>
         <div class="date-admin-wrapper">
           <div class="created-date">
-            {{ postStore.formatDate(post.createdDate) }}
+            {{ postStore.formatDate(postStore.post.createdDate) }}
           </div>
           <div class="admin-wrapper" v-if="headerStore.isAdmin">
             <NuxtLink :to="`/post/update/${postId}`">
@@ -135,7 +137,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="post-text" v-html="post.content">
+      <div class="post-text" v-html="postStore.post.content">
       </div>
       <div class="sns">
         <div class="back-btn">
