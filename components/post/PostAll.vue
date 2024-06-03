@@ -203,12 +203,13 @@ const post = computed(() => store.postsPage ?? {
           margin: rem(5) 0;
           font-size: rem(14);
           background-color: #f5f5f5;
-          width: rem(50);
+          min-width: rem(60);
           text-align: center;
-          padding: rem(3);
+          padding: rem(4) rem(6);
           border-radius: rem(5);
           margin-bottom: rem(7);
           cursor: pointer;
+          display: inline-block;
         }
 
         .all-post-title {
