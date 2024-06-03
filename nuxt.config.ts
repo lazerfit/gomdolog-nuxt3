@@ -2,7 +2,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", '@pinia/nuxt', "@nuxtjs/seo", "@vueuse/nuxt"],
+  modules: ["@nuxt/eslint", '@pinia/nuxt', "@nuxtjs/seo", "@vueuse/nuxt", "nuxt-gtag"],
   imports: {
     dirs: ['./stores']
   }, 
@@ -82,5 +82,8 @@ export default defineNuxtConfig({
   },
   sitemap: {
     exclude: ['/admin', '/post/new']
+  },
+  gtag: {
+    id: 'G-15PTYF2D50'
   }
 });
