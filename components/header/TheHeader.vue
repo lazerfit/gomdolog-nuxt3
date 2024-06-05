@@ -1,5 +1,4 @@
 <script setup lang=ts>
-import TheModal from '../common/TheModal.vue';
 import TheToast from '../common/TheToast.vue';
 import type { JWT } from '~/types';
 

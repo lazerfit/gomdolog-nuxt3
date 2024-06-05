@@ -4,7 +4,6 @@ import type { Post } from '~/types';
 const id = useRoute().params.id
 const postStore = usePostStore();
 
-
 const { data, pending } = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
 
 const post = computed(() => data.value ?? {
@@ -19,6 +18,7 @@ const post = computed(() => data.value ?? {
 postStore.post = post.value
 
 useHead({
+  title: post.value.title,
   meta: [
     { name: 'description', content: post.value.content.replace(/<[^>]*>?/gm, '') },
     { name: 'keyword', content: 'spring, java, vue.js, nuxt' },

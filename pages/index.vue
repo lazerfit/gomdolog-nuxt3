@@ -1,7 +1,6 @@
 <script setup lang=ts>
 import type { PostPageResponseWithoutTags } from '~/types';
 const store = usePostStore();
-const headerStore = useHeaderStore();
 
 const { data, pending } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
   params: {

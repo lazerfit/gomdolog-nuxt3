@@ -63,6 +63,25 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
+.darkMode {
+  .tip-tap-container {
+    background-color: transparent;
+    color: $font-white;
+
+    #post-category {
+      color: $font-white;
+    }
+
+    .tip-tap-post-title {
+      color: $font-white;
+
+      &::placeholder {
+        color: $font-white;
+      }
+    }
+  }
+}
+
 .tip-tap-container {
   width: rem(900);
   margin: rem(60) auto;
