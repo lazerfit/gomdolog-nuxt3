@@ -7,7 +7,7 @@ store.postsPage = data.data.value;
 <template>
   <div>
     <TheBanner />
-    <PostAll />
+    <PostAll :isSearchedBy="true" :searchParam=query />
   </div>
 </template>
 

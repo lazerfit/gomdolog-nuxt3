@@ -1,10 +1,10 @@
 <script setup lang=ts>
-
+const route = useRoute();
 </script>
 <template>
   <div>
     <TheBanner />
-    <PostAll />
+    <PostAll :isSearchedBy="true" :searchParam="route.params.title" />
   </div>
 </template>
 
