@@ -1,16 +1,26 @@
 <script setup lang=ts>
 const store = usePostStore();
+const route = useRoute();
 
 const post = computed(() => store.postsPage ?? {
   content: [],
   numberOfElements: 0,
   size: 0
 })
+
+defineProps(['isSearchedBy', 'searchParam'])
 </script>
 <template>
   <div class="container">
-    <div class="container-title">
+    <div class="container-title" v-if="!isSearchedBy">
       <h1>All blog posts</h1>
+    </div>
+    <div class="container-title-sub" v-else>
+      <NuxtLink to="/" class="home-btn">
+        Home
+      </NuxtLink>
+      <span> > </span>
+      <span>{{ searchParam }}</span>
     </div>
     <div class="post-wrapper">
       <template v-if="post.content.length > 0">
@@ -84,6 +94,12 @@ const post = computed(() => store.postsPage ?? {
       color: $font-white !important;
     }
   }
+
+  .container-title-sub {
+    .home-btn {
+      color: $font-white !important;
+    }
+  }
 }
 
 .container {
@@ -105,7 +121,13 @@ const post = computed(() => store.postsPage ?? {
     @media screen and (max-width: 767px) {
       text-align: center;
     }
+  }
 
+  .container-title-sub {
+    .home-btn {
+      cursor: pointer;
+      color: $font-black;
+    }
   }
 
   .all-post-title {
