@@ -162,7 +162,7 @@ const post = computed(() => data.data.value ?? [])
           margin-top: rem(5);
           cursor: pointer;
           color: $font-black;
-          font-family: $sans;
+          font-family: $font-third;
 
           &:hover {
             text-shadow: 1.5px 1.5px #999;
