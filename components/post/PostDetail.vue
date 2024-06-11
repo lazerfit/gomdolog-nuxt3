@@ -164,6 +164,13 @@ onMounted(() => {
       }
     }
   }
+
+  .post-title-tags {
+
+    span {
+      color: #ffda79 !important;
+    }
+  }
 }
 
 .container {
@@ -210,7 +217,7 @@ onMounted(() => {
     .post-title {
       text-align: center;
       font-weight: 500;
-      font-family: $sans;
+      font-family: $font-third;
 
       .title {
         font-size: rem(35);
@@ -221,9 +228,12 @@ onMounted(() => {
       }
 
       .post-title-tags {
+        margin-bottom: rem(5);
+
         span {
           font-size: 0.9rem;
-          color: #ffda79;
+          font-family: $font-third;
+          color: #519872a8;
           margin-right: rem(7);
 
           @media (max-width: 767px) {
