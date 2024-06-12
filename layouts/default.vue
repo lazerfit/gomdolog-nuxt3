@@ -1,8 +1,11 @@
 <script setup lang=ts>
+import { SpeedInsights } from "@vercel/speed-insights/nuxt"
+
 const store = useHeaderStore();
 </script>
 <template>
   <div>
+    <SpeedInsights />
     <TheHeader />
     <slot />
     <TheFooter />
