@@ -1,6 +1,6 @@
 <script setup lang=ts>
-const store = usePostStore();
 import type { PostResopnseWithoutTags } from '~/types';
+const store = usePostStore();
 
 const data = await useFetch<PostResopnseWithoutTags[]>('/api/post/popular');
 const post = computed(() => data.data.value ?? [])
@@ -15,8 +15,8 @@ const post = computed(() => data.data.value ?? [])
     <div class="post-wrapper">
       <div class="main-post">
         <NuxtLink class="main-post-img" :to="'/post/' + post[0].id">
-          <img src=/assets/img/pineapples.jpg alt="mockup" v-if="post[0].thumbnail === 'Default Thumbnail'">
-          <img :src=post[0].thumbnail v-else>
+          <img v-if="post[0].thumbnail === 'Default Thumbnail'" src=/assets/img/pineapples.jpg alt="mockup">
+          <img v-else :src=post[0].thumbnail>
         </NuxtLink>
         <div class="content-wrapper">
           <div class="main-post-category">
@@ -26,8 +26,7 @@ const post = computed(() => data.data.value ?? [])
             <div class="main-post-title">
               {{ post[0].title }}
             </div>
-            <div class="main-post-text" v-html="post[0].content">
-            </div>
+            <div class="main-post-text" v-html="post[0].content" />
           </NuxtLink>
           <div class="main-post-day">
             {{ store.formatDate(post[0].createdDate) }}
@@ -35,10 +34,10 @@ const post = computed(() => data.data.value ?? [])
         </div>
       </div>
       <div class="sub-post-wrapper">
-        <div class="sub-post" v-for="item in (post.slice(1, 3))" :key="item.id">
+        <div v-for="item in (post.slice(1, 3))" :key="item.id" class="sub-post">
           <NuxtLink class="sub-post-img" :to="'/post/' + item.id">
-            <img src=/assets/img/pineapples.jpg alt="mockup" v-if="item.thumbnail === 'Default Thumbnail'">
-            <img :src=item.thumbnail v-else>
+            <img v-if="item.thumbnail === 'Default Thumbnail'" src=/assets/img/pineapples.jpg alt="mockup">
+            <img v-else :src=item.thumbnail>
           </NuxtLink>
           <div class="content-wrapper">
             <div class="sub-post-category">
@@ -48,8 +47,7 @@ const post = computed(() => data.data.value ?? [])
               <div class="sub-post-title">
                 {{ item.title }}
               </div>
-              <div class="sub-post-text" v-html="item.content">
-              </div>
+              <div class="sub-post-text" v-html="item.content" />
             </NuxtLink>
             <div class="sub-post-day">
               {{ store.formatDate(item.createdDate) }}

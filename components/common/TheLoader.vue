@@ -1,9 +1,13 @@
 <script setup lang=ts>
-const props = defineProps(['isPending'])
+defineProps({
+  isPending: {
+    type: Boolean
+  }
+})
 </script>
 <template>
-  <div class="wrapper" v-show="props.isPending">
-    <span class="loader"></span>
+  <div v-show="isPending" class="wrapper">
+    <span class="loader" />
   </div>
 </template>
 

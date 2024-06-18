@@ -1,6 +1,5 @@
 <script setup lang=ts>
 const store = usePostStore();
-const route = useRoute();
 
 const post = computed(() => store.postsPage ?? {
   content: [],
@@ -8,14 +7,22 @@ const post = computed(() => store.postsPage ?? {
   size: 0
 })
 
-defineProps(['isSearchedBy', 'searchParam'])
+defineProps({
+  isSearchedBy: {
+    type: Boolean
+  },
+  searchParam: {
+    type: String,
+    default: 'Search...'
+  }
+})
 </script>
 <template>
   <div class="container">
-    <div class="container-title" v-if="!isSearchedBy">
+    <div v-if="!isSearchedBy" class="container-title">
       <h1>All blog posts</h1>
     </div>
-    <div class="container-title-sub" v-else>
+    <div v-else class="container-title-sub">
       <NuxtLink to="/" class="home-btn">
         Home
       </NuxtLink>
@@ -24,10 +31,10 @@ defineProps(['isSearchedBy', 'searchParam'])
     </div>
     <div class="post-wrapper">
       <template v-if="post.content.length > 0">
-        <div class="post" v-for="item in post.content" :key="item.id">
+        <div v-for="item in post.content" :key="item.id" class="post">
           <NuxtLink :to="'/post/' + item.id">
-            <img src="/assets/img/pineapples.jpg" alt="all-post-img" v-if="item.thumbnail === 'Default Thumbnail'">
-            <img :src="item.thumbnail" v-else>
+            <img v-if="item.thumbnail === 'Default Thumbnail'" src="/assets/img/pineapples.jpg" alt="all-post-img">
+            <img v-else :src="item.thumbnail">
           </NuxtLink>
           <div class="content-wrapper">
             <div class="all-post-category">
@@ -37,8 +44,7 @@ defineProps(['isSearchedBy', 'searchParam'])
               <div class="all-post-title">
                 {{ item.title }}
               </div>
-              <div class="all-post-text" v-html="item.content">
-              </div>
+              <div class="all-post-text" v-html="item.content" />
             </NuxtLink>
             <div class="all-post-day">
               {{ store.formatDate(item.createdDate) }}

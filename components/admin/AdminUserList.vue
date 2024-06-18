@@ -2,14 +2,14 @@
 const adminStore = useAdminStore();
 </script>
 <template>
-  <div class="users" v-if="adminStore.isUserShow">
+  <div v-if="adminStore.isUserShow" class="users">
     <h1>Users</h1>
     <div class="user">
       <div class="name">
         redkafe98@gmail.com
       </div>
       <div class="role">
-        <select name="role" id="user-role">
+        <select id="user-role" name="role">
           <option value="ADMIN">ADMIN</option>
           <option value="USER">USER</option>
         </select>
@@ -20,7 +20,7 @@ const adminStore = useAdminStore();
         redkafe12@gmail.com
       </div>
       <div class="role">
-        <select name="role" id="user-role">
+        <select id="user-role" name="role">
           <option value="ADMIN">ADMIN</option>
           <option value="USER">USER</option>
         </select>

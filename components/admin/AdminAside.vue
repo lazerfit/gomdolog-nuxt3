@@ -27,33 +27,33 @@ const recycleBinShow = () => {
 <template>
   <aside>
     <div class="content-wrapper">
-      <input type="radio" id="home" name="asdie" value="home" checked>
+      <input id="home" type="radio" name="asdie" value="home" checked>
       <label for="home">
         <div class="dashboard menu" @click="dashboardShow">
           <span>
-            <i class="fa-solid fa-house"></i>
+            <i class="fa-solid fa-house" />
           </span>
           <span class="title">
             Home
           </span>
         </div>
       </label>
-      <input type="radio" id="category" name="asdie" value="category">
+      <input id="category" type="radio" name="asdie" value="category">
       <label for="category">
         <div class="category menu" @click="categoryShow">
           <span>
-            <i class="fa-solid fa-table-list"></i>
+            <i class="fa-solid fa-table-list" />
           </span>
           <span class="title">
             Category
           </span>
         </div>
       </label>
-      <input type="radio" id="recycleBin" name="asdie" value="recycleBin">
+      <input id="recycleBin" type="radio" name="asdie" value="recycleBin">
       <label for="recycleBin">
         <div class="recycleBin menu" @click="recycleBinShow">
           <span>
-            <i class="fa-regular fa-trash-can"></i>
+            <i class="fa-regular fa-trash-can" />
           </span>
           <span class="title">
             Recycle

@@ -26,7 +26,7 @@ watchEffect(async () => {
 </script>
 <template>
   <div class="category-container">
-    <NuxtLink :to="`/category/${item.title}`" class="category" v-for="(item, index) in filteredCategory" :key="index">
+    <NuxtLink v-for="(item, index) in filteredCategory" :key="index" :to="`/category/${item.title}`" class="category">
       {{ item.title }}
     </NuxtLink>
   </div>

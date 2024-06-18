@@ -57,12 +57,12 @@ onBeforeUnmount(() => {
         <MobileSidebar />
         <LazyTheAdminMenu />
         <LazyTheAdminMenuBar />
-        <LazyTheModal :isOpen="store.isModalOpened" @modal-close="store.isModalOpened = false"
+        <LazyTheModal :is-open="store.isModalOpened" @modal-close="store.isModalOpened = false"
           @keyup.esc="store.isModalOpened = false">
           <template #header>
             <div class="modal-header-container">
               <div class="close-btn">
-                <i class="fa-solid fa-x" @click="store.isModalOpened = false"></i>
+                <i class="fa-solid fa-x" @click="store.isModalOpened = false" />
               </div>
               <div class="login-welcome">
                 <img src="/assets/img/cat4.jpg" alt="login-welcome-img">
@@ -73,10 +73,10 @@ onBeforeUnmount(() => {
             <div class="modal-body-container">
               <div class="login-field">
                 <div>
-                  <input type="email" placeholder="이메일" required v-model="store.signinForm.email">
+                  <input v-model="store.signinForm.email" type="email" placeholder="이메일" required>
                 </div>
                 <div>
-                  <input type="password" placeholder="비밀번호" required v-model="store.signinForm.password"
+                  <input v-model="store.signinForm.password" type="password" placeholder="비밀번호" required
                     @keyup.enter="signIn">
                 </div>
                 <button class="btn-member-primary" @click="signIn">로그인</button>
@@ -84,8 +84,7 @@ onBeforeUnmount(() => {
             </div>
           </template>
           <template #footer>
-            <div>
-            </div>
+            <div />
           </template>
         </LazyTheModal>
       </div>

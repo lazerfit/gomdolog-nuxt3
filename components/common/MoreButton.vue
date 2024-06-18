@@ -19,7 +19,7 @@ const hasNextPage = computed(() => (store?.postsPage?.size || 0) > (store?.posts
 </script>
 <template>
   <div class="container">
-    <button @click="store.pageSize += 6" v-if="!hasNextPage">More Posts</button>
+    <button v-if="!hasNextPage" @click="store.pageSize += 6">More Posts</button>
   </div>
 </template>
 

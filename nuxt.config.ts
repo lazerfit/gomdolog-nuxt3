@@ -1,58 +1,62 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { defineNuxtConfig } from 'nuxt/config'
+import { defineNuxtConfig } from 'nuxt/config';
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", '@pinia/nuxt', "@nuxtjs/seo", "@vueuse/nuxt"],
+  modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxtjs/seo', '@vueuse/nuxt'],
   imports: {
-    dirs: ['./stores']
-  }, 
+    dirs: ['./stores'],
+  },
   alias: {
-    'img': "/assets/img"
+    img: '/assets/img',
   },
   components: [
     {
       path: '~/components',
-      pathPrefix: true
+      pathPrefix: true,
     },
     {
       path: '~/components/common',
-      pathPrefix: true
+      pathPrefix: true,
     },
     {
       path: '~/components/header',
-      pathPrefix: true
+      pathPrefix: true,
     },
     {
       path: '~/components/post',
-      pathPrefix: true
+      pathPrefix: true,
     },
     {
       path: '~/components/admin',
-      pathPrefix: true
+      pathPrefix: true,
     },
   ],
   app: {
     head: {
       link: [
-        {rel:'stylesheet', href: '//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'}
+        { rel: 'stylesheet', href: '//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css' },
       ],
       script: [
-        { src: "https://kit.fontawesome.com/464ec02bb1.js",
-          crossorigin: "anonymous"
-        }
-      ]
+        { src: 'https://kit.fontawesome.com/464ec02bb1.js',
+          crossorigin: 'anonymous',
+        },
+      ],
     },
-    pageTransition: { name: 'page', mode: 'out-in'}
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
   site: {
     url: 'http://localhost:3000',
     name: 'gomdolog',
     description: 'Java/Spring/vue.js 관련 포스팅과 일상/맛집/블록체인을 다루는 개인 블로그입니다.',
-    defaultLocale: 'ko_KR'
+    defaultLocale: 'ko_KR',
   },
   eslint: {
     config: {
-      stylistic: true,
+      stylistic: {
+        indent: 'tab',
+        semi: true,
+      },
     },
   },
   css: ['~/assets/scss/main.scss'],
@@ -63,10 +67,10 @@ export default defineNuxtConfig({
           additionalData: `
           @import "~/assets/scss/variables.scss";
           @import "~/assets/scss/mixin.scss";
-          `
-        }
-      }
-    }
+          `,
+        },
+      },
+    },
   },
   routeRules: {
     '/': { prerender: true },
@@ -74,15 +78,15 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: 'http://localhost:8080/api'
-    }
+      apiBase: 'http://localhost:8080/api',
+    },
   },
-  robots:{
+  robots: {
     disallow: ['/admin', '/post/new'],
     allow: '/',
     blockNonSeoBots: true,
   },
   sitemap: {
-    exclude: ['/admin', '/post/new']
-  }
+    exclude: ['/admin', '/post/new'],
+  },
 });

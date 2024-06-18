@@ -1,5 +1,5 @@
 <script setup lang=ts>
-import { ref, onBeforeMount, onMounted, computed } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
 
@@ -112,40 +112,39 @@ onMounted(() => {
           <div class="created-date">
             {{ postStore.formatDate(postStore.post.createdDate) }}
           </div>
-          <div class="admin-wrapper" v-if="headerStore.isAdmin">
+          <div v-if="headerStore.isAdmin" class="admin-wrapper">
             <NuxtLink :to="`/post/update/${postId}`">
               <span>
-                <i class="fa-solid fa-pen"></i>
+                <i class="fa-solid fa-pen" />
               </span>
             </NuxtLink>
             <span>
-              <i class="fa-solid fa-trash" @click="deletePost"></i>
+              <i class="fa-solid fa-trash" @click="deletePost" />
             </span>
           </div>
         </div>
       </div>
-      <div class="post-text" v-html="postStore.post.content">
-      </div>
+      <div class="post-text" v-html="postStore.post.content" />
       <div class="sns">
         <div class="back-btn">
-          <i class="fa-solid fa-chevron-left" @click="goBack"></i>
+          <i class="fa-solid fa-chevron-left" @click="goBack" />
         </div>
         <div class="wrapper">
           <span>
-            <i class="fa-brands fa-x-twitter" @click="shareTwitter"></i>
+            <i class="fa-brands fa-x-twitter" @click="shareTwitter" />
           </span>
           <span>
             <LazyTheToast />
-            <i class="fa-solid fa-paperclip" @click="linkCopy"></i>
+            <i class="fa-solid fa-paperclip" @click="linkCopy" />
           </span>
         </div>
         <div class="up-btn">
-          <i class="fa-solid fa-chevron-up" @click="scrollToTop"></i>
+          <i class="fa-solid fa-chevron-up" @click="scrollToTop" />
         </div>
       </div>
     </div>
     <div class="comment">
-      <div ref="utterancesContainer"></div>
+      <div ref="utterancesContainer" />
     </div>
   </div>
 </template>

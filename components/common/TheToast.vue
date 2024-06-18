@@ -6,8 +6,8 @@ const store = useCommonStore();
 <template>
   <Teleport to="body">
     <div v-if="store.isToastOpened" class="toast">
-      <i class="fa-solid fa-circle-check" v-if="store.toastStatus === 'check'"></i>
-      <i class="fa-solid fa-circle-xmark" v-else-if="store.toastStatus === 'error'"></i>
+      <i v-if="store.toastStatus === 'check'" class="fa-solid fa-circle-check" />
+      <i v-else-if="store.toastStatus === 'error'" class="fa-solid fa-circle-xmark" />
       {{ store.toastMessage }}
     </div>
   </Teleport>
