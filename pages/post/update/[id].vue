@@ -56,12 +56,12 @@ const UPDATE_POST = () => {
   <div class="tip-tap-container">
     <div class="tip-tap-submit">
       <div class="tip-tap-category-wrapper">
-        <select name="category" id="post-category" v-model="store.postSaveForm.categoryTitle">
+        <select id="post-category" v-model="store.postSaveForm.categoryTitle" name="category">
           <option value="" selected>카테고리</option>
-          <option :value="item.title" v-for="item in categories" :key="item.id">{{ item.title }}</option>
+          <option v-for="item in categories" :key="item.id" :value="item.title">{{ item.title }}</option>
         </select>
       </div>
-      <input type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title" v-model="store.postSaveForm.title">
+      <input v-model="store.postSaveForm.title" type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title">
       <TiptapEditor />
       <div class="tip-tap-tag-submit">
         <tag-input v-model="store.postSaveForm.tags" />

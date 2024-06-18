@@ -14,11 +14,12 @@ const revertDelete = async (id: number) => {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
-  }).then((response) => {
+  }).then(() => {
     fetchAll();
     toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
   }).catch((error) => {
     toastStore.setToast('오류가 발생하였습니다.\n다시 시도해주세요.', 'error');
+    console.log(error);
   })
 }
 
@@ -32,7 +33,7 @@ const deletePermanent = async (id: number) => {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
-      }).then((response) => {
+      }).then(() => {
         fetchAll();
         toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
       }
@@ -45,7 +46,7 @@ const deletePermanent = async (id: number) => {
 }
 
 const fetchAll = async () => {
-  const data = await $fetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
+  await $fetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -60,10 +61,10 @@ fetchAll();
 
 </script>
 <template>
-  <div class="recyclebin-container" v-if="adminStore.isRecycleBinShow">
+  <div v-if="adminStore.isRecycleBinShow" class="recyclebin-container">
     <h1>Recycle Bin</h1>
-    <div class="posts" v-if="postStore.postsDeleted.length > 0">
-      <div class="post" v-for="item in postStore.postsDeleted" :key="item.id">
+    <div v-if="postStore.postsDeleted.length > 0" class="posts">
+      <div v-for="item in postStore.postsDeleted" :key="item.id" class="post">
         <div class="title">
           {{ item.title }}
         </div>
@@ -71,12 +72,12 @@ fetchAll();
           {{ postStore.formatDate(item.deletedDate) }}
         </div>
         <div class="btns">
-          <i class="fa-solid fa-rotate" @click="revertDelete(item.id)"></i>
-          <i class="fa-solid fa-trash" @click="deletePermanent(item.id)"></i>
+          <i class="fa-solid fa-rotate" @click="revertDelete(item.id)" />
+          <i class="fa-solid fa-trash" @click="deletePermanent(item.id)" />
         </div>
       </div>
     </div>
-    <div class="posts" v-else>
+    <div v-else class="posts">
       <div class="empty-img-container">
         <img src="/assets/img/box.png" alt="empty-post-img">
         <p>

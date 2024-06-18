@@ -32,9 +32,9 @@ store.postsPage = data.value;
 <template>
   <div>
     <TheBanner />
-    <TheLoader :isPending="pending" />
+    <TheLoader :is-pending="pending" />
     <PostPopular />
-    <PostAll :isSearchedBy="false" />
+    <PostAll :is-searched-by="false" />
     <LazyMoreButton />
   </div>
 </template>

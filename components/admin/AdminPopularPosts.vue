@@ -14,10 +14,10 @@ const data = await useFetch<AdminPopularPosts[]>('/api/post/popular/top5', {
 const popularPosts = computed(() => data.data.value ?? []);
 </script>
 <template>
-  <div class="popular-post" v-show="store.isDashboardShow">
+  <div v-show="store.isDashboardShow" class="popular-post">
     <h1>Popular Posts</h1>
     <div class="posts">
-      <div class="post" v-for="(item, index) in popularPosts" :key="index">
+      <div v-for="(item, index) in popularPosts" :key="index" class="post">
         <div class="post-title">
           {{ item.title }}
         </div>

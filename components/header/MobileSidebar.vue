@@ -1,6 +1,5 @@
 <script setup lang=ts>
 import { computed, onBeforeMount, ref } from 'vue';
-import { onBeforeUnmount } from 'vue';
 import type { JWT } from '~/types';
 
 const headerStore = useHeaderStore();
@@ -87,18 +86,18 @@ onBeforeUnmount(() => {
       </button>
       <LazyTheToast />
       <Transition name="bounce">
-        <div class="sidebar" v-show="isSidebarOpen">
+        <div v-show="isSidebarOpen" class="sidebar">
           <div class="category-wrapper">
-            <NuxtLink :to="'/category/' + item.title" @click="isSidebarOpen = false" class="category"
-              v-for="(item, index) in filteredCategory" :key="index">
+            <NuxtLink :to="'/category/' + item.title" v-for="(item, index) in filteredCategory" :key="index"
+              class="category" @click="isSidebarOpen = false">
               {{ item.title }}
             </NuxtLink>
           </div>
           <div class="login-wrapper">
-            <div class="login-btn" v-show="!headerStore.isAdmin" @click="openModal">
+            <div v-show="!headerStore.isAdmin" class="login-btn" @click="openModal">
               로그인
             </div>
-            <div class="admin-menu-wrapper" v-show="headerStore.isAdmin">
+            <div v-show="headerStore.isAdmin" class="admin-menu-wrapper">
               <div>
                 <NuxtLink to="/post/new" @click="isSidebarOpen = false">글쓰기</NuxtLink>
               </div>
@@ -113,11 +112,11 @@ onBeforeUnmount(() => {
         </div>
       </Transition>
       <Transition name="fade">
-        <LazyTheModal :isOpen="isModalOpened" @modal-close="closeModal" @submit="submitHandler">
+        <LazyTheModal :is-open="isModalOpened" @modal-close="closeModal" @submit="submitHandler">
           <template #header>
             <div class="modal-header-container">
               <div class="close-btn">
-                <i class="fa-solid fa-x" @click="closeModal"></i>
+                <i class="fa-solid fa-x" @click="closeModal" />
               </div>
               <div class="login-welcome">
                 <img src="/assets/img/cat4.jpg" alt="login-welcome-img">
@@ -128,18 +127,17 @@ onBeforeUnmount(() => {
             <div class="modal-body-container">
               <div class="login-field">
                 <div>
-                  <input type="email" placeholder="이메일" required v-model="headerStore.signinForm.email">
+                  <input v-model="headerStore.signinForm.email" type="email" placeholder="이메일" required>
                 </div>
                 <div>
-                  <input type="password" placeholder="비밀번호" required v-model="headerStore.signinForm.password">
+                  <input v-model="headerStore.signinForm.password" type="password" placeholder="비밀번호" required>
                 </div>
                 <button class="btn-member-primary" @click="signIn">로그인</button>
               </div>
             </div>
           </template>
           <template #footer>
-            <div>
-            </div>
+            <div />
           </template>
         </LazyTheModal>
       </Transition>

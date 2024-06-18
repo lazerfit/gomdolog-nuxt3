@@ -3,7 +3,6 @@ import { useEditor, EditorContent, BubbleMenu, FloatingMenu } from '@tiptap/vue-
 import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
-import Dropcursor from '@tiptap/extension-dropcursor'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import css from 'highlight.js/lib/languages/css'
 import js from 'highlight.js/lib/languages/javascript'
@@ -55,57 +54,56 @@ const addImage = () => {
 }
 </script>
 <template>
-  <div class=" tip-tap-buttons" v-if="editor">
+  <div v-if="editor" class="tip-tap-buttons">
     <bubble-menu class="bubble-menu" :tippy-options="{ duration: 100 }" :editor="editor">
-      <button @click="editor.chain().focus().toggleBold().run()"
-        :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
+      <button :disabled="!editor.can().chain().focus().toggleBold().run()"
+        :class="{ 'is-active': editor.isActive('bold') }" @click="editor.chain().focus().toggleBold().run()">
         Bold
       </button>
-      <button @click="editor.chain().focus().toggleItalic().run()"
-        :disabled="!editor.can().chain().focus().toggleItalic().run()"
-        :class="{ 'is-active': editor.isActive('italic') }">
+      <button :disabled="!editor.can().chain().focus().toggleItalic().run()"
+        :class="{ 'is-active': editor.isActive('italic') }" @click="editor.chain().focus().toggleItalic().run()">
         Italic
       </button>
-      <button @click="editor.chain().focus().toggleCodeBlock().run()"
-        :class="{ 'is-active': editor.isActive('codeBlock') }">
+      <button :class="{ 'is-active': editor.isActive('codeBlock') }"
+        @click="editor.chain().focus().toggleCodeBlock().run()">
         Code
       </button>
     </bubble-menu>
-    <button @click="editor.chain().focus().toggleStrike().run()"
-      :disabled="!editor.can().chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }"
-      class="menu-btn">
-      <i class="fa-solid fa-strikethrough"></i>
+    <button :disabled="!editor.can().chain().focus().toggleStrike().run()"
+      :class="{ 'is-active': editor.isActive('strike') }" class="menu-btn"
+      @click="editor.chain().focus().toggleStrike().run()">
+      <i class="fa-solid fa-strikethrough" />
     </button>
     <floating-menu class="floating-menu" :tippy-options="{ duration: 100 }" :editor="editor">
       <button @click="addImage">Image</button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
+      <button :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
+        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()">
         H1
       </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
+      <button :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
+        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()">
         H2
       </button>
     </floating-menu>
-    <button @click="editor.chain().focus().toggleBulletList().run()"
-      :class="{ 'is-active': editor.isActive('bulletList') }" class="menu-btn">
-      <i class="fa-solid fa-list-ul"></i>
+    <button :class="{ 'is-active': editor.isActive('bulletList') }" class="menu-btn"
+      @click="editor.chain().focus().toggleBulletList().run()">
+      <i class="fa-solid fa-list-ul" />
     </button>
-    <button @click="editor.chain().focus().toggleOrderedList().run()"
-      :class="{ 'is-active': editor.isActive('orderedList') }" class="menu-btn">
-      <i class="fa-solid fa-list-ol"></i>
+    <button :class="{ 'is-active': editor.isActive('orderedList') }" class="menu-btn"
+      @click="editor.chain().focus().toggleOrderedList().run()">
+      <i class="fa-solid fa-list-ol" />
     </button>
-    <button @click="editor.chain().focus().toggleBlockquote().run()"
-      :class="{ 'is-active': editor.isActive('blockquote') }" class="menu-btn">
-      <i class="fa-solid fa-quote-left"></i>
+    <button :class="{ 'is-active': editor.isActive('blockquote') }" class="menu-btn"
+      @click="editor.chain().focus().toggleBlockquote().run()">
+      <i class="fa-solid fa-quote-left" />
     </button>
-    <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()"
-      class="menu-btn">
-      <i class="fa-solid fa-rotate-left"></i>
+    <button :disabled="!editor.can().chain().focus().undo().run()" class="menu-btn"
+      @click="editor.chain().focus().undo().run()">
+      <i class="fa-solid fa-rotate-left" />
     </button>
-    <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()"
-      class="menu-btn">
-      <i class="fa-solid fa-rotate-right"></i>
+    <button :disabled="!editor.can().chain().focus().redo().run()" class="menu-btn"
+      @click="editor.chain().focus().redo().run()">
+      <i class="fa-solid fa-rotate-right" />
     </button>
   </div>
   <editor-content :editor="editor" />

@@ -1,5 +1,4 @@
 <script setup lang=ts>
-import { RouterLink } from 'vue-router';
 
 const store = useHeaderStore();
 
@@ -12,7 +11,7 @@ const logout = () => {
 <template>
   <div class="container">
     <Transition name="bounce">
-      <div class="wrapper" v-show="store.isAdminMenuOpened">
+      <div v-show="store.isAdminMenuOpened" class="wrapper">
         <div>
           <NuxtLink to="/post/new" @click="store.isAdminMenuOpened = false">글쓰기</NuxtLink>
         </div>

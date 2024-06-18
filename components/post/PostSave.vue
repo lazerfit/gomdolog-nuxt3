@@ -6,9 +6,33 @@ import TagInput from './TagInput.client.vue';
 
 const store = usePostStore();
 
-function submitSavePost() {
-  localStorage.removeItem('draft')
-}
+const submitSavePost = async () => {
+  const config = useRuntimeConfig();
+  const token = sessionStorage.getItem('_token');
+  localStorage.removeItem('draft');
+  await $fetch(`${config.public.apiBase}/post/new`,
+    {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: {
+        title: store.postSaveForm.title,
+        content: store.postSaveForm.content,
+        categoryTitle: store.postSaveForm.categoryTitle,
+        tags: store.postSaveForm.tags
+      }
+    }
+  )
+    .then(() => {
+      store.postSaveForm.title = '';
+      store.postSaveForm.categoryTitle = '';
+      store.postSaveForm.tags = [];
+      useRouter().push('/');
+    })
+    .catch((error) => console.log(error))
+};
 
 const { data: rawCategories } = await useFetch<Category[]>('/api/category/all');
 const categories = computed(() => rawCategories.value ?? []);
@@ -18,39 +42,38 @@ const loadDraft = () => {
     if (window.confirm('임시저장된 게시글이 존재합니다. 불러오시겠습니까?')) {
       const draftToString = localStorage.getItem('draft') || '';
       const draft = JSON.parse(draftToString);
-      store.postSaveForm = draft
+      store.postSaveForm = draft;
     }
   }
-}
+};
 
 const saveDraft = () => {
   localStorage.setItem('draft', JSON.stringify(store.postSaveForm));
   console.log('Draft saved');
-}
+};
 
-const timer = setInterval(() => saveDraft(), 30 * 1000)
+const timer = setInterval(() => saveDraft(), 30 * 1000);
 
 onBeforeMount(() => {
   loadDraft();
-  timer
-})
+  timer;
+});
 
 onUnmounted(() => {
   clearInterval(timer);
-})
-
+});
 </script>
 
 <template>
   <div class="tip-tap-container">
     <div class="tip-tap-submit">
       <div class="tip-tap-category-wrapper">
-        <select name="category" id="post-category" v-model="store.postSaveForm.categoryTitle">
+        <select id="post-category" v-model="store.postSaveForm.categoryTitle" name="category">
           <option value="" selected>카테고리</option>
-          <option :value="item.title" v-for="item in categories" :key="item.id">{{ item.title }}</option>
+          <option v-for="item in categories" :key="item.id" :value="item.title">{{ item.title }}</option>
         </select>
       </div>
-      <input type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title" v-model="store.postSaveForm.title">
+      <input v-model="store.postSaveForm.title" type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title">
       <TiptapEditor />
       <div class="tip-tap-tag-submit">
         <TagInput v-model="store.postSaveForm.tags" />

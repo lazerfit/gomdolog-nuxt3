@@ -4,7 +4,7 @@ const route = useRoute();
 <template>
   <div>
     <TheBanner />
-    <PostAll :isSearchedBy="true" :searchParam="route.params.title" />
+    <PostAll :is-searched-by="true" :search-param="route.params.title" />
   </div>
 </template>
 

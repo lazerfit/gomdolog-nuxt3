@@ -7,12 +7,12 @@
       <div class="sns">
         <span>
           <a target="_blank" href="https://github.com/lazerfit">
-            <i class="fa-brands fa-github"></i>
+            <i class="fa-brands fa-github" />
           </a>
         </span>
         <span>
           <a target="_blank" href="https://www.linkedin.com/in/ddoddi14/">
-            <i class="fa-brands fa-linkedin"></i>
+            <i class="fa-brands fa-linkedin" />
           </a>
         </span>
       </div>

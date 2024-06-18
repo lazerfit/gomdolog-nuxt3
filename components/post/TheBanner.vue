@@ -1,7 +1,5 @@
 <script setup lang=ts>
 const searchQuery = ref('');
-const store = usePostStore();
-
 const searchPost = async () => {
   useRouter().push(`/post/search/${searchQuery.value}`)
 }
@@ -14,8 +12,8 @@ const searchPost = async () => {
       <p>Innovate, Integrate, Inspire</p>
     </div>
     <div class="search-bar">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="search" name="search" pattern=".*\S.*" required placeholder="search..." v-model="searchQuery"
+      <i class="fa-solid fa-magnifying-glass" />
+      <input v-model="searchQuery" type="search" name="search" pattern=".*\S.*" required placeholder="search..."
         @keyup.enter="searchPost()">
     </div>
     <TheCategory />

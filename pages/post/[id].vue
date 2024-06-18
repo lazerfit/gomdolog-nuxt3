@@ -29,7 +29,7 @@ useHead({
 <template>
   <div>
     <PostDetail />
-    <TheLoader :isPending="pending" />
+    <TheLoader :is-pending="pending" />
   </div>
 </template>
 

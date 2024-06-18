@@ -94,32 +94,32 @@ const updateCategory = async (id: number, title: string) => {
 }
 </script>
 <template>
-  <div class="category-container" v-if="adminStore.isCategoryShow">
+  <div v-if="adminStore.isCategoryShow" class="category-container">
     <h1>Category</h1>
     <div class="categories">
-      <div class="category" v-for="item in categoryEditable" :key="item.id">
-        <div class="title" v-if="!item.isEditable">
+      <div v-for="item in categoryEditable" :key="item.id" class="category">
+        <div v-if="!item.isEditable" class="title">
           {{ item.title }}
         </div>
         <input v-else v-model="adminStore.updateTitle" type="text" placeholder="change title..."
           @keyup.enter="updateCategory(item.id, adminStore.updateTitle)">
         <div class="btns">
-          <i class="fa-solid fa-rotate" @click="editTitle(item)"></i>
-          <i class="fa-solid fa-trash" @click="deleteCategory(item.id)"></i>
+          <i class="fa-solid fa-rotate" @click="editTitle(item)" />
+          <i class="fa-solid fa-trash" @click="deleteCategory(item.id)" />
         </div>
       </div>
       <div v-for="(item, index) in adminStore.divList" :key="index" class="add-div">
-        <input type="text" v-model="item.inputValue" placeholder="type something.."
+        <input v-model="item.inputValue" type="text" placeholder="type something.."
           @keyup.enter="categorySave(item.inputValue, index)">
         <button @click="categorySave(item.inputValue, index)">
-          <i class="fa-solid fa-plus"></i>
+          <i class="fa-solid fa-plus" />
         </button>
         <span>
-          <i class="fa-solid fa-minus" @click="adminStore.divList.splice(index, 1)"></i>
+          <i class="fa-solid fa-minus" @click="adminStore.divList.splice(index, 1)" />
         </span>
       </div>
-      <button @click="addDiv" class="add-div-btn">
-        <i class="fa-solid fa-plus"></i>
+      <button class="add-div-btn" @click="addDiv">
+        <i class="fa-solid fa-plus" />
       </button>
     </div>
   </div>
