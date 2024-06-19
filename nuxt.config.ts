@@ -13,6 +13,7 @@ export default defineNuxtConfig({
 	imports: {
 		dirs: ['./stores'],
 	},
+	plugins: ['~/plugins/dompurify.ts'],
 	alias: {
 		img: '/assets/img',
 	},

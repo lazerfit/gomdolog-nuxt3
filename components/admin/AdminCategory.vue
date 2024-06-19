@@ -1,22 +1,16 @@
 <script setup lang=ts>
-import type { CategoryResponse, Category } from '~/types';
-
-interface CategoryEditable {
-  id: number,
-  title: string,
-  isEditable: boolean
-}
+import type { Category } from '~/types';
 
 const adminStore = useAdminStore();
 const config = useRuntimeConfig();
 const token = sessionStorage.getItem('_token');
-const categoryEditable = ref<CategoryEditable[]>([]);
+const categoryEditable = ref<Category[]>([]);
 
 const addDiv = () => {
   adminStore.divList.push({ inputValue: '' });
 }
 
-const editTitle = (item: CategoryResponse) => {
+const editTitle = (item: Category) => {
   item.isEditable = !item.isEditable
   adminStore.updateTitle = item.title;
 }

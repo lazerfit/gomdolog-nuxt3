@@ -19,6 +19,7 @@ export default createConfigForNuxt({
 		'no-nonoctal-decimal-escape': 'error',
 		'no-redeclare': 'error',
 		'no-regex-spaces': 'error',
-		'first-attribute-linebreak': false,
+		'vue/first-attribute-linebreak': false,
+		'vue/no-v-html': false
 	},
 });

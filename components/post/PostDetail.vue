@@ -124,7 +124,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="post-text" v-html="postStore.post.content" />
+      <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
       <div class="sns">
         <div class="back-btn">
           <i class="fa-solid fa-chevron-left" @click="goBack" />
@@ -291,13 +291,17 @@ onMounted(() => {
     }
 
     .post-text:deep(h1) {
-      font-size: rem(24);
+      font-size: rem(32);
       line-height: rem(38.4);
     }
 
     .post-text:deep(h2) {
-      font-size: rem(20);
+      font-size: rem(24);
       line-height: rem(32);
+    }
+
+    .post-text:deep(h3) {
+      font-size: rem(19);
     }
 
     .post-text:deep(img) {

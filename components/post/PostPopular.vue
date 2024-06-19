@@ -1,7 +1,7 @@
+<!-- eslint-disable vue/no-v-html -->
 <script setup lang=ts>
 import type { PostResopnseWithoutTags } from '~/types';
 const store = usePostStore();
-
 const data = await useFetch<PostResopnseWithoutTags[]>('/api/post/popular');
 const post = computed(() => data.data.value ?? [])
 </script>
@@ -26,7 +26,7 @@ const post = computed(() => data.data.value ?? [])
             <div class="main-post-title">
               {{ post[0].title }}
             </div>
-            <div class="main-post-text" v-html="post[0].content" />
+            <div class="main-post-text" v-html="$sanitizeHTML(post[0].content)" />
           </NuxtLink>
           <div class="main-post-day">
             {{ store.formatDate(post[0].createdDate) }}
@@ -47,7 +47,7 @@ const post = computed(() => data.data.value ?? [])
               <div class="sub-post-title">
                 {{ item.title }}
               </div>
-              <div class="sub-post-text" v-html="item.content" />
+              <div class="sub-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
             <div class="sub-post-day">
               {{ store.formatDate(item.createdDate) }}
