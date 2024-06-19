@@ -84,6 +84,10 @@ const addImage = () => {
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()">
         H2
       </button>
+      <button :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
+        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()">
+        H3
+      </button>
     </floating-menu>
     <button :class="{ 'is-active': editor.isActive('bulletList') }" class="menu-btn"
       @click="editor.chain().focus().toggleBulletList().run()">
