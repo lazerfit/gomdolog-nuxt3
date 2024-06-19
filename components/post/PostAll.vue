@@ -44,7 +44,7 @@ defineProps({
               <div class="all-post-title">
                 {{ item.title }}
               </div>
-              <div class="all-post-text" v-html="item.content" />
+              <div class="all-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
             <div class="all-post-day">
               {{ store.formatDate(item.createdDate) }}

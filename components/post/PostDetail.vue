@@ -124,7 +124,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="post-text" v-html="postStore.post.content" />
+      <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
       <div class="sns">
         <div class="back-btn">
           <i class="fa-solid fa-chevron-left" @click="goBack" />

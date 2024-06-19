@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
       <Transition name="bounce">
         <div v-show="isSidebarOpen" class="sidebar">
           <div class="category-wrapper">
-            <NuxtLink :to="'/category/' + item.title" v-for="(item, index) in filteredCategory" :key="index"
+            <NuxtLink v-for="(item, index) in filteredCategory" :key="index" :to="'/category/' + item.title"
               class="category" @click="isSidebarOpen = false">
               {{ item.title }}
             </NuxtLink>
