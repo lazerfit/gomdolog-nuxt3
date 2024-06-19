@@ -31,6 +31,8 @@ defineProps({
     </div>
     <div class="post-wrapper">
       <template v-if="post.content.length > 0">
+        {{ post.content.length }}
+        {{ post.numberOfElements }}
         <div v-for="item in post.content" :key="item.id" class="post">
           <NuxtLink :to="'/post/' + item.id">
             <img v-if="item.thumbnail === 'Default Thumbnail'" src="/assets/img/pineapples.jpg" alt="all-post-img">
