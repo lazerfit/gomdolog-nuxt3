@@ -6,6 +6,7 @@ import "@yaireo/tagify/dist/tagify.css";
 const props = defineProps({
   modelValue: {
     type: Array,
+    default: () => ["default"]
   }
 });
 

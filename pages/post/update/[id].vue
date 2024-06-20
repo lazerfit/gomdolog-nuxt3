@@ -1,5 +1,6 @@
 <script setup lang=ts>
 import type { Category, Post } from '~/types';
+import TagInputClient from '~/components/post/TagInput.client.vue';
 
 definePageMeta({
   middleware: ['auth']
@@ -64,7 +65,7 @@ const UPDATE_POST = () => {
       <input v-model="store.postSaveForm.title" type="text" placeholder="제목을 입력해주세요." class="tip-tap-post-title">
       <TiptapEditor />
       <div class="tip-tap-tag-submit">
-        <tag-input v-model="store.postSaveForm.tags" />
+        <TagInputClient v-model="store.postSaveForm.tags" />
         <div class="tip-tap-submit">
           <button @click="UPDATE_POST">Update</button>
         </div>
@@ -94,6 +95,7 @@ const UPDATE_POST = () => {
     padding: rem(5);
     color: $silver-black;
     font-family: $sans;
+    background-color: transparent;
   }
 
   .tip-tap-post-title {
@@ -105,6 +107,7 @@ const UPDATE_POST = () => {
     padding: rem(10);
     box-sizing: border-box;
     font-family: $sans;
+    background-color: transparent;
 
     &::placeholder {
       padding-left: rem(1);
