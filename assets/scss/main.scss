@@ -2,53 +2,53 @@
 @import '~/assets/scss/mixin.scss';
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-size: 16px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 16px;
 }
 
 body {
-  color: $font-black;
-  background-color: $background-color;
-  font-family: $pretendard, sans-serif;
+	color: $font-black;
+	background-color: $background-color;
+	font-family: $pretendard, sans-serif;
 }
 
 .darkMode {
-  background-color: #0E1116;
-  color: $font-white;
+	background-color: #0e1116;
+	color: $font-white;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 button {
-  border: none;
+	border: none;
 }
 
 input {
-  &:focus {
-    outline: none;
-  }
+	&:focus {
+		outline: none;
+	}
 }
 
 ::selection {
-  background-color: hotpink;
-  color: white;
+	background-color: hotpink;
+	color: white;
 }
 
 p {
-  font-size: 18px;
-  margin-bottom: 20px;
+	font-size: 18px;
+	margin-bottom: 10px;
 }
 
 pre {
-  font-family: "Fira Code", monospace;
-  font-optical-sizing: auto;
-  font-style: normal;
+	font-family: 'Fira Code', monospace;
+	font-optical-sizing: auto;
+	font-style: normal;
 }
 
 code {
-  font-family: Hack, monospace;
+	font-family: Hack, monospace;
 }
