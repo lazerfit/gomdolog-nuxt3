@@ -290,18 +290,28 @@ onMounted(() => {
       }
     }
 
+    .post-text:deep(p) {
+      margin-bottom: 0;
+      line-height: 2.1rem;
+      min-height: 30px;
+      font-size: rem(19);
+    }
+
     .post-text:deep(h1) {
       font-size: rem(32);
       line-height: rem(38.4);
+      margin: 10px 0;
     }
 
     .post-text:deep(h2) {
       font-size: rem(24);
       line-height: rem(32);
+      margin: 20px 0;
     }
 
     .post-text:deep(h3) {
       font-size: rem(19);
+      margin: 20px 0;
     }
 
     .post-text:deep(img) {
