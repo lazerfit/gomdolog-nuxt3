@@ -9,7 +9,8 @@ const data = await useFetch<AdminPopularPosts[]>('/api/post/popular/top5', {
   headers: {
     'Authorization': `Bearer ${token}`,
     'Content-Type': 'application/json'
-  }
+  },
+  params: { limit: 5 }
 });
 const popularPosts = computed(() => data.data.value ?? []);
 </script>
