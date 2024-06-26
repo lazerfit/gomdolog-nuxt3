@@ -9,6 +9,14 @@ export interface Post {
 	updatedDate: string;
 }
 
+export interface PostDetail {
+	id: number;
+	title: string;
+	content: string;
+	createdDate: string;
+	tags: string[];
+}
+
 export interface PostPageResponseWithoutTags {
 	content: PostResopnseWithoutTags[];
 	numberOfElements: number;

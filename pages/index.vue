@@ -31,7 +31,7 @@ store.postsPage = data.value;
 </script>
 <template>
   <div>
-    <TheBanner />
+    <LazyTheBanner />
     <TheLoader :is-pending="pending" />
     <PostPopular />
     <PostAll :is-searched-by="false" />

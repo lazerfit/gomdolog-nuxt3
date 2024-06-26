@@ -1,7 +1,9 @@
 <script setup lang=ts>
 import type { PostResopnseWithoutTags } from '~/types';
 const store = usePostStore();
-const data = await useFetch<PostResopnseWithoutTags[]>('/api/post/popular');
+const data = await useFetch<PostResopnseWithoutTags[]>('/api/post/popular', {
+  params: { limit: 3 }
+});
 const post = computed(() => data.data.value ?? [])
 </script>
 <template>

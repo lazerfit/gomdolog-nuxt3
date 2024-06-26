@@ -8,10 +8,10 @@
       <div class="content-wrapper">
         <AdminPopularPosts />
         <div class="user-container">
-          <AdminUserList />
+          <LazyAdminUserList />
         </div>
-        <AdminCategory />
-        <AdminRecycleBin />
+        <LazyAdminCategory />
+        <LazyAdminRecycleBin />
         <TheToast />
       </div>
     </div>
