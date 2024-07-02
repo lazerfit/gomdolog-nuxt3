@@ -4,7 +4,7 @@ import type { Post } from '~/types';
 const id = useRoute().params.id
 const postStore = usePostStore();
 
-const { data, pending } = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
+const { data } = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
 
 const post = computed(() => data.value ?? {
   id: 0,
@@ -29,7 +29,6 @@ useHead({
 <template>
   <div>
     <PostDetail />
-    <TheLoader :is-pending="pending" />
   </div>
 </template>
 
