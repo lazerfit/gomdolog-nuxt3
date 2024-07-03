@@ -15,6 +15,7 @@ export interface PostDetail {
 	content: string;
 	createdDate: string;
 	tags: string[];
+	summary: string;
 }
 
 export interface PostPageResponseWithoutTags {

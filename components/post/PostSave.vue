@@ -5,11 +5,11 @@ import TiptapEditor from './TiptapEditor.client.vue';
 import TagInput from './TagInput.client.vue';
 
 const store = usePostStore();
+const toastStore = useCommonStore();
 
 const submitSavePost = async () => {
   const config = useRuntimeConfig();
   const token = sessionStorage.getItem('_token');
-  localStorage.removeItem('draft');
   await $fetch(`${config.public.apiBase}/post/new`,
     {
       method: 'POST',
@@ -29,9 +29,13 @@ const submitSavePost = async () => {
       store.postSaveForm.title = '';
       store.postSaveForm.categoryTitle = '';
       store.postSaveForm.tags = [];
+      localStorage.removeItem('draft');
       useRouter().push('/');
     })
-    .catch((error) => console.log(error))
+    .catch((error) => {
+      console.log(error);
+      toastStore.setToast('잠시후 다시 시도해주십시오.', 'error');
+    })
 };
 
 const { data: rawCategories } = await useFetch<Category[]>('/api/category/all');

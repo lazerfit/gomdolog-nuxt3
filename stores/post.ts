@@ -19,8 +19,8 @@ export const usePostStore = defineStore('post', () => {
 		title: '',
 		content: '',
 		createdDate: '',
-		categoryTitle: '',
 		tags: [''],
+		summary: '',
 	});
 	const postsDeleted = ref<PostDeleted[]>([]);
 

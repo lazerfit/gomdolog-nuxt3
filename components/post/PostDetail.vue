@@ -122,6 +122,14 @@ onMounted(() => {
               <i class="fa-solid fa-trash" @click="deletePost" />
             </span>
           </div>
+          <div v-if="postStore.post.summary != 'no summary'" class="summary">
+            <i class="fa-solid fa-quote-left" />
+            <div>
+              {{ postStore.post.summary }}
+            </div>
+            <i class="fa-solid fa-quote-right" />
+          </div>
+          <div class="divider" />
         </div>
       </div>
       <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
@@ -151,6 +159,24 @@ onMounted(() => {
 
 <style lang='scss' scoped>
 .darkMode {
+  .post-text {
+    color: $font-white !important;
+  }
+
+  .summary {
+    div {
+      color: $font-white !important;
+    }
+
+    .fa-solid {
+      color: $font-white;
+    }
+  }
+
+  .divider {
+    background-color: #ffffff2f !important;
+  }
+
   .admin-wrapper {
 
     span {
@@ -220,6 +246,7 @@ onMounted(() => {
 
       .title {
         font-size: rem(35);
+        font-weight: 600;
 
         @media (max-width: 767px) {
           font-size: rem(44);
@@ -253,6 +280,32 @@ onMounted(() => {
           font-size: 0.9rem;
         }
 
+        .summary {
+          color: $font-black;
+          margin-top: rem(20);
+          display: flex;
+          justify-content: center;
+
+          div {
+            max-width: 500px;
+            font-size: 1.2rem;
+            text-align: left;
+            font-weight: normal;
+            color: #343a40;
+          }
+
+          .fa-quote-left {
+            margin-bottom: auto;
+            margin-right: rem(10);
+          }
+
+          .fa-quote-right {
+            margin-top: auto;
+            margin-left: rem(10);
+          }
+
+        }
+
         .admin-wrapper {
           margin-top: rem(7);
 
@@ -270,6 +323,13 @@ onMounted(() => {
             }
           }
         }
+
+        .divider {
+          width: 100%;
+          height: 1px;
+          background-color: #5555551a;
+          margin-top: rem(30);
+        }
       }
     }
 
@@ -279,6 +339,7 @@ onMounted(() => {
       line-height: rem(31);
       white-space: pre-wrap;
       word-wrap: break-word;
+      color: $font-black;
 
       @media (max-width: 767px) {
         margin: 30px 10px;
