@@ -22,6 +22,19 @@ export interface PostPageResponseWithoutTags {
 	content: PostResopnseWithoutTags[];
 	numberOfElements: number;
 	size: number;
+	totalElements: number;
+	totalPages: number;
+	first: boolean;
+	last: boolean;
+	number: number;
+}
+export interface PageInfo {
+	totalElements: number;
+	totalPages: number;
+	number: number;
+	first: boolean;
+	last: boolean;
+	limit: number;
 }
 
 export interface Category {

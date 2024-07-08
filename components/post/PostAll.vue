@@ -4,7 +4,7 @@ const store = usePostStore();
 const post = computed(() => store.postsPage ?? {
   content: [],
   numberOfElements: 0,
-  size: 0
+  size: 0,
 })
 
 defineProps({
@@ -253,7 +253,8 @@ defineProps({
           line-height: rem(20);
           height: rem(80);
           margin-top: rem(14);
-          color: #555;
+          color: #0314039a;
+          font-weight: 400;
           cursor: pointer;
 
           @media screen and (max-width: 767px) {

@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, onMounted } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
+import { isClient } from '@vueuse/shared';
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const router = useRouter();
@@ -9,6 +10,8 @@ const route = useRoute();
 const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
+
+const formattedDate = useDateFormat(postStore.post.createdDate, 'MMM D, YYYY', { locales: 'en-US' });
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -95,6 +98,19 @@ onMounted(() => {
   addUtterancesScript();
   hljs.highlightAll();
 });
+
+const shareOptions = ref({
+  title: postStore.post.title,
+  text: 'share test',
+  url: isClient ? location.href : ''
+})
+
+const { share, isSupported } = useShare(shareOptions);
+
+const startShare = async () => {
+  return share().catch(err => console.log('postShare error : {}', err))
+}
+
 </script>
 
 <template>
@@ -108,46 +124,51 @@ onMounted(() => {
         <div class="title">
           {{ postStore.post.title }}
         </div>
-        <div class="date-admin-wrapper">
-          <div class="created-date">
-            {{ postStore.formatDate(postStore.post.createdDate) }}
+      </div>
+      <div class="summary-wrapper">
+        <div v-if="postStore.post.summary != 'no summary'" class="summary">
+          <i class="fa-solid fa-quote-left" />
+          <div>
+            {{ postStore.post.summary }}
           </div>
-          <div v-if="headerStore.isAdmin" class="admin-wrapper">
-            <NuxtLink :to="`/post/update/${postId}`">
-              <span>
-                <i class="fa-solid fa-pen" />
-              </span>
-            </NuxtLink>
-            <span>
-              <i class="fa-solid fa-trash" @click="deletePost" />
-            </span>
-          </div>
-          <div v-if="postStore.post.summary != 'no summary'" class="summary">
-            <i class="fa-solid fa-quote-left" />
-            <div>
-              {{ postStore.post.summary }}
-            </div>
-            <i class="fa-solid fa-quote-right" />
-          </div>
-          <div class="divider" />
+          <i class="fa-solid fa-quote-right" />
         </div>
       </div>
+      <div class="date-admin">
+        <div class="created-date">
+          {{ formattedDate }}
+        </div>
+        <div v-if="headerStore.isAdmin" class="admin-wrapper">
+          <NuxtLink :to="`/post/update/${postId}`">
+            <span>
+              <i class="fa-solid fa-pen" />
+            </span>
+          </NuxtLink>
+          <span>
+            <i class="fa-solid fa-trash" @click="deletePost" />
+          </span>
+        </div>
+      </div>
+      <div class="divider" />
       <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
       <div class="sns">
-        <div class="back-btn">
-          <i class="fa-solid fa-chevron-left" @click="goBack" />
+        <div class="back-btn" @click="goBack">
+          <i class="fa-solid fa-chevron-left" />
         </div>
         <div class="wrapper">
           <span>
             <i class="fa-brands fa-x-twitter" @click="shareTwitter" />
           </span>
           <span>
+            <button :disabled="!isSupported" @click="startShare">Share</button>
+          </span>
+          <span>
             <LazyTheToast />
             <i class="fa-solid fa-paperclip" @click="linkCopy" />
           </span>
         </div>
-        <div class="up-btn">
-          <i class="fa-solid fa-chevron-up" @click="scrollToTop" />
+        <div class="up-btn" @click="scrollToTop">
+          <i class="fa-solid fa-chevron-up" />
         </div>
       </div>
     </div>
@@ -159,11 +180,19 @@ onMounted(() => {
 
 <style lang='scss' scoped>
 .darkMode {
+  .date-admin {
+    color: $gray-2 !important;
+  }
+
   .post-text {
     color: $font-white !important;
   }
 
   .summary {
+    i {
+      color: $gray-4 !important;
+    }
+
     div {
       color: $font-white !important;
     }
@@ -193,7 +222,7 @@ onMounted(() => {
   .post-title-tags {
 
     span {
-      color: #ffda79 !important;
+      color: $gray-7 !important;
     }
   }
 }
@@ -206,9 +235,9 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
 
-
   @media (max-width: 767px) {
-    width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
   }
 
   @media (min-width:768px) and (max-width: 1024px) {
@@ -229,247 +258,343 @@ onMounted(() => {
   }
 
   .content-wrapper {
-    width: rem(900);
+    width: rem(720);
 
     @media (max-width: 767px) {
-      width: 100%;
+      max-width: 100%;
     }
 
     @media (min-width:768px) and (max-width: 1024px) {
-      width: 100%;
+      max-width: rem(773);
     }
 
     .post-title {
       text-align: center;
-      font-weight: 500;
-      font-family: $font-third;
+      font-weight: 700;
+      font-family: $nanum;
+      width: rem(720);
+      justify-content: center;
+      align-items: center;
+      display: block;
+      margin: 0 auto;
+
+      @media (max-width: 767px) {
+        width: 100%;
+      }
 
       .title {
-        font-size: rem(35);
-        font-weight: 600;
+        font-size: 2.5rem;
+        line-height: 1.2;
+        text-align: left;
+        font-family: $pretendard;
 
         @media (max-width: 767px) {
-          font-size: rem(44);
+          font-size: rem(30);
+          line-height: rem(39);
+          letter-spacing: rem(-0.75);
         }
       }
 
       .post-title-tags {
         margin-bottom: rem(5);
+        display: flex;
 
         span {
           font-size: 0.9rem;
-          font-family: $font-third;
-          color: #519872a8;
+          font-family: $nanum;
+          color: $gray-6;
           margin-right: rem(7);
+          display: inline-block;
+          background-color: $gray-1;
+          border-radius: rem(10);
+          padding: rem(5);
 
           @media (max-width: 767px) {
-            font-size: 1.2rem;
+            font-size: 1rem;
+            line-height: rem(24);
           }
         }
       }
+    }
 
-      .date-admin-wrapper {
-        font-size: 0.8rem;
-        margin-top: rem(10);
-        color: #999;
+    .summary-wrapper {
+      font-size: 0.8rem;
+      margin-top: rem(10);
+      color: #999;
+      font-family: $nanum;
+      width: rem(720);
+
+
+      @media (min-width:768px) and (max-width: 800px) {
+        width: rem(730);
+        margin: 0 auto;
+      }
+
+      @media (max-width: 767px) {
+        width: 100%;
+
+      }
+
+      .summary {
+        color: $font-black;
+        margin: rem(20) auto;
         display: flex;
-        justify-content: center;
         flex-direction: column;
+        justify-content: center;
+        width: 100%;
 
-        .created-date {
-          font-size: 0.9rem;
-        }
+        div {
+          max-width: rem(720);
+          font-size: 1.34rem;
+          line-height: 1.2;
+          text-align: left;
+          font-weight: 400;
+          color: $gray-7;
 
-        .summary {
-          color: $font-black;
-          margin-top: rem(20);
-          display: flex;
-          justify-content: center;
-
-          div {
-            max-width: 500px;
-            font-size: 1.2rem;
-            text-align: left;
-            font-weight: normal;
-            color: #343a40;
-          }
-
-          .fa-quote-left {
-            margin-bottom: auto;
-            margin-right: rem(10);
-          }
-
-          .fa-quote-right {
-            margin-top: auto;
-            margin-left: rem(10);
-          }
-
-        }
-
-        .admin-wrapper {
-          margin-top: rem(7);
-
-          span {
-            margin-right: rem(10);
-
-            i {
-              cursor: pointer;
-              color: #999;
-              transition: all .3s ease;
-
-              &:hover {
-                color: $font-black;
-              }
-            }
+          @media (max-width: 767px) {
+            font-size: rem(18);
+            line-height: rem(27);
           }
         }
 
-        .divider {
-          width: 100%;
-          height: 1px;
-          background-color: #5555551a;
-          margin-top: rem(30);
+        i {
+          margin-bottom: auto;
+          color: $gray-6;
+        }
+
+        .fa-quote-left {
+          margin-right: rem(5);
+
+        }
+
+        .fa-quote-right {
+          margin-left: rem(5);
+          margin-left: auto;
         }
       }
     }
 
-    .post-text {
-      margin: rem(30) auto;
-      font-size: rem(18);
-      line-height: rem(31);
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      color: $font-black;
-
-      @media (max-width: 767px) {
-        margin: 30px 10px;
-        font-size: rem(28);
-      }
-
-      @media (min-width:768px) and (max-width: 1024px) {
-        margin: 30px 20px;
-      }
-    }
-
-    .post-text:deep(p) {
-      margin-bottom: 0;
-      line-height: 2.1rem;
-      min-height: 30px;
-      font-size: rem(19);
-    }
-
-    .post-text:deep(h1) {
-      font-size: rem(32);
-      line-height: rem(38.4);
-      margin: 10px 0;
-    }
-
-    .post-text:deep(h2) {
-      font-size: rem(24);
-      line-height: rem(32);
-      margin: 20px 0;
-    }
-
-    .post-text:deep(h3) {
-      font-size: rem(19);
-      margin: 20px 0;
-    }
-
-    .post-text:deep(img) {
-      max-width: 900px;
-      border-radius: rem(10);
-      margin: rem(30) auto;
-      object-fit: cover;
-      display: block;
-      margin: 20px auto;
-
-      @media (max-width: 767px) {
-        max-width: 330px;
-      }
-    }
-
-    .post-text:deep(pre code) {
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-
-    .post-text:deep(a) {
-      text-decoration: none;
-      color: #fff !important;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-
-      &:link {
-        color: #fff !important;
-      }
-
-      &:visited {
-        color: blueviolet !important;
-      }
-
-      &:hover {
-        color: #2c974b !important;
-      }
-    }
-
-    .sns {
+    .date-admin {
+      width: rem(720);
       display: flex;
-      justify-content: space-between;
+      margin: rem(30) auto 0 auto;
+      color: $gray-6;
 
-      .wrapper {
-        transition: all .3s ease;
+      @media (max-width: 767px) {
+        width: 100%;
+        font-size: rem(15);
+        line-height: rem(22.5);
+      }
 
-        &:hover span i {
-          opacity: .5;
-        }
+      .admin-wrapper {
+        margin-left: auto;
 
         span {
+          margin-right: rem(10);
+
           i {
+            cursor: pointer;
+            color: #999;
             transition: all .3s ease;
-            font-size: 1.25rem;
 
             &:hover {
-              transform: translateY(-5px) scale(1.1);
-              opacity: 1;
+              color: $font-black;
             }
           }
         }
       }
+    }
 
-      .back-btn {
-        cursor: pointer;
-        color: #999;
-        padding: 10px 15px;
+    .divider {
+      width: rem(720);
+      height: 1px;
+      background-color: #5555551a;
+      margin-top: rem(30);
 
-        .fa-chevron-left {
-          font-size: rem(17);
-
-          &:hover {
-            animation: back-btn 1.1s linear infinite;
-          }
-        }
+      @media (max-width: 767px) {
+        width: 100%;
+        margin-left: 0;
       }
+    }
+  }
 
-      .up-btn {
-        cursor: pointer;
-        color: #999;
-        padding: 10px 15px;
+  .post-text {
+    width: rem(720);
+    margin: rem(30) auto;
+    font-size: rem(18);
+    font-weight: 300;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: $gray-9;
+    font-family: $pretendard;
 
-        .fa-chevron-up {
-          font-size: rem(17);
+    @media (max-width: 767px) {
+      margin: 30px auto;
+      font-size: rem(18);
+      line-height: rem(30);
+      width: 100%;
+    }
 
-          &:hover {
-            animation: up-btn 1.1s linear infinite;
-          }
-        }
+    @media (min-width:768px) and (max-width: 1024px) {
+      margin: 30px auto;
+    }
+  }
+
+  .post-text:deep(p) {
+    margin-bottom: 0;
+    line-height: 1.6;
+    min-height: 30px;
+    font-size: rem(19);
+  }
+
+  .post-text:deep(h1) {
+    font-size: rem(32);
+    line-height: rem(38.4);
+    margin: 10px 0;
+  }
+
+  .post-text:deep(h2) {
+    font-size: rem(24);
+    line-height: rem(32);
+    margin: 20px 0;
+  }
+
+  .post-text:deep(h3) {
+    font-size: rem(19);
+    margin: 20px 0;
+  }
+
+  .post-text:deep(img) {
+    max-width: 900px;
+    border-radius: rem(10);
+    margin: rem(30) auto;
+    object-fit: cover;
+    display: block;
+    margin: 20px auto;
+
+    @media (max-width: 767px) {
+      max-width: 330px;
+    }
+  }
+
+  .post-text:deep(pre code) {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .post-text:deep(a) {
+    text-decoration: none;
+    color: #fff !important;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    &:link {
+      color: #fff !important;
+    }
+
+    &:visited {
+      color: blueviolet !important;
+    }
+
+    &:hover {
+      color: #2c974b !important;
+    }
+  }
+
+  .sns {
+    display: flex;
+    justify-content: space-between;
+
+    .wrapper {
+      transition: all .3s ease;
+
+      &:hover span i {
+        opacity: .5;
       }
 
       span {
-        font-size: rem(22);
-        margin-right: rem(7);
-        cursor: pointer;
+        i {
+          transition: all .3s ease;
+          font-size: 1.25rem;
+
+          &:hover {
+            transform: translateY(-5px) scale(1.1);
+            opacity: 1;
+          }
+        }
       }
     }
+
+    .back-btn {
+      cursor: pointer;
+      color: #999;
+      padding: rem(10) rem(15);
+      border-radius: rem(10);
+      transition: all .2s;
+
+      &:hover {
+        background-color: $gray-2;
+
+        .fa-chevron-left {
+          animation: back-btn .9s linear infinite;
+        }
+      }
+
+      .fa-chevron-left {
+        font-size: rem(17);
+      }
+    }
+
+    .up-btn {
+      cursor: pointer;
+      color: #999;
+      padding: 10px 15px;
+      border-radius: rem(10);
+      transition: all .2s;
+
+      &:hover {
+        background-color: $gray-2;
+
+        .fa-chevron-up {
+          animation: up-btn .9s linear infinite;
+        }
+      }
+
+      .fa-chevron-up {
+        font-size: rem(17);
+      }
+
+      .fa-chevron-up {
+        font-size: rem(17);
+      }
+    }
+
+    span {
+      font-size: rem(22);
+      margin-right: rem(7);
+      cursor: pointer;
+    }
+  }
+}
+
+
+@keyframes back-btn {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-7px);
+  }
+}
+
+@keyframes up-btn {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-7px);
   }
 }
 </style>

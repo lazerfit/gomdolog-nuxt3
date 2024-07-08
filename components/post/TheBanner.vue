@@ -1,7 +1,7 @@
 <script setup lang=ts>
 const searchQuery = ref('');
 const searchPost = async () => {
-  useRouter().push(`/post/search/${searchQuery.value}`)
+  useRouter().push(`/post/search/${searchQuery.value}/0`)
 }
 
 </script>

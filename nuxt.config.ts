@@ -80,7 +80,6 @@ export default defineNuxtConfig({
 	},
 	routeRules: {
 		'/': { prerender: true },
-		'/api/*': { cache: { maxAge: 60 * 60 } },
 	},
 	runtimeConfig: {
 		public: {

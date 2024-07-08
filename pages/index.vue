@@ -2,18 +2,32 @@
 import type { PostPageResponseWithoutTags } from '~/types';
 const store = usePostStore();
 
-const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
-  params: {
-    size: store.pageSize
-  }
-});
-
 const isExpired = () => {
   if (localStorage.getItem('visitedPostCreatedAt')) {
     const storedCreatedAt = parseInt(localStorage.getItem('visitedPostCreatedAt') || '0');
     return Date.now() - storedCreatedAt >= 24 * 60 * 60 * 1000
   }
 }
+
+const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
+  params: {
+    page: 0,
+    size: store.pageSize
+  }
+});
+
+const post = computed(() => data.value ?? {
+  content: [],
+  numberOfElements: 0,
+  size: 0,
+  totalElements: 0,
+  totalPages: 0,
+  first: false,
+  last: false,
+  number: 0,
+})
+
+store.postsPage = post.value;
 
 onBeforeMount(() => {
   if (!localStorage.getItem('visitedPost')) {
@@ -26,15 +40,14 @@ onBeforeMount(() => {
     localStorage.setItem('visitedPostCreatedAt', Date.now().toString())
   }
 })
-
-store.postsPage = data.value;
 </script>
 <template>
   <div>
     <LazyTheBanner />
     <PostPopular />
     <PostAll :is-searched-by="false" />
-    <LazyMoreButton />
+    <ThePagination :is-index="true" />
+    <LazyPaginationForMobile />
   </div>
 </template>
 
