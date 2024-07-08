@@ -41,10 +41,10 @@ useHead({
 </script>
 <template>
   <div>
-    <TheBanner />
+    <TheBanner :is-mobile="mobile" />
     <PostAll :is-searched-by="true" :search-param="param.title" />
     <PaginationForSearch :nuxt-link-base="`/category`" />
-    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/category`" />
+    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/post/category`" :title="param.title" />
   </div>
 </template>
 

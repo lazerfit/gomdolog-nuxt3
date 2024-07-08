@@ -28,6 +28,14 @@ export interface PostPageResponseWithoutTags {
 	last: boolean;
 	number: number;
 }
+
+export interface PostSliceResponseWithoutTags {
+	content: PostResopnseWithoutTags[];
+	first: boolean;
+	last: boolean;
+	nubmer: number;
+}
+
 export interface PageInfo {
 	totalElements: number;
 	totalPages: number;

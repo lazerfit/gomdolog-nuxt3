@@ -3,6 +3,16 @@ const searchQuery = ref('');
 const searchPost = async () => {
   useRouter().push(`/post/search/${searchQuery.value}/0`)
 }
+const searchPostForMobile = async () => {
+  useRouter().push(`/post/search/${searchQuery.value}`)
+}
+
+defineProps({
+  isMobile: {
+    type: Boolean,
+    default: false
+  }
+})
 
 </script>
 <template>
@@ -11,10 +21,15 @@ const searchPost = async () => {
       <p>Unlocking the Future with Technology</p>
       <p>Innovate, Integrate, Inspire</p>
     </div>
-    <div class="search-bar">
+    <div v-if="!isMobile" class="search-bar">
       <i class="fa-solid fa-magnifying-glass" />
       <input v-model="searchQuery" type="search" name="search" pattern=".*\S.*" required placeholder="search..."
         @keyup.enter="searchPost()">
+    </div>
+    <div v-else class="search-bar">
+      <i class="fa-solid fa-magnifying-glass" />
+      <input v-model="searchQuery" type="search" name="search" pattern=".*\S.*" required placeholder="search..."
+        @keyup.enter="searchPostForMobile()">
     </div>
     <TheCategory />
   </div>

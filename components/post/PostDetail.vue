@@ -280,7 +280,8 @@ const startShare = async () => {
 
         span {
           font-size: 0.9rem;
-          font-family: $nanum;
+          font-family: $pretendard;
+          font-weight: 300;
           color: $gray-6;
           margin-right: rem(7);
           display: inline-block;
@@ -300,7 +301,7 @@ const startShare = async () => {
       font-size: 0.8rem;
       margin-top: rem(10);
       color: #999;
-      font-family: $nanum;
+      font-family: $pretendard;
       width: rem(720);
 
 
@@ -332,7 +333,7 @@ const startShare = async () => {
           font-family: $pretendard;
 
           @media (max-width: 767px) {
-            font-size: rem(18);
+            font-size: rem(19);
             line-height: rem(27);
           }
         }
@@ -340,6 +341,7 @@ const startShare = async () => {
         i {
           margin-bottom: auto;
           color: $gray-6;
+          font-size: 1.2rem;
         }
 
         .fa-quote-left {
@@ -357,6 +359,7 @@ const startShare = async () => {
     .date-admin {
       width: rem(720);
       display: flex;
+      align-items: center;
       margin: rem(30) auto 0 auto;
       color: $gray-6;
 
@@ -365,8 +368,14 @@ const startShare = async () => {
           padding: rem(3);
           background-color: transparent;
 
+          &:disabled {
+            display: none;
+          }
+
           .fa-share {
             color: $gray-6;
+            margin-left: rem(10);
+            cursor: pointer;
           }
         }
       }

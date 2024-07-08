@@ -174,7 +174,7 @@ const post = computed(() => data.data.value ?? [])
           display: -webkit-box;
           -webkit-line-clamp: 9;
           -webkit-box-orient: vertical;
-          line-height: rem(20);
+          line-height: rem(24);
           height: rem(180);
           margin-top: rem(14);
           color: #0314039a;
@@ -249,7 +249,7 @@ const post = computed(() => data.data.value ?? [])
             display: -webkit-box;
             -webkit-line-clamp: 8;
             -webkit-box-orient: vertical;
-            line-height: rem(20);
+            line-height: rem(24);
             height: rem(160);
             margin-top: rem(14);
             color: #0314039a;

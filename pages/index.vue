@@ -1,5 +1,11 @@
 <script setup lang=ts>
 import type { PostPageResponseWithoutTags } from '~/types';
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768
+});
+
+const mobile = breakpoints.between('mobile', 'tablet');
 const store = usePostStore();
 
 const isExpired = () => {
@@ -43,11 +49,11 @@ onBeforeMount(() => {
 </script>
 <template>
   <div>
-    <LazyTheBanner />
+    <LazyTheBanner :is-mobile="mobile" />
     <PostPopular />
     <PostAll :is-searched-by="false" />
     <ThePagination :is-index="true" />
-    <LazyPaginationForMobile />
+    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/post/all`" />
   </div>
 </template>
 
