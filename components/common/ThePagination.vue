@@ -24,8 +24,8 @@ const pages = computed(() => {
   return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
 })
 
-const changePage = async (pageNum: number) => {
-  const data: PostPageResponseWithoutTags = await $fetch(
+const changePage = async (pageNum: number): Promise<void> => {
+  const data = await $fetch<PostPageResponseWithoutTags>(
     `${config.public.apiBase}/post/all`,
     {
       params: {

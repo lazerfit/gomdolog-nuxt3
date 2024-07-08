@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		const id = getRouterParam(event, 'id');
 		const config = useRuntimeConfig();
-		const data: PostDetail = await $fetch(
+		const data = await $fetch<PostDetail>(
 			`${config.public.apiBase}/post/${id}`
 		);
 

@@ -39,23 +39,9 @@ const scrollToTop = () => {
   });
 };
 
-const linkCopy = () => {
-  const url = window.location.href;
-  navigator.clipboard.writeText(url)
-    .then(() => {
-      toastStore.setToast("복사가 완료되었습니다.", 'check');
-    }).catch((error: string) => {
-      console.log('링크 복사 중 오류 발생: ', error);
-    })
-}
-
 const isVisitedPost = () => {
   const visitedPost = localStorage.getItem('visitedPost');
   return visitedPost ? visitedPost.includes(route.params.id as string) : false;
-}
-
-const shareTwitter = () => {
-  window.open('https://twitter.com/intent/tweet?url=' + document.URL + '&text=' + postStore.post.title, "_blank", "width=450,height=500")
 }
 
 const postId = route.params.id;
@@ -148,24 +134,17 @@ const startShare = async () => {
             <i class="fa-solid fa-trash" @click="deletePost" />
           </span>
         </div>
+        <div class="btn-share">
+          <button :disabled="!isSupported" @click="startShare">
+            <i class="fa-solid fa-share" />
+          </button>
+        </div>
       </div>
       <div class="divider" />
       <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
       <div class="sns">
         <div class="back-btn" @click="goBack">
           <i class="fa-solid fa-chevron-left" />
-        </div>
-        <div class="wrapper">
-          <span>
-            <i class="fa-brands fa-x-twitter" @click="shareTwitter" />
-          </span>
-          <span>
-            <button :disabled="!isSupported" @click="startShare">Share</button>
-          </span>
-          <span>
-            <LazyTheToast />
-            <i class="fa-solid fa-paperclip" @click="linkCopy" />
-          </span>
         </div>
         <div class="up-btn" @click="scrollToTop">
           <i class="fa-solid fa-chevron-up" />
@@ -350,6 +329,7 @@ const startShare = async () => {
           text-align: left;
           font-weight: 400;
           color: $gray-7;
+          font-family: $pretendard;
 
           @media (max-width: 767px) {
             font-size: rem(18);
@@ -379,6 +359,17 @@ const startShare = async () => {
       display: flex;
       margin: rem(30) auto 0 auto;
       color: $gray-6;
+
+      .btn-share {
+        button {
+          padding: rem(3);
+          background-color: transparent;
+
+          .fa-share {
+            color: $gray-6;
+          }
+        }
+      }
 
       @media (max-width: 767px) {
         width: 100%;
@@ -504,26 +495,6 @@ const startShare = async () => {
   .sns {
     display: flex;
     justify-content: space-between;
-
-    .wrapper {
-      transition: all .3s ease;
-
-      &:hover span i {
-        opacity: .5;
-      }
-
-      span {
-        i {
-          transition: all .3s ease;
-          font-size: 1.25rem;
-
-          &:hover {
-            transform: translateY(-5px) scale(1.1);
-            opacity: 1;
-          }
-        }
-      }
-    }
 
     .back-btn {
       cursor: pointer;
