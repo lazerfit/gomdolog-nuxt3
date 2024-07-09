@@ -84,6 +84,9 @@ export default defineNuxtConfig({
 	},
 	css: ['~/assets/scss/main.scss'],
 	vite: {
+		optimizeDeps: {
+			exclude: ['https'],
+		},
 		css: {
 			preprocessorOptions: {
 				scss: {
