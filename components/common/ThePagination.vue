@@ -133,6 +133,7 @@ const changePage = async (pageNum: number): Promise<void> => {
   button {
     cursor: pointer;
     background-color: transparent;
+    font-family: $pretendard;
 
     &:hover:not(:disabled) {
       text-decoration: underline;

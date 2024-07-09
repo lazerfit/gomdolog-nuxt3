@@ -250,7 +250,7 @@ const startShare = async () => {
     .post-title {
       text-align: center;
       font-weight: 700;
-      font-family: $nanum;
+      font-family: $pretendard;
       width: rem(720);
       justify-content: center;
       align-items: center;

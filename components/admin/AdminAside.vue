@@ -130,7 +130,7 @@ aside {
     }
 
     span {
-      font-family: $sans;
+      font-family: $pretendard;
       cursor: pointer;
     }
 

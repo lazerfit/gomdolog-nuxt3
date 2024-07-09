@@ -81,6 +81,8 @@
 
     .copywrite {
       margin-top: rem(5);
+      font-family: $sans;
+      font-weight: 500;
     }
   }
 }

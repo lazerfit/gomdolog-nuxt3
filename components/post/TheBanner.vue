@@ -95,7 +95,7 @@ defineProps({
     p {
       &:first-child {
         font-size: rem(40);
-        font-family: "Playfair Display", serif;
+        font-family: $sans;
         font-weight: 600;
         background-image: url('/assets/img/textBanner.jpg');
         background-clip: text;
@@ -105,7 +105,7 @@ defineProps({
 
       &:last-child {
         font-size: 1.2rem;
-        font-family: "Playfair Display", serif;
+        font-family: $sans, serif;
         margin: 11px 0;
       }
     }
@@ -128,14 +128,14 @@ defineProps({
       background-color: transparent;
       border: none;
       padding: 3px;
-      font-family: "orbit", serif;
+      font-family: $pretendard, serif;
 
       &:focus::placeholder {
         opacity: 0;
       }
 
       &::placeholder {
-        font-family: "Playfair Display", serif;
+        font-family: $sans, serif;
         padding-left: 5px;
         transition: all .3s;
       }

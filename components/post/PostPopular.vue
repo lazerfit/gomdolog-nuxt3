@@ -111,7 +111,7 @@ const post = computed(() => data.data.value ?? [])
 
   h1 {
     font-weight: 500;
-    font-family: "Playfair Display", serif;
+    font-family: $sans, serif;
     font-size: rem(24);
   }
 

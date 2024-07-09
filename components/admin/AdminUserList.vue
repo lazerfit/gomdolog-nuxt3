@@ -54,7 +54,7 @@ const adminStore = useAdminStore();
 
     .role {
       select {
-        font-family: $sans;
+        font-family: $pretendard;
         border-radius: rem(10);
       }
     }

@@ -40,7 +40,7 @@ const filteredCategory = computed(() => categories.value.filter(category => cate
   }
 
   .category {
-    font-family: $sans;
+    font-family: $pretendard;
     max-width: rem(100);
     text-align: center;
     border-radius: rem(10);

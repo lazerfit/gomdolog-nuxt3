@@ -29,7 +29,7 @@
   width: 1180px;
   display: flex;
   margin: rem(40) auto;
-  font-family: $sans;
+  font-family: $pretendard;
 
   @media (max-width: 767px) {
     width: 100%;
@@ -44,7 +44,7 @@
 
   h1 {
     font-size: 1.5rem;
-    font-family: $playfair;
+    font-family: $pretendard;
   }
 
   .main-content-container {
