@@ -16,6 +16,7 @@ const store = useCommonStore();
 <style lang='scss' scoped>
 .toast {
   display: inline-block;
+  font-family: $pretendard;
   position: fixed;
   top: 100px;
   left: 50%;

@@ -182,7 +182,7 @@ const updateCategory = async (id: number, title: string) => {
         border-bottom: 1px solid #555;
         height: rem(23);
         transition: all .3s ease-in-out;
-        font-family: $sans;
+        font-family: $pretendard;
         padding-left: rem(2);
 
         &:focus::placeholder {
@@ -190,7 +190,7 @@ const updateCategory = async (id: number, title: string) => {
         }
 
         &::placeholder {
-          font-family: $playfair;
+          font-family: $pretendard;
           font-size: 1.3rem;
           font-weight: 600;
           transition: all .3s ease-in-out;

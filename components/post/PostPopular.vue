@@ -111,7 +111,7 @@ const post = computed(() => data.data.value ?? [])
 
   h1 {
     font-weight: 500;
-    font-family: "Playfair Display", serif;
+    font-family: $sans, serif;
     font-size: rem(24);
   }
 
@@ -153,7 +153,7 @@ const post = computed(() => data.data.value ?? [])
         }
 
         .main-post-title {
-          font-weight: 600;
+          font-weight: semi-bold;
           font-size: rem(30);
           text-overflow: ellipsis;
           overflow: hidden;
@@ -161,7 +161,7 @@ const post = computed(() => data.data.value ?? [])
           margin-top: rem(5);
           cursor: pointer;
           color: $font-black;
-          font-family: $font-third;
+          font-family: $pretendard;
 
           &:hover {
             text-shadow: 1.5px 1.5px #999;
@@ -174,10 +174,10 @@ const post = computed(() => data.data.value ?? [])
           display: -webkit-box;
           -webkit-line-clamp: 9;
           -webkit-box-orient: vertical;
-          line-height: rem(20);
+          line-height: rem(24);
           height: rem(180);
           margin-top: rem(14);
-          color: #555;
+          color: #0314039a;
           cursor: pointer;
         }
 
@@ -249,10 +249,10 @@ const post = computed(() => data.data.value ?? [])
             display: -webkit-box;
             -webkit-line-clamp: 8;
             -webkit-box-orient: vertical;
-            line-height: rem(20);
+            line-height: rem(24);
             height: rem(160);
             margin-top: rem(14);
-            color: #555;
+            color: #0314039a;
             cursor: pointer;
           }
 

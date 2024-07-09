@@ -93,14 +93,14 @@ const logout = () => {
       a {
         font-size: rem(14);
         cursor: pointer;
-        font-family: $sans;
+        font-family: $pretendard;
         color: $font-black;
       }
 
       button {
         font-size: rem(14);
         cursor: pointer;
-        font-family: $sans;
+        font-family: $pretendard;
         color: $font-black;
         background-color: transparent;
       }

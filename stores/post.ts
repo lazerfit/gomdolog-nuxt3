@@ -6,22 +6,35 @@ import type {
 } from '~/types';
 
 export const usePostStore = defineStore('post', () => {
-	const postsPage = ref<PostPageResponseWithoutTags | null>(null);
+	const postsPage = ref<PostPageResponseWithoutTags>({
+		content: [],
+		numberOfElements: 0,
+		size: 0,
+		totalElements: 0,
+		totalPages: 0,
+		first: false,
+		last: false,
+		number: 0,
+	});
+
 	const pageSize = ref(6);
+
 	const postSaveForm = ref<PostSave>({
 		title: '',
 		content: '',
 		categoryTitle: '',
 		tags: [],
 	});
+
 	const post = ref({
 		id: 0,
 		title: '',
 		content: '',
 		createdDate: '',
-		categoryTitle: '',
 		tags: [''],
+		summary: '',
 	});
+
 	const postsDeleted = ref<PostDeleted[]>([]);
 
 	const formatDate = (date: string) => {

@@ -21,6 +21,7 @@ body {
 
 a {
 	text-decoration: none;
+	color: $font-black;
 }
 
 button {
@@ -51,4 +52,8 @@ pre {
 
 code {
 	font-family: Hack, monospace;
+}
+
+ul {
+	list-style: none;
 }

@@ -15,12 +15,34 @@ export interface PostDetail {
 	content: string;
 	createdDate: string;
 	tags: string[];
+	summary: string;
 }
 
 export interface PostPageResponseWithoutTags {
 	content: PostResopnseWithoutTags[];
 	numberOfElements: number;
 	size: number;
+	totalElements: number;
+	totalPages: number;
+	first: boolean;
+	last: boolean;
+	number: number;
+}
+
+export interface PostSliceResponseWithoutTags {
+	content: PostResopnseWithoutTags[];
+	first: boolean;
+	last: boolean;
+	nubmer: number;
+}
+
+export interface PageInfo {
+	totalElements: number;
+	totalPages: number;
+	number: number;
+	first: boolean;
+	last: boolean;
+	limit: number;
 }
 
 export interface Category {

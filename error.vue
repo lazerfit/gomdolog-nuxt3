@@ -20,7 +20,7 @@ const handleClearError = () => {
 
 <style lang='scss' scoped>
 .container {
-  font-family: $playfair;
+  font-family: $sans;
   display: flex;
   height: 100vh;
   justify-content: center;

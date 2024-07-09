@@ -1,18 +1,18 @@
 <script setup lang=ts>
-import type { Post } from '~/types';
+import type { PostDetail } from '~/types';
 
 const id = useRoute().params.id
 const postStore = usePostStore();
 
-const { data } = await useFetch<Post>(`/api/post/${id}`, { method: 'GET' })
+const { data } = await useFetch<PostDetail>(`/api/post/${id}`, { method: 'GET' })
 
 const post = computed(() => data.value ?? {
   id: 0,
   title: '',
   content: '',
   createdDate: '',
-  categoryTitle: '',
   tags: [''],
+  summary: ''
 })
 
 postStore.post = post.value

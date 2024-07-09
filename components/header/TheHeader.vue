@@ -54,7 +54,7 @@ onBeforeUnmount(() => {
       <div class="login">
         <TheDarkmodeToggle />
         <TheLoginButton />
-        <MobileSidebar />
+        <LazyMobileSidebar />
         <LazyTheAdminMenu />
         <LazyTheAdminMenuBar />
         <LazyTheModal :is-open="store.isModalOpened" @modal-close="store.isModalOpened = false"

@@ -4,7 +4,7 @@ const store = usePostStore();
 const post = computed(() => store.postsPage ?? {
   content: [],
   numberOfElements: 0,
-  size: 0
+  size: 0,
 })
 
 defineProps({
@@ -120,7 +120,7 @@ defineProps({
   .container-title {
     h1 {
       font-weight: 500;
-      font-family: "Playfair Display", serif;
+      font-family: $sans, serif;
       font-size: rem(24);
     }
 
@@ -250,10 +250,11 @@ defineProps({
           display: -webkit-box;
           -webkit-line-clamp: 4;
           -webkit-box-orient: vertical;
-          line-height: rem(20);
+          line-height: rem(24);
           height: rem(80);
           margin-top: rem(14);
-          color: #555;
+          color: #0314039a;
+          font-weight: 400;
           cursor: pointer;
 
           @media screen and (max-width: 767px) {
