@@ -35,6 +35,13 @@ const post = computed(() => data.value ?? {
 
 store.postsPage = post.value;
 
+const currentComponent = computed(() => {
+  return mobile.value ? resolveComponent('PaginationForMobile') : resolveComponent('ThePagination')
+});
+const currentProps = computed(() => {
+  return mobile.value ? { isMobile: true, apiBase: '/post/all' } : { isIndex: true }
+})
+
 onBeforeMount(() => {
   if (!localStorage.getItem('visitedPost')) {
     localStorage.setItem('visitedPost', JSON.stringify([]))
@@ -52,8 +59,7 @@ onBeforeMount(() => {
     <LazyTheBanner :is-mobile="mobile" />
     <PostPopular />
     <PostAll :is-searched-by="false" />
-    <ThePagination :is-index="true" />
-    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/post/all`" />
+    <component :is="currentComponent" v-bind="currentProps" />
   </div>
 </template>
 
