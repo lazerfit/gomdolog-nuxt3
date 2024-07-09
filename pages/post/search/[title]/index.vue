@@ -37,7 +37,6 @@ const post = computed(() => data.value ?? {
 
 store.postsPage = post.value;
 
-
 </script>
 <template>
   <div>
