@@ -45,10 +45,10 @@
 .container {
 
   width: 100%;
-  height: rem(120);
+  height: rem(140);
   display: flex;
-  border-top: 1px solid $font-black;
   box-sizing: border-box;
+  background-color: #e0e0e0af;
 
   @media screen and (max-width: 767px) {
     height: 100px;

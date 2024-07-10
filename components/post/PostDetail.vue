@@ -5,7 +5,6 @@ import 'highlight.js/styles/atom-one-dark.css'
 import { isClient } from '@vueuse/shared';
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
-const router = useRouter();
 const route = useRoute();
 const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
@@ -27,10 +26,6 @@ const addUtterancesScript = () => {
     console.error("utterancesContainer is null.");
   }
 }
-
-const goBack = () => {
-  router.go(-1);
-};
 
 const scrollToTop = () => {
   window.scroll({
@@ -142,18 +137,13 @@ const startShare = async () => {
       </div>
       <div class="divider" />
       <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
-      <div class="sns">
-        <div class="back-btn" @click="goBack">
-          <i class="fa-solid fa-chevron-left" />
-        </div>
-        <div class="up-btn" @click="scrollToTop">
-          <i class="fa-solid fa-chevron-up" />
-        </div>
-      </div>
     </div>
     <div class="comment">
       <div ref="utterancesContainer" />
     </div>
+  </div>
+  <div class="float-btn" @click="scrollToTop">
+    <i class="fa-solid fa-chevron-up" />
   </div>
 </template>
 
@@ -203,6 +193,22 @@ const startShare = async () => {
     span {
       color: $gray-7 !important;
     }
+  }
+}
+
+.float-btn {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  padding: rem(15);
+  border-radius: 50%;
+  box-shadow: rgba(63, 71, 77, 0.25) 0px 2px 10px 0px;
+  cursor: pointer;
+  transition: all .1s;
+  background-color: #f9f9f9;
+
+  &:hover {
+    background-color: $gray-1;
   }
 }
 
@@ -498,61 +504,6 @@ const startShare = async () => {
 
     &:hover {
       color: #2c974b !important;
-    }
-  }
-
-  .sns {
-    display: flex;
-    justify-content: space-between;
-
-    .back-btn {
-      cursor: pointer;
-      color: #999;
-      padding: rem(10) rem(15);
-      border-radius: rem(10);
-      transition: all .2s;
-
-      &:hover {
-        background-color: $gray-2;
-
-        .fa-chevron-left {
-          animation: back-btn .9s linear infinite;
-        }
-      }
-
-      .fa-chevron-left {
-        font-size: rem(17);
-      }
-    }
-
-    .up-btn {
-      cursor: pointer;
-      color: #999;
-      padding: 10px 15px;
-      border-radius: rem(10);
-      transition: all .2s;
-
-      &:hover {
-        background-color: $gray-2;
-
-        .fa-chevron-up {
-          animation: up-btn .9s linear infinite;
-        }
-      }
-
-      .fa-chevron-up {
-        font-size: rem(17);
-      }
-
-      .fa-chevron-up {
-        font-size: rem(17);
-      }
-    }
-
-    span {
-      font-size: rem(22);
-      margin-right: rem(7);
-      cursor: pointer;
     }
   }
 }
