@@ -89,3 +89,7 @@ export interface PostDeleted {
 	title: string;
 	deletedDate: string;
 }
+
+export interface UserRole {
+	role: string;
+}

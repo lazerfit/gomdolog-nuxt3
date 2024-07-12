@@ -6,9 +6,11 @@ import { isClient } from '@vueuse/shared';
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const route = useRoute();
+const router = useRouter();
 const toastStore = useCommonStore();
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
+const config = useRuntimeConfig();
 
 const formattedDate = useDateFormat(postStore.post.createdDate, 'MMM D, YYYY', { locales: 'en-US' });
 
@@ -46,17 +48,18 @@ if (postStore.post.title === '') {
 }
 
 const deletePost = async () => {
-  const token = sessionStorage.getItem('_token');
+  const token = sessionStorage.getItem('token');
   try {
     const confirmed = window.confirm('정말 삭제하시겠습니까?')
     if (confirmed) {
-      await useFetch(`/api/post/delete/${postId}`, {
+      await $fetch(`${config.public.apiBase}/post/delete/${postId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       })
+      router.push('/');
     } else {
       return
     }
@@ -149,6 +152,18 @@ const startShare = async () => {
 
 <style lang='scss' scoped>
 .darkMode {
+  .float-btn {
+    background-color: black;
+
+    &:hover {
+      background-color: $gray-8;
+    }
+
+    .fa-chevron-up {
+      color: $gray-3;
+    }
+  }
+
   .date-admin {
     color: $gray-2 !important;
   }
