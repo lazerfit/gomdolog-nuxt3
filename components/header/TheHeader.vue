@@ -17,6 +17,7 @@ const signin = async () => {
     });
 
     sessionStorage.setItem('token', response.token)
+    sessionStorage.setItem('userRole', 'ADMIN')
     store.isAdmin = true;
     store.isModalOpened = false;
     store.signinForm.password = '';
