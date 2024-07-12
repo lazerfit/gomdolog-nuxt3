@@ -1,7 +1,7 @@
 <script setup lang=ts>
 import type { AdminPopularPosts } from '~/types';
 
-const token = sessionStorage.getItem('_token');
+const token = sessionStorage.getItem('token');
 const store = useAdminStore();
 
 const data = await useFetch<AdminPopularPosts[]>('/api/post/popular/top5', {

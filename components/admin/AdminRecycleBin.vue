@@ -3,7 +3,7 @@ import type { PostDeleted } from '~/types';
 
 const adminStore = useAdminStore();
 const postStore = usePostStore();
-const token = sessionStorage.getItem('_token');
+const token = sessionStorage.getItem('token');
 const config = useRuntimeConfig();
 const toastStore = useCommonStore();
 

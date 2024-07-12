@@ -9,7 +9,7 @@ const toastStore = useCommonStore();
 
 const submitSavePost = async () => {
   const config = useRuntimeConfig();
-  const token = sessionStorage.getItem('_token');
+  const token = sessionStorage.getItem('token');
   await $fetch(`${config.public.apiBase}/post/new`,
     {
       method: 'POST',

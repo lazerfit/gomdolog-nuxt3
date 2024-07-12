@@ -3,7 +3,7 @@ import type { Category } from '~/types';
 
 const adminStore = useAdminStore();
 const config = useRuntimeConfig();
-const token = sessionStorage.getItem('_token');
+const token = sessionStorage.getItem('token');
 const categoryEditable = ref<Category[]>([]);
 
 const addDiv = () => {

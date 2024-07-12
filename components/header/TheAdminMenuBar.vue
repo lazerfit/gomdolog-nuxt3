@@ -5,7 +5,7 @@ const store = useHeaderStore();
 const logout = () => {
   store.isAdmin = false;
   store.isAdminMenuOpened = false;
-  sessionStorage.removeItem('userRole');
+  sessionStorage.removeItem('token');
 }
 </script>
 <template>

@@ -26,15 +26,15 @@
 <style lang='scss' scoped>
 .darkMode {
   .container {
-    border-top: 1px solid $font-white !important;
+    background-color: $gray-7;
 
     .content-wrapper {
-      color: $font-white !important;
+      color: $gray-4 !important;
 
       .sns {
         span {
           a {
-            color: $font-white !important;
+            color: $gray-4 !important;
           }
         }
       }

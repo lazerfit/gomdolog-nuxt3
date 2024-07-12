@@ -8,7 +8,7 @@ definePageMeta({
 
 const store = usePostStore();
 const { id } = useRoute().params;
-const token = sessionStorage.getItem('_token');
+const token = sessionStorage.getItem('token');
 const config = useRuntimeConfig();
 const toastStore = useCommonStore();
 
@@ -29,8 +29,8 @@ const post = computed(() => rawPost.value ?? {
 })
 store.postSaveForm = post.value;
 
-const UPDATE_POST = () => {
-  $fetch(`${config.public.apiBase}/post/update`, {
+const UPDATE_POST = async () => {
+  await $fetch(`${config.public.apiBase}/post/update`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
