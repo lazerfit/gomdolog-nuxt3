@@ -1,8 +1,6 @@
 <script setup lang=ts>
-import type { PostPageResponseWithoutTags } from '~/types';
-
 const postStore = usePostStore();
-const config = useRuntimeConfig();
+const { changePage } = usePostStore();
 const param = useRoute().params;
 const limit = 5;
 
@@ -24,19 +22,6 @@ const pages = computed(() => {
   return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
 })
 
-const changePage = async (pageNum: number): Promise<void> => {
-  const data = await $fetch<PostPageResponseWithoutTags>(
-    `${config.public.apiBase}/post/all`,
-    {
-      params: {
-        page: pageNum,
-        size: postStore.pageSize
-      },
-    }
-  );
-
-  postStore.postsPage = data;
-}
 </script>
 <template>
   <div class="wrapper">

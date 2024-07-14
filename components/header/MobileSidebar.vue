@@ -1,18 +1,13 @@
 <script setup lang=ts>
-import { computed, onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import type { JWT } from '~/types';
 
 const headerStore = useHeaderStore();
+const { fetchAllCategory } = usePostStore();
 const config = useRuntimeConfig();
 const toastStore = useCommonStore();
 
-const { data: rawCategories } = await useFetch('/api/category/all', {
-  method: 'GET'
-});
-
-const categories = computed(() => rawCategories.value ?? []);
-
-const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'));
+const filteredCategory = await fetchAllCategory();
 
 const isModalOpened = ref(false);
 const isSidebarOpen = ref(false);

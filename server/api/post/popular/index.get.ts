@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
 
 	const data = await $fetch<PostResopnseWithoutTags[]>(
 		`${config.public.apiBase}/post/popular?limit=${query.limit}`
-	);
+	).catch((error) => {
+		console.log(error);
+	});
 	return data;
 });

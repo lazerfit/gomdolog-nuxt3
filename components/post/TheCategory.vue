@@ -1,10 +1,7 @@
 <script setup lang=ts>
-import type { Category } from '~/types';
-const { data: rawCategories } = useFetch<Category[]>('/api/category/all', {
-  method: 'GET',
-})
-const categories = computed(() => rawCategories.value ?? [])
-const filteredCategory = computed(() => categories.value.filter(category => category.title !== '없음'))
+const { fetchAllCategory } = usePostStore();
+
+const filteredCategory = await fetchAllCategory();
 
 </script>
 <template>

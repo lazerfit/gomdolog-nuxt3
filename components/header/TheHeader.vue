@@ -1,33 +1,8 @@
 <script setup lang=ts>
 import TheToast from '../common/TheToast.vue';
-import type { JWT } from '~/types';
 
 const store = useHeaderStore();
-const toastStore = useCommonStore();
-const config = useRuntimeConfig();
-
-const signin = async () => {
-  try {
-    const response = await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: store.signinForm.email,
-        password: store.signinForm.password
-      }),
-    });
-
-    sessionStorage.setItem('token', response.token)
-    sessionStorage.setItem('userRole', 'ADMIN')
-    store.isAdmin = true;
-    store.isModalOpened = false;
-    store.signinForm.password = '';
-    toastStore.setToast('로그인에 성공하였습니다.', 'check');
-
-  } catch (error) {
-    console.log(error);
-    toastStore.setToast('아이디 혹은 비밀번호가 올바르지 않습니다.', 'error');
-  }
-}
+const { signin } = useHeaderStore();
 
 onBeforeMount(() => {
   store.setDarkMode();

@@ -1,79 +1,26 @@
 <script setup lang=ts>
-import type { PostDeleted } from '~/types';
-
 const adminStore = useAdminStore();
-const postStore = usePostStore();
-const token = sessionStorage.getItem('token');
-const config = useRuntimeConfig();
-const toastStore = useCommonStore();
+const { fetchAllDeletedPosts, revertPost, deletePostPermanent } = useAdminStore();
 
-const revertDelete = async (id: number) => {
-  await $fetch(`${config.public.apiBase}/post/revertDelete/${id}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  }).then(() => {
-    fetchAll();
-    toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
-  }).catch((error) => {
-    toastStore.setToast('오류가 발생하였습니다.\n다시 시도해주세요.', 'error');
-    console.log(error);
-  })
-}
-
-const deletePermanent = async (id: number) => {
-  const confirmed = window.confirm('삭제하시면 복구하실 수 없습니다.\n정말 삭제하시겠습니까?')
-  try {
-    if (confirmed) {
-      await $fetch(`${config.public.apiBase}/post/deletePermanent/${id}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      }).then(() => {
-        fetchAll();
-        toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
-      }
-      )
-    }
-  } catch (error) {
-    console.log(error);
-    toastStore.setToast('삭제에 실패하였습니다.\n다시 시도해주세요.', 'error');
-  }
-}
-
-const fetchAll = async () => {
-  await $fetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  }).then(response => {
-    postStore.postsDeleted = response
-  });
-}
-
-fetchAll();
+onBeforeMount(() => {
+  fetchAllDeletedPosts();
+})
 
 </script>
 <template>
   <div v-if="adminStore.isRecycleBinShow" class="recyclebin-container">
     <h1>Recycle Bin</h1>
-    <div v-if="postStore.postsDeleted.length > 0" class="posts">
-      <div v-for="item in postStore.postsDeleted" :key="item.id" class="post">
+    <div v-if="adminStore.postsDeleted.length > 0" class="posts">
+      <div v-for="item in adminStore.postsDeleted" :key="item.id" class="post">
         <div class="title">
           {{ item.title }}
         </div>
         <div class="date">
-          {{ postStore.formatDate(item.deletedDate) }}
+          {{ useDateFormat(item.deletedDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
         </div>
         <div class="btns">
-          <i class="fa-solid fa-rotate" @click="revertDelete(item.id)" />
-          <i class="fa-solid fa-trash" @click="deletePermanent(item.id)" />
+          <i class="fa-solid fa-rotate" @click="revertPost(item.id)" />
+          <i class="fa-solid fa-trash" @click="deletePostPermanent(item.id)" />
         </div>
       </div>
     </div>

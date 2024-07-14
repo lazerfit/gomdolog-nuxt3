@@ -23,6 +23,7 @@ const recycleBinShow = () => {
   makeNotShowAll()
   adminStore.isRecycleBinShow = !adminStore.isRecycleBinShow;
 }
+
 </script>
 <template>
   <aside>

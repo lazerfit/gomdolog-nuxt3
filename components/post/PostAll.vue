@@ -1,11 +1,6 @@
 <script setup lang=ts>
 const store = usePostStore();
-
-const post = computed(() => store.postsPage ?? {
-  content: [],
-  numberOfElements: 0,
-  size: 0,
-})
+const post = computed(() => store.postsPage)
 
 defineProps({
   isSearchedBy: {
@@ -47,7 +42,7 @@ defineProps({
               <div class="all-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
             <div class="all-post-day">
-              {{ store.formatDate(item.createdDate) }}
+              {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
             </div>
           </div>
         </div>

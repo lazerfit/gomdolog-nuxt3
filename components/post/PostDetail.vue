@@ -5,12 +5,10 @@ import 'highlight.js/styles/atom-one-dark.css'
 import { isClient } from '@vueuse/shared';
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
-const route = useRoute();
-const router = useRouter();
-const toastStore = useCommonStore();
+const postId = useRoute().params.id;
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
-const config = useRuntimeConfig();
+const { deleteById, addViews } = usePostStore();
 
 const formattedDate = useDateFormat(postStore.post.createdDate, 'MMM D, YYYY', { locales: 'en-US' });
 
@@ -38,42 +36,19 @@ const scrollToTop = () => {
 
 const isVisitedPost = () => {
   const visitedPost = localStorage.getItem('visitedPost');
-  return visitedPost ? visitedPost.includes(route.params.id as string) : false;
+  return visitedPost ? visitedPost.includes(postId as string) : false;
 }
-
-const postId = route.params.id;
 
 if (postStore.post.title === '') {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 
-const deletePost = async () => {
-  const token = sessionStorage.getItem('token');
-  try {
-    const confirmed = window.confirm('정말 삭제하시겠습니까?')
-    if (confirmed) {
-      await $fetch(`${config.public.apiBase}/post/delete/${postId}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      })
-      router.push('/');
-    } else {
-      return
-    }
-  } catch {
-    toastStore.setToast('삭제에 실패하였습니다.', 'error');
-  }
-}
-
 onBeforeMount(async () => {
   if (!isVisitedPost() && !headerStore.isAdmin) {
-    await useFetch(`/api/post/${postId}/views`, { method: 'POST' })
+    await addViews(postId);
     const visitedPostString = localStorage.getItem('visitedPost') || '[]';
     const visitedPost = JSON.parse(visitedPostString);
-    visitedPost.push(route.params.id);
+    visitedPost.push(postId);
     localStorage.setItem('visitedPost', JSON.stringify(visitedPost));
   }
 });
@@ -129,7 +104,7 @@ const startShare = async () => {
             </span>
           </NuxtLink>
           <span>
-            <i class="fa-solid fa-trash" @click="deletePost" />
+            <i class="fa-solid fa-trash" @click="deleteById(postId)" />
           </span>
         </div>
         <div class="btn-share">

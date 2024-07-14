@@ -1,10 +1,6 @@
 <script setup lang=ts>
-import type { PostResopnseWithoutTags } from '~/types';
-const store = usePostStore();
-const data = await useFetch<PostResopnseWithoutTags[]>('/api/post/popular', {
-  params: { limit: 3 }
-});
-const post = computed(() => data.data.value ?? [])
+const { fetchAllTop } = usePostStore();
+const post = await fetchAllTop();
 </script>
 <template>
   <div class="container">
@@ -30,7 +26,7 @@ const post = computed(() => data.data.value ?? [])
             <div class="main-post-text" v-html="$sanitizeHTML(post[0].content)" />
           </NuxtLink>
           <div class="main-post-day">
-            {{ store.formatDate(post[0].createdDate) }}
+            {{ useDateFormat(post[0].createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
           </div>
         </div>
       </div>
@@ -51,7 +47,7 @@ const post = computed(() => data.data.value ?? [])
               <div class="sub-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
             <div class="sub-post-day">
-              {{ store.formatDate(item.createdDate) }}
+              {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
             </div>
           </div>
         </div>
