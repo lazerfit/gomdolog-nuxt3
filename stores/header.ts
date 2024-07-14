@@ -50,25 +50,28 @@ export const useHeaderStore = defineStore('header', () => {
 	};
 
 	const signin = async () => {
-		try {
-			const data = await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
-				method: 'POST',
-				body: {
-					email: signinForm.value.email,
-					password: signinForm.value.password,
-				},
+		await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
+			method: 'POST',
+			body: {
+				email: signinForm.value.email,
+				password: signinForm.value.password,
+			},
+		})
+			.then((response) => {
+				sessionStorage.setItem('token', response.token);
+				sessionStorage.setItem('userRole', response.role);
+				isAdmin.value = true;
+				isModalOpened.value = false;
+				signinForm.value.password = '';
+				toastStore.setToast('로그인에 성공하였습니다.', 'check');
+			})
+			.catch((error) => {
+				console.log(error);
+				toastStore.setToast(
+					'아이디 혹은 비밀번호가 올바르지 않습니다.',
+					'error'
+				);
 			});
-
-			sessionStorage.setItem('token', data.token);
-			sessionStorage.setItem('userRole', data.role);
-			isAdmin.value = true;
-			isModalOpened.value = false;
-			signinForm.value.password = '';
-			toastStore.setToast('로그인에 성공하였습니다.', 'check');
-		} catch (error) {
-			console.log(error);
-			toastStore.setToast('아이디 혹은 비밀번호가 올바르지 않습니다.', 'error');
-		}
 	};
 
 	return {

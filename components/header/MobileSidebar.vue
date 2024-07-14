@@ -1,20 +1,14 @@
 <script setup lang=ts>
 import { onBeforeMount, ref } from 'vue';
-import type { JWT } from '~/types';
 
 const headerStore = useHeaderStore();
+const { signin } = useHeaderStore();
 const { fetchAllCategory } = usePostStore();
-const config = useRuntimeConfig();
-const toastStore = useCommonStore();
 
 const filteredCategory = await fetchAllCategory();
 
 const isModalOpened = ref(false);
 const isSidebarOpen = ref(false);
-
-const submitHandler = () => {
-  console.log("정상 제출 완료");
-}
 
 const openModal = () => {
   isModalOpened.value = true;
@@ -25,41 +19,15 @@ const closeModal = () => {
 }
 
 const signIn = async () => {
-  await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
-    method: 'POST',
-    body: JSON.stringify({
-      email: headerStore.signinForm.email,
-      password: headerStore.signinForm.password
-    })
-  }).then((response) => {
-    sessionStorage.setItem('_token', response.token)
-    $fetch<string>(`${config.public.apiBase}/auth/getRole`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${response.token}`,
-        'Content-Type': 'application/json'
-      }
-    }).then((response) => {
-      sessionStorage.setItem('userRole', response);
-      closeModal();
-      isSidebarOpen.value = false;
-      toastStore.setToast('로그인에 성공하였습니다.', 'check');
-      headerStore.isAdmin = true;
-      toastStore.setToast('로그인에 성공하였습니다.', 'check')
-    }).catch((error) => {
-      console.log(error);
-    })
-  }).catch(error => {
-    if (error.statusCode === 403) {
-      toastStore.setToast('이메일 또는 비밀번호가 잘못되었습니다.', 'error');
-    } else {
-      toastStore.setToast('오류가 발생하였습니다.\n다시 시도해주세요.', 'error');
-    }
-  })
+  await signin();
+  isModalOpened.value = false;
+  isSidebarOpen.value = false;
 }
 
 const logout = () => {
   headerStore.isAdmin = false;
+  isSidebarOpen.value = false;
+  sessionStorage.removeItem('token');
   sessionStorage.removeItem('userRole');
 }
 
@@ -107,7 +75,7 @@ onBeforeUnmount(() => {
         </div>
       </Transition>
       <Transition name="fade">
-        <LazyTheModal :is-open="isModalOpened" @modal-close="closeModal" @submit="submitHandler">
+        <LazyTheModal :is-open="isModalOpened" @modal-close="closeModal">
           <template #header>
             <div class="modal-header-container">
               <div class="close-btn">
