@@ -6,6 +6,7 @@ const logout = () => {
   store.isAdmin = false;
   store.isAdminMenuOpened = false;
   sessionStorage.removeItem('token');
+  sessionStorage.removeItem('userRole');
 }
 </script>
 <template>

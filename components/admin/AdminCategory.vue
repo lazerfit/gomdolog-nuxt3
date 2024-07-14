@@ -2,9 +2,12 @@
 import type { Category } from '~/types';
 
 const adminStore = useAdminStore();
-const config = useRuntimeConfig();
-const token = sessionStorage.getItem('token');
-const categoryEditable = ref<Category[]>([]);
+const {
+  fetchAllCategory,
+  deleteCategory,
+  saveCategory,
+  updateCategory,
+} = useAdminStore();
 
 const addDiv = () => {
   adminStore.divList.push({ inputValue: '' });
@@ -15,83 +18,15 @@ const editTitle = (item: Category) => {
   adminStore.updateTitle = item.title;
 }
 
-function fetchAll() {
-  $fetch<Category[]>(`${config.public.apiBase}/category/all`, {
-    method: 'GET'
-  })
-    .then((response) => {
-      adminStore.categories = response
-      makeCategyEditable()
-    })
-    .catch((error) => console.log(error))
-}
-
-fetchAll();
-
-function makeCategyEditable() {
-  categoryEditable.value = adminStore.categories
-    .filter(category => category.title !== '없음')
-    .map((category) => {
-      return {
-        ...category,
-        isEditable: false
-      }
-    })
-}
-
-const categorySave = async (data: string, index: number) => {
-  await $fetch(`${config.public.apiBase}/category/new`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    },
-    body: {
-      title: data
-    }
-  })
-    .then(() => {
-      fetchAll()
-      adminStore.divList.splice(index, 1)
-    })
-    .catch(error => console.log('category save error : ', error));
-};
-
-const deleteCategory = async (id: number) => {
-  await $fetch(`${config.public.apiBase}/category/delete/${id}`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    }
-  }).then(() => {
-    fetchAll()
-  })
-    .catch(error => console.log('category delete error : ', error));
-}
-
-const updateCategory = async (id: number, title: string) => {
-  await $fetch(`${config.public.apiBase}/category/update`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    },
-    body: {
-      id: id,
-      title: title
-    }
-  }).then(() => {
-    fetchAll()
-  })
-    .catch(error => console.log('category update error : ', error));
-}
+onBeforeMount(async () => {
+  await fetchAllCategory()
+})
 </script>
 <template>
   <div v-if="adminStore.isCategoryShow" class="category-container">
     <h1>Category</h1>
     <div class="categories">
-      <div v-for="item in categoryEditable" :key="item.id" class="category">
+      <div v-for="item in adminStore.categoryEditable" :key="item.id" class="category">
         <div v-if="!item.isEditable" class="title">
           {{ item.title }}
         </div>
@@ -104,8 +39,8 @@ const updateCategory = async (id: number, title: string) => {
       </div>
       <div v-for="(item, index) in adminStore.divList" :key="index" class="add-div">
         <input v-model="item.inputValue" type="text" placeholder="type something.."
-          @keyup.enter="categorySave(item.inputValue, index)">
-        <button @click="categorySave(item.inputValue, index)">
+          @keyup.enter="saveCategory(item.inputValue, index)">
+        <button @click="saveCategory(item.inputValue, index)">
           <i class="fa-solid fa-plus" />
         </button>
         <span>

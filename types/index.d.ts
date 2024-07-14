@@ -62,6 +62,7 @@ export interface PostResopnseWithoutTags {
 
 export interface JWT {
 	token: string;
+	role: string;
 }
 
 export interface PostSave {
@@ -92,4 +93,12 @@ export interface PostDeleted {
 
 export interface UserRole {
 	role: string;
+}
+
+export interface ErrorResponse {
+	timestamp: string;
+	status: number;
+	error: string;
+	message: string;
+	path: string;
 }

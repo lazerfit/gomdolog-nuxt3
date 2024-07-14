@@ -1,45 +1,12 @@
 <script setup lang="ts">
 import { onBeforeMount, onUnmounted } from 'vue';
-import type { Category } from "~/types";
 import TiptapEditor from './TiptapEditor.client.vue';
 import TagInput from './TagInput.client.vue';
 
 const store = usePostStore();
-const toastStore = useCommonStore();
+const { save, fetchAllCategory } = usePostStore();
 
-const submitSavePost = async () => {
-  const config = useRuntimeConfig();
-  const token = sessionStorage.getItem('token');
-  await $fetch(`${config.public.apiBase}/post/new`,
-    {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: {
-        title: store.postSaveForm.title,
-        content: store.postSaveForm.content,
-        categoryTitle: store.postSaveForm.categoryTitle,
-        tags: store.postSaveForm.tags
-      }
-    }
-  )
-    .then(() => {
-      store.postSaveForm.title = '';
-      store.postSaveForm.categoryTitle = '';
-      store.postSaveForm.tags = [];
-      localStorage.removeItem('draft');
-      useRouter().push('/');
-    })
-    .catch((error) => {
-      console.log(error);
-      toastStore.setToast('잠시후 다시 시도해주십시오.', 'error');
-    })
-};
-
-const { data: rawCategories } = await useFetch<Category[]>('/api/category/all');
-const categories = computed(() => rawCategories.value ?? []);
+const categories = await fetchAllCategory();
 
 const loadDraft = () => {
   if (localStorage.getItem('draft')) {
@@ -82,7 +49,7 @@ onUnmounted(() => {
       <div class="tip-tap-tag-submit">
         <TagInput v-model="store.postSaveForm.tags" />
         <div class="tip-tap-submit">
-          <button @click="submitSavePost">Submit</button>
+          <button @click="save">Submit</button>
         </div>
       </div>
     </div>

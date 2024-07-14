@@ -1,12 +1,13 @@
 <script setup lang=ts>
-import type { PostPageResponseWithoutTags } from '~/types';
 const breakpoints = useBreakpoints({
   mobile: 0,
   tablet: 768
 });
 
 const mobile = breakpoints.between('mobile', 'tablet');
-const store = usePostStore();
+const { fetchAll } = usePostStore();
+
+await fetchAll();
 
 const isExpired = () => {
   if (localStorage.getItem('visitedPostCreatedAt')) {
@@ -15,26 +16,6 @@ const isExpired = () => {
   }
 }
 
-const { data } = await useFetch<PostPageResponseWithoutTags>('/api/post/all', {
-  params: {
-    page: 0,
-    size: store.pageSize
-  }
-});
-
-const post = computed(() => data.value ?? {
-  content: [],
-  numberOfElements: 0,
-  size: 0,
-  totalElements: 0,
-  totalPages: 0,
-  first: false,
-  last: false,
-  number: 0,
-})
-
-store.postsPage = post.value;
-
 const currentComponent = computed(() => {
   return mobile.value ? resolveComponent('PaginationForMobile') : resolveComponent('ThePagination')
 });
@@ -42,7 +23,7 @@ const currentProps = computed(() => {
   return mobile.value ? { isMobile: true, apiBase: '/post/all' } : { isIndex: true }
 })
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   if (!localStorage.getItem('visitedPost')) {
     localStorage.setItem('visitedPost', JSON.stringify([]))
     localStorage.setItem('visitedPostCreatedAt', Date.now().toString())
@@ -53,6 +34,7 @@ onBeforeMount(() => {
     localStorage.setItem('visitedPostCreatedAt', Date.now().toString())
   }
 })
+
 </script>
 <template>
   <div>
