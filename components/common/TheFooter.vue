@@ -26,7 +26,7 @@
 <style lang='scss' scoped>
 .darkMode {
   .container {
-    background-color: $gray-7;
+    background-color: #222831;
 
     .content-wrapper {
       color: $gray-4 !important;
@@ -48,7 +48,7 @@
   height: rem(140);
   display: flex;
   box-sizing: border-box;
-  background-color: #e0e0e0af;
+  background-color: #EEEDEB;
 
   @media screen and (max-width: 767px) {
     height: 100px;

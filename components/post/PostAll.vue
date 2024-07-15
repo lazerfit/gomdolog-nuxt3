@@ -41,6 +41,7 @@ defineProps({
               </div>
               <div class="all-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
+
             <div class="all-post-day">
               {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
             </div>
@@ -222,14 +223,16 @@ defineProps({
         }
 
         .all-post-category {
-          font-family: $sans;
+          font-family: $pretendard;
           margin: rem(5) 0;
           font-size: rem(14);
-          background-color: #f5f5f5;
+          font-weight: 600;
+          background-color: transparent;
           min-width: rem(60);
           text-align: center;
           padding: rem(4) rem(6);
           border-radius: rem(5);
+          border: 1px solid $font-black;
           margin-bottom: rem(7);
           cursor: pointer;
           display: inline-block;

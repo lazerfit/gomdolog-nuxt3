@@ -80,7 +80,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f9f9f9;
+  background-color: $background-color;
   position: sticky;
   padding: 15px 10px;
   top: 0;
@@ -170,6 +170,7 @@ header {
               width: 100%;
               margin-top: rem(10);
               font-family: $pretendard;
+              background-color: $background-color;
 
               &::placeholder {
                 color: #bdbdbd;

@@ -108,25 +108,25 @@ const filteredCategory = await fetchAllCategory();
   }
 
   .category:nth-child(1) {
-    background-color: #FFDA79;
+    background-color: #36BA98;
     border: none;
     color: #FF793F;
   }
 
   .category:nth-child(2) {
-    background-color: #34ace075;
+    background-color: #E9C46A;
     border: none;
     color: #227093;
   }
 
   .category:nth-child(3) {
-    background-color: #716fd369;
+    background-color: #F4A261;
     border: none;
     color: #706FD3;
   }
 
   .category:nth-child(4) {
-    background-color: #33d9b26e;
+    background-color: #E76F51;
     border: none;
     color: #218C74;
   }
