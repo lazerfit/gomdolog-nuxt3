@@ -43,9 +43,9 @@ onBeforeUnmount(() => {
 <template>
   <div class="mobile-menu">
     <div class="wrapper">
-      <button class="button" data-text="Awesome" @click="isSidebarOpen = !isSidebarOpen">
-        <span class="actual-text">&nbsp;menu&nbsp;</span>
-        <span aria-hidden="true" class="hover-text">&nbsp;menu&nbsp;</span>
+      <button class="button" @click="isSidebarOpen = !isSidebarOpen">
+        <NuxtImg v-show="!isSidebarOpen" src="/svg/menu-svgrepo-com.svg" />
+        <NuxtImg v-show="isSidebarOpen" src="/svg/x-svgrepo-com.svg" />
       </button>
       <LazyTheToast />
       <Transition name="bounce">
@@ -143,16 +143,11 @@ onBeforeUnmount(() => {
 
 .darkMode {
   .wrapper {
+
     .button {
-      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6) !important;
-      border: none !important;
 
-      &:hover .hover-text {
-        filter: drop-shadow(0 0 23px #37ff8b);
-      }
-
-      .hover-text {
-        border-right: 4px solid #37ff8b !important;
+      img {
+        filter: invert(1);
       }
     }
 
@@ -169,6 +164,9 @@ onBeforeUnmount(() => {
 }
 
 .mobile-menu {
+  z-index: 10000;
+
+
   @media screen and (min-width: 1024px) {
     display: none;
   }
@@ -178,14 +176,28 @@ onBeforeUnmount(() => {
   }
 
   .wrapper {
-    @include the-menu;
+    z-index: 10000;
+
+    .button {
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid $font-black;
+      border-radius: rem(7);
+
+      img {
+        width: rem(22);
+        height: rem(22);
+      }
+    }
 
     .sidebar {
       @media screen and (max-width: 767px) {
         width: 100%;
         height: 100%;
         position: fixed;
-        background-color: #f9f9f9;
+        background-color: $background-color;
         left: 0;
         top: 53px;
         transition: .3s ease;

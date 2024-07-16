@@ -38,13 +38,12 @@ defineProps({
 <style lang='scss' scoped>
 .darkMode {
   .container {
-    border-bottom: 1px solid #555;
-    border-top: 1px solid $font-white !important;
+    border: 2px solid $background-color;
 
     .title {
       p {
         &:first-child {
-          background-image: url('/assets/img/textBannerDark.jpg');
+          color: $font-white;
         }
 
         &:last-child {
@@ -73,16 +72,23 @@ defineProps({
   height: 250px;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid lightgray;
-  border-top: 1px solid $font-black;
-  margin-top: 10px;
+  border: 2px solid $font-black;
+  border-radius: 10px;
+  max-width: 1180px;
+  margin: 10px auto;
 
-  @media screen and (min-width: 1024px) {
+
+  @media screen and (min-width: 1025px) {
     height: 330px;
   }
 
-  @media (max-width: 380px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
+    margin: 0 rem(10);
+  }
+
+  @media (max-width: 767px) {
     height: 300px;
+    margin: 0 rem(10);
   }
 
   .title {
@@ -95,17 +101,14 @@ defineProps({
     p {
       &:first-child {
         font-size: rem(40);
-        font-family: $sans;
+        font-family: $pretendard;
         font-weight: 600;
-        background-image: url('/assets/img/textBanner.jpg');
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
+        color: $font-black;
       }
 
       &:last-child {
         font-size: 1.2rem;
-        font-family: $sans, serif;
+        font-family: $pretendard, serif;
         margin: 11px 0;
       }
     }
@@ -113,7 +116,7 @@ defineProps({
 
   .search-bar {
     margin: 14px auto;
-    border: 1px solid rgba(0, 0, 0, 0.315);
+    border: 1px solid $font-black;
     border-radius: 5px;
     height: 27px;
     display: flex;
@@ -135,7 +138,7 @@ defineProps({
       }
 
       &::placeholder {
-        font-family: $sans, serif;
+        font-family: $pretendard, serif;
         padding-left: 5px;
         transition: all .3s;
       }

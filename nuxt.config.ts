@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 		'@nuxtjs/seo',
 		'@vueuse/nuxt',
 		'nuxt-gtag',
+		'@nuxt/image',
 	],
 	imports: {
 		dirs: ['./stores'],

@@ -1,6 +1,12 @@
 <script setup lang=ts>
 const store = usePostStore();
 const post = computed(() => store.postsPage)
+const breakpoints = useBreakpoints({
+  mobile: 0,
+  tablet: 768
+});
+
+const mobile = breakpoints.between('mobile', 'tablet');
 
 defineProps({
   isSearchedBy: {
@@ -27,22 +33,36 @@ defineProps({
     <div class="post-wrapper">
       <template v-if="post.content.length > 0">
         <div v-for="item in post.content" :key="item.id" class="post">
-          <NuxtLink :to="'/post/' + item.id">
+          <NuxtLink :to="'/post/' + item.id" class="img-wrapper">
             <img v-if="item.thumbnail === 'Default Thumbnail'" src="/assets/img/pineapples.jpg" alt="all-post-img">
             <img v-else :src="item.thumbnail">
           </NuxtLink>
           <div class="content-wrapper">
-            <div class="all-post-category">
-              {{ item.categoryTitle }}
-            </div>
             <NuxtLink :to="'/post/' + item.id">
               <div class="all-post-title">
-                {{ item.title }}
+                <span class="title">
+                  {{ item.title }}
+                </span>
+                <span class="up-right-btn">
+                  <NuxtImg src="/svg/arrow-up-right-svgrepo-com.svg" />
+                </span>
               </div>
               <div class="all-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
-            <div class="all-post-day">
-              {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+            <div class="post-bottom-wrapper">
+              <div v-show="!mobile" class="all-post-category">
+                <NuxtLink :to="`/category/${item.categoryTitle}/0`">
+                  {{ item.categoryTitle }}
+                </NuxtLink>
+              </div>
+              <div v-show="mobile" class="all-post-category">
+                <NuxtLink :to="`/category/${item.categoryTitle}`">
+                  {{ item.categoryTitle }}
+                </NuxtLink>
+              </div>
+              <div class="all-post-day">
+                {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+              </div>
             </div>
           </div>
         </div>
@@ -77,18 +97,44 @@ defineProps({
       width: 100%;
       display: flex;
       height: 220px;
-      box-shadow: rgba(0, 0, 0, 0.493) 0px 60px 40px -7px !important;
       border-radius: 7px;
-      background-color: #0d182150 !important;
+      background-color: transparent !important;
       padding-top: 15px;
     }
 
-    .all-post-category {
-      color: $font-black !important;
+    .post-bottom-wrapper {
+      .all-post-category {
+        @include post-category-darkmode;
+
+        a {
+          color: $font-white;
+        }
+
+        &::before {
+          background-color: $background-color !important;
+        }
+
+        &:hover {
+          a {
+            color: $font-black !important;
+          }
+        }
+      }
+
+      .all-post-day {
+        color: $font-white !important;
+      }
     }
 
+
     .all-post-title {
-      color: #E9FF92 !important;
+      .title {
+        color: $darkmode-point-color !important;
+      }
+
+      .up-right-btn {
+        filter: invert(1);
+      }
     }
 
     .all-post-text {
@@ -107,6 +153,7 @@ defineProps({
 
   width: 1180px;
   margin: rem(25) auto;
+  z-index: 0;
 
   @media (min-width:768px) and (max-width: 1024px) {
     padding: 0 10px;
@@ -121,6 +168,7 @@ defineProps({
 
     @media screen and (max-width: 767px) {
       text-align: center;
+      margin-top: rem(40);
     }
   }
 
@@ -195,62 +243,82 @@ defineProps({
       @media screen and (max-width: 767px) {
         width: 100%;
         display: flex;
-        height: 220px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+        align-items: center;
+        height: rem(420);
         border-radius: 7px;
         background-color: #fffaf036;
         padding-top: 15px;
+        flex-direction: column;
       }
 
-      img {
+      .img-wrapper {
         width: 100%;
         height: rem(260);
+        display: block;
+        border: 2px solid $font-black;
         border-radius: rem(10);
-        object-fit: cover;
 
         @media screen and (max-width: 767px) {
-          height: 190px;
+          height: rem(200);
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: rem(10);
+          object-fit: cover;
+          overflow: hidden;
         }
       }
 
       .content-wrapper {
-        margin: 0 rem(10);
+        margin-top: rem(20);
 
         @media screen and (max-width: 767px) {
-          min-width: 60%;
-          max-width: 60%;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-top: rem(20);
+          padding: rem(5) rem(7);
         }
 
-        .all-post-category {
-          font-family: $sans;
-          margin: rem(5) 0;
-          font-size: rem(14);
-          background-color: #f5f5f5;
-          min-width: rem(60);
-          text-align: center;
-          padding: rem(4) rem(6);
-          border-radius: rem(5);
-          margin-bottom: rem(7);
-          cursor: pointer;
-          display: inline-block;
+        .post-bottom-wrapper {
+          @include post-bottom;
+
+          .all-post-category {
+
+            @include post-category;
+
+          }
+
+          .all-post-day {
+            @include post-day;
+          }
         }
 
         .all-post-title {
-          @include sub-post-title
+          display: flex;
+          align-items: center;
+
+          .title {
+            @include sub-post-title
+          }
+
+          .up-right-btn {
+            margin-left: auto;
+
+            img {
+              width: rem(20);
+              height: rem(20);
+            }
+          }
         }
 
         .all-post-text {
-          text-overflow: ellipsis;
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 4;
-          -webkit-box-orient: vertical;
-          line-height: rem(24);
+          @include post-text(4);
           height: rem(80);
-          margin-top: rem(14);
-          color: #0314039a;
-          font-weight: 400;
-          cursor: pointer;
 
           @media screen and (max-width: 767px) {
             font-size: rem(24);
@@ -266,13 +334,6 @@ defineProps({
           pointer-events: none;
           cursor: default;
           color: $font-black;
-        }
-
-
-        .all-post-day {
-          margin-top: rem(15);
-          font-size: rem(13);
-          color: #999;
         }
       }
     }

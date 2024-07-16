@@ -10,7 +10,7 @@ const headerStore = useHeaderStore();
 const postStore = usePostStore();
 const { deleteById, addViews } = usePostStore();
 
-const formattedDate = useDateFormat(postStore.post.createdDate, 'MMM D, YYYY', { locales: 'en-US' });
+const formattedDate = useDateFormat(postStore.post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -86,11 +86,10 @@ const startShare = async () => {
       </div>
       <div class="summary-wrapper">
         <div v-if="postStore.post.summary != 'no summary'" class="summary">
-          <i class="fa-solid fa-quote-left" />
+          <NuxtImg src="/svg/double-quotes-l-svgrepo-com.svg" />
           <div>
             {{ postStore.post.summary }}
           </div>
-          <i class="fa-solid fa-quote-right" />
         </div>
       </div>
       <div class="date-admin">
@@ -100,17 +99,12 @@ const startShare = async () => {
         <div v-if="headerStore.isAdmin" class="admin-wrapper">
           <NuxtLink :to="`/post/update/${postId}`">
             <span>
-              <i class="fa-solid fa-pen" />
+              <NuxtImg src="/svg/pen-new-square-svgrepo-com.svg" />
             </span>
           </NuxtLink>
           <span>
-            <i class="fa-solid fa-trash" @click="deleteById(postId)" />
+            <NuxtImg src="/svg/trash-bin-trash-svgrepo-com.svg" class="trash-bin" @click="deleteById(postId)" />
           </span>
-        </div>
-        <div class="btn-share">
-          <button :disabled="!isSupported" @click="startShare">
-            <i class="fa-solid fa-share" />
-          </button>
         </div>
       </div>
       <div class="divider" />
@@ -120,27 +114,25 @@ const startShare = async () => {
       <div ref="utterancesContainer" />
     </div>
   </div>
-  <div class="float-btn" @click="scrollToTop">
-    <i class="fa-solid fa-chevron-up" />
+  <div class="float-btn">
+    <div :disabled="!isSupported" class="share-btn" @click="startShare">
+      <NuxtImg src="/svg/share-svgrepo-com.svg" />
+    </div>
+    <div class="up-btn" @click="scrollToTop">
+      <NuxtImg src="/svg/arrow-up-351-svgrepo-com.svg" />
+    </div>
   </div>
 </template>
 
 <style lang='scss' scoped>
 .darkMode {
-  .float-btn {
-    background-color: black;
-
-    &:hover {
-      background-color: $gray-8;
-    }
-
-    .fa-chevron-up {
-      color: $gray-3;
-    }
-  }
 
   .date-admin {
     color: $gray-2 !important;
+
+    img {
+      filter: invert(1);
+    }
   }
 
   .post-text {
@@ -190,17 +182,41 @@ const startShare = async () => {
   position: fixed;
   right: 10px;
   bottom: 10px;
-  padding: rem(15);
-  border-radius: 50%;
-  box-shadow: rgba(63, 71, 77, 0.25) 0px 2px 10px 0px;
-  cursor: pointer;
-  transition: all .1s;
-  background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
 
-  &:hover {
-    background-color: $gray-1;
+  .share-btn {
+    margin-bottom: rem(5);
+  }
+
+  .up-btn,
+  .share-btn {
+    padding: rem(15);
+    border-radius: 50%;
+    box-shadow: rgba(63, 71, 77, 0.25) 0px 2px 10px 0px;
+    cursor: pointer;
+    transition: all .1s;
+    background-color: $background-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 767px) {
+      background-color: #fdfcf7e3;
+    }
+
+    img {
+      width: rem(20);
+      height: rem(20);
+    }
+
+    &:hover {
+      background-color: $gray-1;
+    }
   }
 }
+
 
 .container {
   width: 1180px;
@@ -278,15 +294,17 @@ const startShare = async () => {
           font-size: 0.9rem;
           font-family: $pretendard;
           font-weight: 300;
-          color: $gray-6;
+          color: $font-white;
+          background-color: #A3CCC4;
+          border-radius: rem(10);
           margin-right: rem(7);
           display: inline-block;
-          background-color: $gray-1;
-          border-radius: rem(10);
           padding: rem(5);
+          margin-bottom: rem(10);
 
           @media (max-width: 767px) {
-            font-size: 1rem;
+            padding: rem(3) rem(5);
+            font-size: .9rem;
             line-height: rem(24);
           }
         }
@@ -334,20 +352,12 @@ const startShare = async () => {
           }
         }
 
-        i {
-          margin-bottom: auto;
-          color: $gray-6;
-          font-size: 1.2rem;
-        }
-
-        .fa-quote-left {
-          margin-right: rem(5);
-
-        }
-
-        .fa-quote-right {
-          margin-left: rem(5);
-          margin-left: auto;
+        img {
+          width: rem(30);
+          height: rem(30);
+          filter: invert(.55);
+          margin-bottom: rem(5);
+          margin-top: rem(10);
         }
       }
     }
@@ -357,24 +367,7 @@ const startShare = async () => {
       display: flex;
       align-items: center;
       margin: rem(30) auto 0 auto;
-      color: $gray-6;
-
-      .btn-share {
-        button {
-          padding: rem(3);
-          background-color: transparent;
-
-          &:disabled {
-            display: none;
-          }
-
-          .fa-share {
-            color: $gray-6;
-            margin-left: rem(10);
-            cursor: pointer;
-          }
-        }
-      }
+      color: $font-black;
 
       @media (max-width: 767px) {
         width: 100%;
@@ -386,16 +379,17 @@ const startShare = async () => {
         margin-left: auto;
 
         span {
-          margin-right: rem(10);
+          margin-right: rem(5);
 
-          i {
+          .trash-bin {
+            width: rem(27);
+            height: rem(27);
+          }
+
+          img {
             cursor: pointer;
-            color: #999;
-            transition: all .3s ease;
-
-            &:hover {
-              color: $font-black;
-            }
+            width: rem(25);
+            height: rem(25);
           }
         }
       }
@@ -495,27 +489,6 @@ const startShare = async () => {
     &:hover {
       color: #2c974b !important;
     }
-  }
-}
-
-
-@keyframes back-btn {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-7px);
-  }
-}
-
-@keyframes up-btn {
-  0% {
-    transform: translateY(0);
-  }
-
-  100% {
-    transform: translateY(-7px);
   }
 }
 </style>

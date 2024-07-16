@@ -1,10 +1,11 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
 
 // color
-$background-color: #f9f9f9;
-$font-black: #031403;
+$background-color: #fdfcf7;
+$darkmode-point-color: #f9f871;
+$font-black: #1d1c28;
 $font-white: #fffdf6;
 $light-black: #999;
 $silver-black: #777;
@@ -25,7 +26,7 @@ $gray-8: #343a40;
 $gray-9: #212529;
 
 // fonts
-$pretendard: 'Pretendard Variable';
+$pretendard: 'Wanted Sans Variable';
 $sans: 'Raleway';
 
 //function

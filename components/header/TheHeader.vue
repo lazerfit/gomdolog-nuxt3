@@ -21,10 +21,9 @@ onBeforeUnmount(() => {
         <img src="/assets/img/gomdolog3.png" alt="main-logo">
       </NuxtLink>
       <div class="login">
-        <TheDarkmodeToggle />
-        <TheLoginButton />
+        <LazyTheDarkToggle />
+        <LazyTheLoginButtonV2 />
         <LazyMobileSidebar />
-        <LazyTheAdminMenu />
         <LazyTheAdminMenuBar />
         <LazyTheModal :is-open="store.isModalOpened" @modal-close="store.isModalOpened = false"
           @keyup.esc="store.isModalOpened = false">
@@ -80,7 +79,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f9f9f9;
+  background-color: $background-color;
   position: sticky;
   padding: 15px 10px;
   top: 0;
@@ -170,6 +169,7 @@ header {
               width: 100%;
               margin-top: rem(10);
               font-family: $pretendard;
+              background-color: $background-color;
 
               &::placeholder {
                 color: #bdbdbd;
