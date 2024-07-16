@@ -21,10 +21,9 @@ onBeforeUnmount(() => {
         <img src="/assets/img/gomdolog3.png" alt="main-logo">
       </NuxtLink>
       <div class="login">
-        <TheDarkmodeToggle />
-        <TheLoginButton />
+        <LazyTheDarkToggle />
+        <LazyTheLoginButtonV2 />
         <LazyMobileSidebar />
-        <LazyTheAdminMenu />
         <LazyTheAdminMenuBar />
         <LazyTheModal :is-open="store.isModalOpened" @modal-close="store.isModalOpened = false"
           @keyup.esc="store.isModalOpened = false">

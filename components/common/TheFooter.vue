@@ -2,6 +2,7 @@
 
 </script>
 <template>
+  <div class="test" />
   <div class="container">
     <div class="content-wrapper">
       <div class="sns">
@@ -25,6 +26,11 @@
 
 <style lang='scss' scoped>
 .darkMode {
+  .test {
+    height: 5px !important;
+    background-color: $darkmode-point-color;
+  }
+
   .container {
     background-color: #222831;
 
@@ -42,13 +48,19 @@
   }
 }
 
+.test {
+  height: 10px;
+  width: 100%;
+  background-color: #E9FF92;
+}
+
 .container {
 
   width: 100%;
   height: rem(140);
   display: flex;
   box-sizing: border-box;
-  background-color: #EEEDEB;
+  background-color: #191825;
 
   @media screen and (max-width: 767px) {
     height: 100px;
@@ -63,7 +75,7 @@
     justify-content: center;
     align-items: center;
     margin: auto;
-    color: $font-black;
+    color: $font-white;
 
     @media screen and (max-width: 767px) {
       width: 100%;
@@ -74,7 +86,7 @@
         a {
           margin-right: rem(5);
           font-size: rem(20);
-          color: $font-black;
+          color: $font-white;
         }
       }
     }

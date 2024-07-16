@@ -29,7 +29,6 @@ onClickOutside(target, () => emit('modal-close'));
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -39,7 +38,6 @@ onClickOutside(target, () => emit('modal-close'));
     background-color: #121212 !important;
   }
 }
-
 
 .modal-mask {
   position: fixed;

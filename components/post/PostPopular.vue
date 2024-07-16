@@ -16,17 +16,26 @@ const post = await fetchAllTop();
           <img v-else :src=post[0].thumbnail>
         </NuxtLink>
         <div class="content-wrapper">
-          <div class="main-post-category">
-            {{ post[0].categoryTitle }}
-          </div>
           <NuxtLink :to="'/post/' + post[0].id">
             <div class="main-post-title">
-              {{ post[0].title }}
+              <span class="title">
+                {{ post[0].title }}
+              </span>
+              <span class="up-right-btn">
+                <NuxtImg src="/svg/arrow-up-right-svgrepo-com.svg" />
+              </span>
             </div>
             <div class="main-post-text" v-html="$sanitizeHTML(post[0].content)" />
           </NuxtLink>
-          <div class="main-post-day">
-            {{ useDateFormat(post[0].createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+          <div class="main-post-bottom">
+            <div class="main-post-category">
+              <NuxtLink :to="`/category/${post[0].categoryTitle}/0`">
+                {{ post[0].categoryTitle }}
+              </NuxtLink>
+            </div>
+            <div class="main-post-day">
+              {{ useDateFormat(post[0].createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+            </div>
           </div>
         </div>
       </div>
@@ -37,17 +46,26 @@ const post = await fetchAllTop();
             <img v-else :src=item.thumbnail>
           </NuxtLink>
           <div class="content-wrapper">
-            <div class="sub-post-category">
-              {{ item.categoryTitle }}
-            </div>
             <NuxtLink :to="'/post/' + item.id">
               <div class="sub-post-title">
-                {{ item.title }}
+                <span class="title">
+                  {{ item.title }}
+                </span>
+                <span class="up-right-btn">
+                  <NuxtImg src="/svg/arrow-up-right-svgrepo-com.svg" />
+                </span>
               </div>
               <div class="sub-post-text" v-html="$sanitizeHTML(item.content)" />
             </NuxtLink>
-            <div class="sub-post-day">
-              {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+            <div class="sub-post-bottom">
+              <div class="sub-post-category">
+                <NuxtLink :to="`/category/${item.categoryTitle}/0`">
+                  {{ item.categoryTitle }}
+                </NuxtLink>
+              </div>
+              <div class="sub-post-day">
+                {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+              </div>
             </div>
           </div>
         </div>
@@ -59,6 +77,25 @@ const post = await fetchAllTop();
 <style lang='scss' scoped>
 .darkMode {
 
+  .main-post-category,
+  .sub-post-category {
+    @include post-category-darkmode;
+
+    a {
+      color: $font-white !important;
+    }
+
+    &::before {
+      background-color: $background-color !important;
+    }
+
+    &:hover {
+      a {
+        color: $font-black !important;
+      }
+    }
+  }
+
   .container {
     border-bottom: 1px solid #555 !important;
   }
@@ -67,16 +104,19 @@ const post = await fetchAllTop();
     color: $font-white !important;
   }
 
-  .main-post-title {
-    color: #E9FF92 !important;
+  .main-post-title,
+  .sub-post-title {
+    .title {
+      color: $darkmode-point-color !important;
+    }
+
+    .up-right-btn {
+      filter: invert(1);
+    }
   }
 
   .main-post-text {
     color: $font-white !important;
-  }
-
-  .sub-post-title {
-    color: #E9FF92 !important;
   }
 
   .sub-post-text {
@@ -130,12 +170,16 @@ const post = await fetchAllTop();
         width: 100%;
         height: rem(265);
         display: block;
+        border: 2px solid $font-black;
+        border-radius: rem(10);
+
 
         img {
-          width: inherit;
-          height: inherit;
+          width: 100%;
+          height: 100%;
           object-fit: cover;
-          border-radius: rem(15);
+          overflow: hidden;
+          border-radius: rem(10);
           cursor: pointer;
         }
       }
@@ -143,38 +187,27 @@ const post = await fetchAllTop();
       .content-wrapper {
         margin: rem(20) rem(10);
 
-
-        .main-post-category {
-          @include post-category;
-        }
-
         .main-post-title {
-          font-weight: semi-bold;
-          font-size: rem(30);
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-          margin-top: rem(5);
-          cursor: pointer;
-          color: $font-black;
-          font-family: $pretendard;
+          display: flex;
+          align-items: center;
 
-          &:hover {
-            text-shadow: 1.5px 1.5px #999;
+          .title {
+            @include sub-post-title
+          }
+
+          .up-right-btn {
+            margin-left: auto;
+
+            img {
+              width: rem(20);
+              height: rem(20);
+            }
           }
         }
 
         .main-post-text {
-          text-overflow: ellipsis;
-          overflow: hidden;
-          display: -webkit-box;
-          -webkit-line-clamp: 9;
-          -webkit-box-orient: vertical;
-          line-height: rem(24);
+          @include post-text(9);
           height: rem(180);
-          margin-top: rem(14);
-          color: #0314039a;
-          cursor: pointer;
         }
 
         .main-post-text:deep(img) {
@@ -188,10 +221,17 @@ const post = await fetchAllTop();
           color: $font-black;
         }
 
-        .main-post-day {
-          margin-top: rem(30);
-          font-size: rem(13);
-          color: #999;
+        .main-post-bottom {
+          @include post-bottom;
+          margin-top: rem(60);
+
+          .main-post-category {
+            @include post-category;
+          }
+
+          .main-post-day {
+            @include post-day;
+          }
         }
       }
     }
@@ -213,6 +253,9 @@ const post = await fetchAllTop();
         display: flex;
 
         .sub-post-img {
+          border: 2px solid $font-black;
+          border-radius: rem(10);
+
           img {
             width: rem(260);
             height: 100%;
@@ -230,26 +273,28 @@ const post = await fetchAllTop();
             width: 100%;
           }
 
-          .sub-post-category {
-            @include post-category
-          }
-
           .sub-post-title {
-            @include sub-post-title;
-            display: block;
+            display: flex;
+            align-items: center;
+
+            .title {
+              @include sub-post-title;
+              display: block;
+            }
+
+            .up-right-btn {
+              margin-left: auto;
+
+              img {
+                width: rem(20);
+                height: rem(20);
+              }
+            }
           }
 
           .sub-post-text {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 8;
-            -webkit-box-orient: vertical;
-            line-height: rem(24);
+            @include post-text(8);
             height: rem(160);
-            margin-top: rem(14);
-            color: #0314039a;
-            cursor: pointer;
           }
 
           .sub-post-text:deep(img) {
@@ -263,10 +308,17 @@ const post = await fetchAllTop();
             color: $font-black;
           }
 
-          .sub-post-day {
-            margin-top: rem(15);
-            font-size: rem(13);
-            color: #999;
+          .sub-post-bottom {
+            @include post-bottom;
+            margin-top: rem(40);
+
+            .sub-post-category {
+              @include post-category;
+            }
+
+            .sub-post-day {
+              @include post-day;
+            }
           }
         }
       }

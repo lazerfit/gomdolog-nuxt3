@@ -3,7 +3,13 @@ import { defineNuxtConfig } from 'nuxt/config';
 
 export default defineNuxtConfig({
 	devtools: { enabled: true },
-	modules: ['@nuxt/eslint', '@pinia/nuxt', '@nuxtjs/seo', '@vueuse/nuxt'],
+	modules: [
+        '@nuxt/eslint',
+        '@pinia/nuxt',
+        '@nuxtjs/seo',
+        '@vueuse/nuxt',
+        "@nuxt/image"
+    ],
 	imports: {
 		dirs: ['./stores'],
 	},

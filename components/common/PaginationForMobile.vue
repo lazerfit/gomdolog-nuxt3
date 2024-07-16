@@ -32,6 +32,7 @@ const onLoadMore = async () => {
     });
 
     if (data.last) {
+      console.log(data.last);
       isLast.value = true;
     };
 

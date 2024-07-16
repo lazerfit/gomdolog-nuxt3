@@ -48,64 +48,8 @@
 		5px 5px 20px rgba($color: #333, $alpha: 0.17);
 }
 
-@mixin the-menu {
-	$border-right: 4px;
-	$text-stroke-color: rgba(0, 0, 0, 0.479);
-	$animation-color: #37ff8a94;
-	$fs-size: 1em;
-
-	.darkMode {
-		.button {
-			-webkit-text-stroke: 1px rgba(255, 255, 255, 0.6) !important;
-
-			&:hover .hover-text {
-				filter: drop-shadow(0 0 23px #37ff8b);
-			}
-
-			.hover-text {
-				border-right: 4px solid #37ff8b !important;
-			}
-		}
-	}
-
-	.button {
-		margin: 0;
-		height: auto;
-		background: transparent;
-		padding: 0;
-		border: none;
-		cursor: pointer;
-		letter-spacing: 3px;
-		text-decoration: none;
-		font-size: $fs-size;
-		font-family: 'Arial';
-		position: relative;
-		text-transform: uppercase;
-		color: transparent;
-		-webkit-text-stroke: 1px $text-stroke-color;
-
-		&:hover .hover-text {
-			width: 100%;
-			filter: drop-shadow(0 0 23px $animation-color);
-		}
-
-		.hover-text {
-			position: absolute;
-			box-sizing: border-box;
-			content: attr(data-text);
-			color: $animation-color;
-			width: 0%;
-			inset: 0;
-			border-right: $border-right solid $animation-color;
-			overflow: hidden;
-			transition: 0.5s;
-			-webkit-text-stroke: 1px $animation-color;
-		}
-	}
-}
-
 @mixin sub-post-title {
-	font-weight: semi-bold;
+	font-weight: 600;
 	font-size: rem(24);
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -119,16 +63,33 @@
 	}
 }
 
+@mixin post-bottom {
+	display: flex;
+	align-items: center;
+	margin-top: rem(20);
+}
+
+@mixin post-category-darkmode {
+	border: 2px solid $font-white !important;
+	color: $font-white !important;
+}
+
 @mixin post-category {
 	font-family: $pretendard;
-	font-size: rem(15);
-	background-color: #f5f5f5;
-	width: rem(70);
+	font-size: rem(14);
+	font-weight: 600;
 	text-align: center;
-	padding: rem(3);
-	border-radius: rem(5);
-	margin-bottom: rem(10);
-	cursor: pointer;
+	min-width: rem(60);
+	background-color: transparent;
+	padding: rem(4) rem(6);
+	border-radius: rem(15);
+	border: 1px solid $font-black;
+}
+
+@mixin post-day {
+	font-size: rem(13);
+	color: $font-black;
+	margin-left: auto;
 }
 
 @mixin basic-input {
@@ -150,4 +111,17 @@
 		font-weight: 600;
 		transition: all 0.3s ease-in-out;
 	}
+}
+
+@mixin post-text($line) {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: $line;
+	-webkit-box-orient: vertical;
+	line-height: rem(28);
+	margin-top: rem(14);
+	color: $font-black;
+	font-weight: 400;
+	cursor: pointer;
 }

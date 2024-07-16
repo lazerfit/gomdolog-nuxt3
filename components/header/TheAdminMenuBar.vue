@@ -1,5 +1,5 @@
 <script setup lang=ts>
-
+import { onClickOutside } from '@vueuse/core';
 const store = useHeaderStore();
 
 const logout = () => {
@@ -8,9 +8,12 @@ const logout = () => {
   sessionStorage.removeItem('token');
   sessionStorage.removeItem('userRole');
 }
+
+const target = ref(null);
+onClickOutside(target, () => store.isAdminMenuOpened = false);
 </script>
 <template>
-  <div class="container">
+  <div ref="target" class="container">
     <Transition name="bounce">
       <div v-show="store.isAdminMenuOpened" class="wrapper">
         <div>
@@ -38,22 +41,22 @@ const logout = () => {
 
 @keyframes bounce-in {
   0% {
-    top: 100%;
-    left: rem(-95);
+    top: rem(7);
+    left: rem(-80);
     transform: scale(0) translateX(35%);
     transform-origin: top right;
   }
 
   50% {
-    top: 100%;
-    left: rem(-95);
+    top: rem(7);
+    left: rem(-80);
     transform: scale(1.25) translateX(35%);
     transform-origin: top right;
   }
 
   100% {
-    top: 100%;
-    left: rem(-95);
+    top: rem(7);
+    left: rem(-80);
     transform: scale(1) translateX(35%);
     transform-origin: top right;
   }
@@ -71,8 +74,8 @@ const logout = () => {
     position: absolute;
     border: 1px solid #000;
     width: rem(65);
-    top: 100%;
-    left: rem(-95);
+    top: rem(7);
+    left: rem(-80);
     transform: translateX(35%);
     margin-top: rem(10);
     background-color: #fff;
@@ -96,6 +99,8 @@ const logout = () => {
         cursor: pointer;
         font-family: $pretendard;
         color: $font-black;
+        display: inline-block;
+        width: 100%;
       }
 
       button {

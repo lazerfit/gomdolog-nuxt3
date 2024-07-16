@@ -15,7 +15,9 @@ const filteredCategory = await fetchAllCategory();
 <style lang='scss' scoped>
 .darkMode {
   .category {
-    background-color: $font-white !important;
+    background-color: transparent !important;
+    border: 1px solid $background-color !important;
+    color: $font-white !important;
   }
 }
 
@@ -87,54 +89,54 @@ const filteredCategory = await fetchAllCategory();
     }
 
     &:nth-child(1):hover {
-      @include box-shadow-animation(#ccae62);
+      @include box-shadow-animation(#FFA17A);
     }
 
     &:nth-child(2):hover {
-      @include box-shadow-animation(#226f938c);
+      @include box-shadow-animation(#00A68B);
     }
 
     &:nth-child(3):hover {
-      @include box-shadow-animation(#47478788);
+      @include box-shadow-animation(#005B48);
     }
 
     &:nth-child(4):hover {
-      @include box-shadow-animation(#218c758a);
+      @include box-shadow-animation(#70598B);
     }
 
     &:nth-child(5):hover {
-      @include box-shadow-animation(#b339398e);
+      @include box-shadow-animation(#6B9F00);
     }
   }
 
   .category:nth-child(1) {
     background-color: #36BA98;
     border: none;
-    color: #FF793F;
+    color: #EAFEF6;
   }
 
   .category:nth-child(2) {
     background-color: #E9C46A;
     border: none;
-    color: #227093;
+    color: #2E8379;
   }
 
   .category:nth-child(3) {
     background-color: #F4A261;
     border: none;
-    color: #706FD3;
+    color: #2F4858;
   }
 
   .category:nth-child(4) {
     background-color: #E76F51;
     border: none;
-    color: #218C74;
+    color: #3A001E;
   }
 
   .category:nth-child(5) {
     background-color: #ff525277;
     border: none;
-    color: #B33939;
+    color: #6B5795;
   }
 }
 </style>
