@@ -34,7 +34,7 @@ const post = await fetchAllTop();
               </NuxtLink>
             </div>
             <div class="main-post-day">
-              {{ useDateFormat(post[0].createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+              {{ useDateFormat(post[0].createdDate, 'DD MMMM YYYY', { locales: 'en-US' }).value }}
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ const post = await fetchAllTop();
                 </NuxtLink>
               </div>
               <div class="sub-post-day">
-                {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+                {{ useDateFormat(item.createdDate, 'DD MMMM YYYY', { locales: 'en-US' }).value }}
               </div>
             </div>
           </div>
