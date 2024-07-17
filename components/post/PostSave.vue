@@ -79,7 +79,7 @@ onUnmounted(() => {
 .tip-tap-container {
   width: rem(900);
   margin: rem(60) auto;
-  background-color: #f9f9f9;
+  background-color: transparent;
 
   @media (max-width: 767px) {
     width: 100%;
