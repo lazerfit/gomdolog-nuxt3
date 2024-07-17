@@ -132,7 +132,7 @@ export const usePostStore = defineStore('post', () => {
 		await $fetch(`${config.public.apiBase}/post/new`, {
 			method: 'POST',
 			headers: {
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${token.value}`,
 				'Content-Type': 'application/json',
 			},
 			body: {
