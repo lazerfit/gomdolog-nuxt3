@@ -61,7 +61,7 @@ defineProps({
                 </NuxtLink>
               </div>
               <div class="all-post-day">
-                {{ useDateFormat(item.createdDate, 'MMM D, YYYY', { locales: 'en-US' }).value }}
+                {{ useDateFormat(item.createdDate, 'D MMMM YYYY', { locales: 'en-US' }).value }}
               </div>
             </div>
           </div>
