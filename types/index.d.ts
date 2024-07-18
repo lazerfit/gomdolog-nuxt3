@@ -14,6 +14,7 @@ export interface PostDetail {
 	title: string;
 	content: string;
 	createdDate: string;
+	updatedDate: string;
 	tags: string[];
 	summary: string;
 }

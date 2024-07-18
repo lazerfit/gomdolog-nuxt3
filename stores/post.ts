@@ -36,6 +36,7 @@ export const usePostStore = defineStore('post', () => {
 		title: '',
 		content: '',
 		createdDate: '',
+		updatedDate: '',
 		tags: [''],
 		summary: '',
 	});
@@ -57,18 +58,19 @@ export const usePostStore = defineStore('post', () => {
 	};
 
 	const changePage = async (pageNum: number) => {
-		const data = await $fetch<PostPageResponseWithoutTags>(
-			`${config.public.apiBase}/post/all`,
-			{
+		const { data } = await useAsyncData<PostPageResponseWithoutTags>(() =>
+			$fetch(`/api/post/all`, {
 				method: 'GET',
 				params: {
 					page: pageNum,
 					size: pageSize,
 				},
-			}
+			})
 		);
 
-		postsPage.value = data;
+		const post = initializePostPage(data);
+
+		postsPage.value = post.value;
 	};
 
 	const deleteById = async (postId: number) => {
@@ -120,6 +122,7 @@ export const usePostStore = defineStore('post', () => {
 					title: '',
 					content: '',
 					createdDate: '',
+					updatedDate: '',
 					tags: [''],
 					summary: '',
 				}

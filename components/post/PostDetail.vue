@@ -1,5 +1,5 @@
 <script setup lang=ts>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
 import { isClient } from '@vueuse/shared';
@@ -8,7 +8,7 @@ const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const postId = useRoute().params.id;
 const headerStore = useHeaderStore();
 const postStore = usePostStore();
-const { deleteById, addViews } = usePostStore();
+const { deleteById } = usePostStore();
 
 const formattedDate = useDateFormat(postStore.post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
 
@@ -34,24 +34,9 @@ const scrollToTop = () => {
   });
 };
 
-const isVisitedPost = () => {
-  const visitedPost = localStorage.getItem('visitedPost');
-  return visitedPost ? visitedPost.includes(postId as string) : false;
-}
-
 if (postStore.post.title === '') {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
-
-onBeforeMount(async () => {
-  if (!isVisitedPost() && !headerStore.isAdmin) {
-    await addViews(postId);
-    const visitedPostString = localStorage.getItem('visitedPost') || '[]';
-    const visitedPost = JSON.parse(visitedPostString);
-    visitedPost.push(postId);
-    localStorage.setItem('visitedPost', JSON.stringify(visitedPost));
-  }
-});
 
 onMounted(() => {
   addUtterancesScript();

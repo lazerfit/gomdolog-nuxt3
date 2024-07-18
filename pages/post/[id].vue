@@ -15,6 +15,10 @@ useHead({
     { name: 'title', content: postStore.post.title }
   ]
 })
+
+definePageMeta({
+  middleware: ['add-views']
+})
 </script>
 <template>
   <div>
