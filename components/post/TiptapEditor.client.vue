@@ -114,6 +114,12 @@ const addImage = () => {
 </template>
 
 <style lang='scss'>
+.darkMode {
+  .menu-btn {
+    border: 2px solid $background-color !important;
+  }
+}
+
 .tip-tap-buttons {
   display: flex;
   flex-flow: row wrap;
@@ -129,11 +135,11 @@ const addImage = () => {
   }
 
   .menu-btn {
-    border: none;
-    background-color: #f9f9f9;
+    border: 2px solid $font-black;
+    border-radius: rem(8);
+    background-color: $background-color;
     color: $font-black;
     padding: rem(5);
-    border-radius: rem(3);
     margin-left: rem(5);
 
     i {

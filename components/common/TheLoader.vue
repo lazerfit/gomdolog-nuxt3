@@ -14,7 +14,7 @@ defineProps({
 <style lang='scss' scoped>
 .darkMode {
   .wrapper {
-    background-color: #121212 !important;
+    background-color: #12121263 !important;
   }
 
   .loader {
@@ -29,7 +29,7 @@ defineProps({
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.63);
 }
 
 .loader {

@@ -1,48 +1,27 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
 import { ref } from 'vue';
-import type { JWT } from '~/types';
 
-export interface SigninForm {
+export interface ISigninForm {
 	email: string;
 	password: string;
 }
 
 export const useHeaderStore = defineStore('header', () => {
-	const config = useRuntimeConfig();
+	const { $api } = useNuxtApp();
+	const token = useSessionStorage('token', '');
+	const userRole = useSessionStorage('userRole', '');
 	const isAdmin = ref(false);
 	const isModalOpened = ref(false);
 	const isAdminMenuOpened = ref(false);
 	const isDarkMode = ref(false);
 	const toastStore = useCommonStore();
-	const signinForm = ref<SigninForm>({
+	const signinForm = ref<ISigninForm>({
 		email: '',
 		password: '',
 	});
 
-	const darkModeToggle = () => {
-		isDarkMode.value = !isDarkMode.value;
-		localStorage.setItem('darkMode', JSON.stringify(isDarkMode.value));
-		if (isDarkMode.value) {
-			document.body.classList.add('darkMode');
-		} else {
-			document.body.classList.remove('darkMode');
-		}
-	};
-
-	const setDarkMode = () => {
-		const savedSetting = localStorage.getItem('darkMode');
-		if (savedSetting === 'true') {
-			isDarkMode.value = true;
-		} else {
-			isDarkMode.value = false;
-		}
-	};
-
 	const setLoginStatus = () => {
-		if (
-			sessionStorage.getItem('userRole') === null ||
-			sessionStorage.getItem('useRole') === 'USER'
-		) {
+		if (userRole.value === '' || userRole.value === 'USER') {
 			isAdmin.value = false;
 		} else {
 			isAdmin.value = true;
@@ -50,16 +29,11 @@ export const useHeaderStore = defineStore('header', () => {
 	};
 
 	const signin = async () => {
-		await $fetch<JWT>(`${config.public.apiBase}/auth/signin`, {
-			method: 'POST',
-			body: {
-				email: signinForm.value.email,
-				password: signinForm.value.password,
-			},
-		})
+		await $api.admin
+			.signin(signinForm.value)
 			.then((response) => {
-				sessionStorage.setItem('token', response.token);
-				sessionStorage.setItem('userRole', response.role);
+				token.value = response.token;
+				userRole.value = response.role;
 				isAdmin.value = true;
 				isModalOpened.value = false;
 				signinForm.value.password = '';
@@ -80,8 +54,6 @@ export const useHeaderStore = defineStore('header', () => {
 		isAdminMenuOpened,
 		isDarkMode,
 		signinForm,
-		darkModeToggle,
-		setDarkMode,
 		setLoginStatus,
 		signin,
 	};

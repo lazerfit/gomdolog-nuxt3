@@ -1,5 +1,5 @@
 <script setup lang=ts>
-import type { Category } from '~/types';
+import type { ICategoryAdmin } from '~/types/model/category';
 
 const adminStore = useAdminStore();
 const {
@@ -13,7 +13,7 @@ const addDiv = () => {
   adminStore.divList.push({ inputValue: '' });
 }
 
-const editTitle = (item: Category) => {
+const editTitle = (item: ICategoryAdmin) => {
   item.isEditable = !item.isEditable
   adminStore.updateTitle = item.title;
 }
@@ -126,8 +126,7 @@ onBeforeMount(async () => {
 
         &::placeholder {
           font-family: $pretendard;
-          font-size: 1.3rem;
-          font-weight: 600;
+          font-size: .9rem;
           transition: all .3s ease-in-out;
         }
       }

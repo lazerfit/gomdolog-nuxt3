@@ -5,10 +5,27 @@ const breakpoints = useBreakpoints({
 });
 
 const mobile = breakpoints.between('mobile', 'tablet');
-const { fetchAllByTitle } = usePostStore();
+const store = usePostStore();
+const { $api } = useNuxtApp();
 const param = useRoute().params;
 
-await fetchAllByTitle(param.title, param.page);
+const { data, error } = await useAsyncData(() => $api.post.fetchAllByTitleSlice(param.title, '0'));
+
+if (error.value) {
+  console.log(error.value);
+}
+
+const post = computed(() => data.value ?? {
+  content: [],
+  numberOfElements: 0,
+  size: 0,
+  totalElements: 0,
+  totalPages: 0,
+  first: false,
+  last: false,
+  number: 0,
+})
+store.postsPage = post.value;
 
 useHead({
   title: param.title
@@ -19,7 +36,7 @@ useHead({
   <div>
     <TheBanner :is-mobile="mobile" />
     <PostAll :is-searched-by="true" :search-param=param.title />
-    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/post/search`" :title="param.title" />
+    <LazyPaginationForMobile :api-base="`search`" :title="param.title" />
   </div>
 </template>
 

@@ -18,7 +18,7 @@ useHead({
   <div>
     <TheBanner :is-mobile="mobile" />
     <PostAll :is-searched-by="true" :search-param="param.title" />
-    <LazyPaginationForMobile :is-mobile="mobile" :api-base="`/post/category`" :title="param.title" />
+    <LazyPaginationForMobile :api-base="`category`" :title="param.title" />
   </div>
 </template>
 

@@ -4,16 +4,16 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
 	devtools: { enabled: true },
 	modules: [
-        '@nuxt/eslint',
-        '@pinia/nuxt',
-        '@nuxtjs/seo',
-        '@vueuse/nuxt',
-        "@nuxt/image"
-    ],
+		'@nuxt/eslint',
+		'@pinia/nuxt',
+		'@nuxtjs/seo',
+		'@vueuse/nuxt',
+		'@nuxt/image',
+	],
 	imports: {
 		dirs: ['./stores'],
 	},
-	plugins: ['~/plugins/dompurify.ts'],
+	plugins: ['~/plugins/dompurify.ts', '~/plugins/api.ts'],
 	alias: {
 		img: '/assets/img',
 	},
@@ -89,7 +89,7 @@ export default defineNuxtConfig({
 	},
 	runtimeConfig: {
 		public: {
-			apiBase: 'http://localhost:8080/api',
+			apiBase: process.env.API_BASE_URL,
 		},
 	},
 	robots: {
