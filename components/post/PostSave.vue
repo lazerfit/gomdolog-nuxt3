@@ -4,9 +4,18 @@ import TiptapEditor from './TiptapEditor.client.vue';
 import TagInput from './TagInput.client.vue';
 
 const store = usePostStore();
-const { save, fetchAllCategory } = usePostStore();
+const { isPending } = storeToRefs(store);
+const id = useRoute().params.id;
+const { save, update, fetchAllCategory } = usePostStore();
 
 const categories = await fetchAllCategory();
+
+const props = defineProps({
+  isUpdate: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const loadDraft = () => {
   if (localStorage.getItem('draft')) {
@@ -26,8 +35,10 @@ const saveDraft = () => {
 const timer = setInterval(() => saveDraft(), 30 * 1000);
 
 onBeforeMount(() => {
-  loadDraft();
-  timer;
+  if (!props.isUpdate) {
+    loadDraft();
+    timer;
+  }
 });
 
 onUnmounted(() => {
@@ -36,6 +47,7 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <LazyTheLoader :is-pending="isPending" />
   <div class="tip-tap-container">
     <div class="tip-tap-submit">
       <div class="tip-tap-category-wrapper">
@@ -49,7 +61,8 @@ onUnmounted(() => {
       <div class="tip-tap-tag-submit">
         <TagInput v-model="store.postSaveForm.tags" />
         <div class="tip-tap-submit">
-          <button @click="save">Submit</button>
+          <button v-if="!isUpdate" @click="save">Submit</button>
+          <button v-else @click="update(id)">Update</button>
         </div>
       </div>
     </div>
@@ -132,6 +145,7 @@ onUnmounted(() => {
     margin-top: rem(17);
 
     .tip-tap-submit {
+
       button {
         border: none;
         background-color: #ff793f;
@@ -146,7 +160,6 @@ onUnmounted(() => {
           transform: translate(-5px, -5px);
           box-shadow: 3px 3px #cd6133;
         }
-
       }
     }
   }

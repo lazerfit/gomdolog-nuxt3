@@ -2,14 +2,13 @@
 const store = useAdminStore();
 const { fetchTopPosts } = useAdminStore();
 
-const data = await fetchTopPosts();
-const popularPosts = computed(() => data.data.value ?? []);
+await fetchTopPosts();
 </script>
 <template>
   <div v-show="store.isDashboardShow" class="popular-post">
     <h1>Popular Posts</h1>
     <div class="posts">
-      <div v-for="(item, index) in popularPosts" :key="index" class="post">
+      <div v-for="(item, index) in store.postTop" :key="index" class="post">
         <div class="post-title">
           {{ item.title }}
         </div>

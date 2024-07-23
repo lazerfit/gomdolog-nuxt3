@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
 	if (headerStore.isAdmin) {
 		navigateTo(to.fullPath);
 	} else {
-		showError({ status: 404, message: 'Page Not Found' });
+		abortNavigation('post not found');
 	}
 });

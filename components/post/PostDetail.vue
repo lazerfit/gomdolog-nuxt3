@@ -1,16 +1,28 @@
 <script setup lang=ts>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
 import { isClient } from '@vueuse/shared';
 
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const postId = useRoute().params.id;
-const headerStore = useHeaderStore();
 const postStore = usePostStore();
-const { deleteById, addViews } = usePostStore();
+const { isPending } = storeToRefs(postStore);
+const { deleteById, fetchById } = usePostStore();
+const headerStore = useHeaderStore();
 
-const formattedDate = useDateFormat(postStore.post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
+const post = await fetchById(postId);
+
+useHead({
+  title: post.title,
+  meta: [
+    { name: 'description', content: post.content.replace(/<[^>]*>?/gm, '') },
+    { name: 'keyword', content: 'spring, java, vue.js, nuxt' },
+    { name: 'title', content: post.title }
+  ]
+})
+
+const formattedDate = useDateFormat(post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -29,29 +41,9 @@ const addUtterancesScript = () => {
 
 const scrollToTop = () => {
   window.scroll({
-    top: 0,
-    behavior: 'smooth'
+    top: 0
   });
 };
-
-const isVisitedPost = () => {
-  const visitedPost = localStorage.getItem('visitedPost');
-  return visitedPost ? visitedPost.includes(postId as string) : false;
-}
-
-if (postStore.post.title === '') {
-  throw createError({ statusCode: 404, statusMessage: 'Post not found' })
-}
-
-onBeforeMount(async () => {
-  if (!isVisitedPost() && !headerStore.isAdmin) {
-    await addViews(postId);
-    const visitedPostString = localStorage.getItem('visitedPost') || '[]';
-    const visitedPost = JSON.parse(visitedPostString);
-    visitedPost.push(postId);
-    localStorage.setItem('visitedPost', JSON.stringify(visitedPost));
-  }
-});
 
 onMounted(() => {
   addUtterancesScript();
@@ -59,8 +51,8 @@ onMounted(() => {
 });
 
 const shareOptions = ref({
-  title: postStore.post.title,
-  text: 'share test',
+  title: post.title,
+  text: post.summary ?? post.content,
   url: isClient ? location.href : ''
 })
 
@@ -73,22 +65,23 @@ const startShare = async () => {
 </script>
 
 <template>
+  <LazyTheLoader :is-pending="isPending" />
   <div class="container">
     <div class="content-wrapper">
       <div class="post-title">
         <div class="post-title-tags">
-          <span v-for="(tag, index) in (postStore.post.tags)" :key="index">#{{ tag
+          <span v-for="(tag, index) in (post.tags)" :key="index">#{{ tag
             }}</span>
         </div>
         <div class="title">
-          {{ postStore.post.title }}
+          {{ post.title }}
         </div>
       </div>
       <div class="summary-wrapper">
-        <div v-if="postStore.post.summary != 'no summary'" class="summary">
+        <div v-if="post.summary != 'no summary'" class="summary">
           <NuxtImg src="/svg/double-quotes-l-svgrepo-com.svg" />
           <div>
-            {{ postStore.post.summary }}
+            {{ post.summary }}
           </div>
         </div>
       </div>
@@ -108,7 +101,7 @@ const startShare = async () => {
         </div>
       </div>
       <div class="divider" />
-      <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
+      <div class="post-text" v-html="$sanitizeHTML(post.content)" />
     </div>
     <div class="comment">
       <div ref="utterancesContainer" />

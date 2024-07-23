@@ -1,19 +1,14 @@
 <script setup lang=ts>
-import type { PostSliceResponseWithoutTags } from '~/types';
-
+import type { IPostPage } from '~/types/model/post';
 const store = usePostStore();
-const config = useRuntimeConfig();
+const { $api } = useNuxtApp();
+const isLast = computed(() => store.postsPage.last);
 const pageNum = ref(1);
-const isLast = ref(false);
 
 const props = defineProps({
-  isMobile: {
-    type: Boolean,
-    default: false
-  },
   apiBase: {
     type: String,
-    default: '/post/all'
+    default: 'all'
   },
   title: {
     type: String,
@@ -22,23 +17,32 @@ const props = defineProps({
 })
 
 const onLoadMore = async () => {
-  if (!isLast.value && props.isMobile) {
-    const data = await $fetch<PostSliceResponseWithoutTags>(`${config.public.apiBase}${props.apiBase}/slice`, {
-      params: {
-        page: pageNum.value,
-        size: 9,
-        title: props.title
-      }
-    });
+  if (!isLast.value) {
 
-    if (data.last) {
-      console.log(data.last);
-      isLast.value = true;
-    };
+    if (props.apiBase === 'all') {
+      const data = await $api.post.fetchAllSlice(pageNum.value);
+      pushDataToStore(data);
+    }
 
-    store.postsPage.content.push(...data.content);
+    else if (props.apiBase === 'category') {
+      const data = await $api.post.fetchAllByCategorySlice(props.title, pageNum.value);
+      pushDataToStore(data);
+    }
+
+    else {
+      const data = await $api.post.fetchAllByTitleSlice(props.title, pageNum.value);
+      pushDataToStore(data);
+    }
+
     pageNum.value += 1;
+  } else {
+    return
   }
+}
+
+const pushDataToStore = (data: IPostPage) => {
+  store.postsPage.content.push(...data.content);
+  store.postsPage.last = data.last;
 }
 
 const { arrivedState } = useScroll(window, {

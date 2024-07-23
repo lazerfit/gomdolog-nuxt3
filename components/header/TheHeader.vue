@@ -5,7 +5,6 @@ const store = useHeaderStore();
 const { signin } = useHeaderStore();
 
 onBeforeMount(() => {
-  store.setDarkMode();
   store.setLoginStatus();
 })
 

@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 	imports: {
 		dirs: ['./stores'],
 	},
-	plugins: ['~/plugins/dompurify.ts'],
+	plugins: ['~/plugins/dompurify.ts', '~/plugins/api.ts'],
 	alias: {
 		img: '/assets/img',
 	},
@@ -104,7 +104,7 @@ export default defineNuxtConfig({
 	},
 	runtimeConfig: {
 		public: {
-			apiBase: 'https://gomdolog.store/api',
+			apiBase: process.env.API_BASE_URL,
 		},
 	},
 	robots: {

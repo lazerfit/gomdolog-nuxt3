@@ -20,7 +20,7 @@ const currentComponent = computed(() => {
   return mobile.value ? resolveComponent('PaginationForMobile') : resolveComponent('ThePagination')
 });
 const currentProps = computed(() => {
-  return mobile.value ? { isMobile: true, apiBase: '/post/all' } : { isIndex: true }
+  return mobile.value ? { apiBase: 'all' } : { isIndex: true }
 })
 
 onBeforeMount(async () => {

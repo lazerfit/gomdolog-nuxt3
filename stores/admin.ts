@@ -1,24 +1,24 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
-import type { Category, AdminPopularPosts, PostDeleted } from '~/types';
+import type { IPostTopAdmin, IPostDeleted } from '~/types/model/admin';
+import type { ICategory, ICategoryAdmin } from '~/types/model/category';
 
 export const useAdminStore = defineStore('admin', () => {
 	const toastStore = useCommonStore();
-	const config = useRuntimeConfig();
-	const token = useSessionStorage('token', 'none');
+	const { $api } = useNuxtApp();
 	const isCategoryShow = ref(false);
 	const isDashboardShow = ref(true);
 	const isRecycleBinShow = ref(false);
 	const isUserShow = ref(false);
-	const categories = ref<Category[]>([]);
-	const categoryEditable = ref<Category[]>([]);
+	const categories = ref<ICategory[]>([]);
+	const categoryEditable = ref<ICategoryAdmin[]>([]);
 	const divList = ref<{ inputValue: string }[]>([]);
 	const updateTitle = ref('');
-	const postsDeleted = ref<PostDeleted[]>([]);
+	const postsDeleted = ref<IPostDeleted[]>([]);
+	const postTop = ref<IPostTopAdmin[]>([]);
 
 	const fetchAllCategory = async () => {
-		await $fetch<Category[]>(`${config.public.apiBase}/category/all`, {
-			method: 'GET',
-		})
+		await $api.category
+			.fetchAll()
 			.then((response) => {
 				categories.value = response;
 				categoryEditable.value = response
@@ -34,13 +34,8 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const deleteCategory = async (id: number) => {
-		return await $fetch(`${config.public.apiBase}/category/delete/${id}`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-		})
+		return $api.category
+			.delete(id)
 			.then(() => {
 				fetchAllCategory();
 			})
@@ -48,16 +43,8 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const saveCategory = async (data: string, index: number) => {
-		return await $fetch(`${config.public.apiBase}/category/new`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-			body: {
-				title: data,
-			},
-		})
+		return $api.category
+			.save(data)
 			.then(() => {
 				fetchAllCategory();
 				divList.value.splice(index, 1);
@@ -66,17 +53,8 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const updateCategory = async (id: number, title: string) => {
-		await $fetch(`${config.public.apiBase}/category/update`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-			body: {
-				id: id,
-				title: title,
-			},
-		})
+		await $api.category
+			.update(id, title)
 			.then(() => {
 				fetchAllCategory();
 			})
@@ -84,40 +62,32 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const fetchTopPosts = async () => {
-		return await useFetch<AdminPopularPosts[]>('/api/post/popular/top5', {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-			params: { limit: 5 },
-		});
+		const { data, error } = await useAsyncData(() => $api.admin.fetchTop());
+		if (error.value) {
+			console.log(error.value);
+		}
+
+		const post = computed(() => data.value ?? []);
+
+		postTop.value = post.value;
 	};
 
 	const fetchAllDeletedPosts = async () => {
-		await $fetch<PostDeleted[]>(`${config.public.apiBase}/post/recycling`, {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-		})
-			.then((response) => {
-				postsDeleted.value = response;
-			})
-			.catch((error) => {
-				console.log(error);
-			});
+		const { data, error } = await useAsyncData(() =>
+			$api.admin.fetchDeletedPosts()
+		);
+		if (error.value) {
+			console.log(error.value);
+		}
+
+		const post = computed(() => data.value ?? []);
+
+		postsDeleted.value = post.value;
 	};
 
 	const revertPost = async (id: number) => {
-		await $fetch(`${config.public.apiBase}/post/revertDelete/${id}`, {
-			method: 'POST',
-			headers: {
-				Authorization: `Bearer ${token.value}`,
-				'Content-Type': 'application/json',
-			},
-		})
+		await $api.admin
+			.revertPost(id)
 			.then(() => {
 				fetchAllDeletedPosts();
 				toastStore.setToast('복구에 성공하였습니다.', 'check');
@@ -137,13 +107,7 @@ export const useAdminStore = defineStore('admin', () => {
 		);
 		try {
 			if (confirmed) {
-				await $fetch(`${config.public.apiBase}/post/deletePermanent/${id}`, {
-					method: 'POST',
-					headers: {
-						Authorization: `Bearer ${token.value}`,
-						'Content-Type': 'application/json',
-					},
-				}).then(() => {
+				await $api.admin.deletePostPermanent(id).then(() => {
 					fetchAllDeletedPosts();
 					toastStore.setToast('성공적으로 삭제하였습니다.', 'check');
 				});
@@ -167,6 +131,7 @@ export const useAdminStore = defineStore('admin', () => {
 		updateTitle,
 		categoryEditable,
 		postsDeleted,
+		postTop,
 		fetchAllCategory,
 		deleteCategory,
 		saveCategory,

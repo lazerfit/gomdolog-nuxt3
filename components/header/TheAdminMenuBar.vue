@@ -1,12 +1,14 @@
 <script setup lang=ts>
 import { onClickOutside } from '@vueuse/core';
 const store = useHeaderStore();
+const accessToken = useSessionStorage('token', '');
+const userRole = useSessionStorage('userRole', '');
 
 const logout = () => {
   store.isAdmin = false;
   store.isAdminMenuOpened = false;
-  sessionStorage.removeItem('token');
-  sessionStorage.removeItem('userRole');
+  accessToken.value = null;
+  userRole.value = null;
 }
 
 const target = ref(null);
