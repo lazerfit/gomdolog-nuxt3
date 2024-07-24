@@ -3,26 +3,23 @@ import { ref, onMounted } from 'vue';
 import hljs from 'highlight.js';
 import 'highlight.js/styles/atom-one-dark.css'
 import { isClient } from '@vueuse/shared';
-
 const utterancesContainer: Ref<HTMLDivElement | null> = ref(null);
 const postId = useRoute().params.id;
 const postStore = usePostStore();
 const { isPending } = storeToRefs(postStore);
-const { deleteById, fetchById } = usePostStore();
+const { deleteById } = usePostStore();
 const headerStore = useHeaderStore();
 
-const post = await fetchById(postId);
-
 useHead({
-  title: post.title,
+  title: postStore.post.title,
   meta: [
-    { name: 'description', content: post.content.replace(/<[^>]*>?/gm, '') },
+    { name: 'description', content: postStore.post.content.replace(/<[^>]*>?/gm, '') },
     { name: 'keyword', content: 'spring, java, vue.js, nuxt' },
-    { name: 'title', content: post.title }
+    { name: 'title', content: postStore.post.title }
   ]
 })
 
-const formattedDate = useDateFormat(post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
+const formattedDate = useDateFormat(postStore.post.createdDate, 'D MMMM YYYY / HH:mm', { locales: 'en-US' });
 
 const addUtterancesScript = () => {
   if (utterancesContainer.value !== null) {
@@ -51,8 +48,8 @@ onMounted(() => {
 });
 
 const shareOptions = ref({
-  title: post.title,
-  text: post.summary ?? post.content,
+  title: postStore.post.title,
+  text: postStore.post.summary ?? postStore.post.content,
   url: isClient ? location.href : ''
 })
 
@@ -70,18 +67,18 @@ const startShare = async () => {
     <div class="content-wrapper">
       <div class="post-title">
         <div class="post-title-tags">
-          <span v-for="(tag, index) in (post.tags)" :key="index">#{{ tag
+          <span v-for="(tag, index) in (postStore.post.tags)" :key="index">#{{ tag
             }}</span>
         </div>
         <div class="title">
-          {{ post.title }}
+          {{ postStore.post.title }}
         </div>
       </div>
       <div class="summary-wrapper">
-        <div v-if="post.summary != 'no summary'" class="summary">
+        <div v-if="postStore.post.summary != 'no summary'" class="summary">
           <NuxtImg src="/svg/double-quotes-l-svgrepo-com.svg" />
           <div>
-            {{ post.summary }}
+            {{ postStore.post.summary }}
           </div>
         </div>
       </div>
@@ -101,7 +98,7 @@ const startShare = async () => {
         </div>
       </div>
       <div class="divider" />
-      <div class="post-text" v-html="$sanitizeHTML(post.content)" />
+      <div class="post-text" v-html="$sanitizeHTML(postStore.post.content)" />
     </div>
     <div class="comment">
       <div ref="utterancesContainer" />
@@ -221,7 +218,7 @@ const startShare = async () => {
 
   @media (max-width: 767px) {
     max-width: 100%;
-    padding: 0 1rem;
+    padding: 0 rem(30);
   }
 
   @media (min-width:768px) and (max-width: 1024px) {
@@ -231,6 +228,7 @@ const startShare = async () => {
   .comment {
     margin-top: rem(40);
     width: rem(900);
+    z-index: -1;
 
     @media (max-width: 767px) {
       width: 100%;
@@ -310,7 +308,7 @@ const startShare = async () => {
       color: #999;
       font-family: $pretendard;
       width: rem(720);
-
+      z-index: -1;
 
       @media (min-width:768px) and (max-width: 800px) {
         width: rem(730);
@@ -351,6 +349,7 @@ const startShare = async () => {
           filter: invert(.55);
           margin-bottom: rem(5);
           margin-top: rem(10);
+          z-index: -1;
         }
       }
     }
