@@ -3,6 +3,7 @@ import type {
 	IPostSaveForm,
 	IPostPage,
 	IPostDeleted,
+	IPostDetail,
 } from '~/types/model/post';
 
 export const usePostStore = defineStore('post', () => {
@@ -11,6 +12,7 @@ export const usePostStore = defineStore('post', () => {
 	const router = useRouter();
 	const isPending = ref(false);
 	const isLast = ref(false);
+	const etag = ref('');
 	const postsPage = ref<IPostPage>({
 		content: [],
 		pageable: {},
@@ -31,9 +33,20 @@ export const usePostStore = defineStore('post', () => {
 		tags: [],
 	});
 	const postsDeleted = ref<IPostDeleted[]>([]);
+	const post = ref<IPostDetail>({
+		id: 0,
+		title: '',
+		content: '',
+		createdDate: '',
+		updatedDate: '',
+		tags: [''],
+		summary: '',
+	});
 
 	const fetchAll = async () => {
-		const { data, error } = await useAsyncData(() => $api.post.fetchAll(0));
+		const { data, error } = await useAsyncData('post-all', () =>
+			$api.post.fetchAll(0)
+		);
 		if (error.value) {
 			console.log(error.value);
 		}
@@ -118,13 +131,40 @@ export const usePostStore = defineStore('post', () => {
 	};
 
 	const fetchAllTop = async () => {
-		const { data } = await useAsyncData(() => $api.post.fetchTop());
+		const { data, error, refresh } = await useAsyncData(
+			'post-top',
+			() => $api.post.fetchTop(),
+			{
+				getCachedData(key, nuxtApp) {
+					if (nuxtApp.isHydrating && nuxtApp.payload.data[key]) {
+						return nuxtApp.payload.data[key];
+					}
+
+					if (nuxtApp.static.data[key]) {
+						return nuxtApp.static.data[key];
+					}
+
+					return null;
+				},
+			}
+		);
+
+		if (!data.value) {
+			console.log('data refresh called');
+			await refresh();
+		}
+
+		if (error.value) {
+			console.log(error.value);
+		}
+
+		console.log('cached data returned');
 
 		return computed(() => data.value ?? []);
 	};
 
 	const fetchById = async (postId: number) => {
-		const { data, error } = await useAsyncData(`post-detail-${postId}`, () =>
+		const { data, error } = await useAsyncData(`post-${postId}`, () =>
 			$api.post.fetchDetail(postId)
 		);
 
@@ -145,11 +185,11 @@ export const usePostStore = defineStore('post', () => {
 				}
 		);
 
-		return postData.value;
+		post.value = postData.value;
 	};
 
 	const fetchUpdateForm = async (id: number) => {
-		const { data, error } = await useAsyncData(() =>
+		const { data, error } = await useAsyncData(`updateform-${id}`, () =>
 			$api.post.fetchUpdateForm(id)
 		);
 
@@ -171,13 +211,16 @@ export const usePostStore = defineStore('post', () => {
 	};
 
 	const fetchAllCategory = async () => {
-		const { data } = await useAsyncData(() => $api.category.fetchAll());
+		const { data } = await useAsyncData('category-all', () =>
+			$api.category.fetchAll()
+		);
 		return computed(() => data.value?.filter((c) => c.title !== '없음') ?? []);
 	};
 
 	const fetchAllByCategoryTitle = async (title: string, page: string) => {
-		const { data, error } = await useAsyncData(() =>
-			$api.post.fetchAllByCategory(title, page)
+		const { data, error } = await useAsyncData(
+			`by-category-${title}-${page}`,
+			() => $api.post.fetchAllByCategory(title, page)
 		);
 
 		if (error.value) {
@@ -195,8 +238,9 @@ export const usePostStore = defineStore('post', () => {
 	};
 
 	const fetchAllByTitle = async (title: string, page: string) => {
-		const { data, error } = await useAsyncData(() =>
-			$api.post.fetchAllByTitle(title, page)
+		const { data, error } = await useAsyncData(
+			`by-title-${title}-${page}`,
+			() => $api.post.fetchAllByTitle(title, page)
 		);
 
 		if (error.value) {
@@ -217,6 +261,8 @@ export const usePostStore = defineStore('post', () => {
 		postSaveForm,
 		postsDeleted,
 		isLast,
+		etag,
+		post,
 		fetchAll,
 		changePage,
 		save,

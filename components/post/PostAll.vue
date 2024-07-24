@@ -207,8 +207,8 @@ defineProps({
 
   @media screen and (max-width: 767px) {
     width: 100%;
-    margin-top: 20px;
-    padding: 0 7px;
+    margin-top: rem(20);
+    padding: 0 rem(20);
   }
 
   @media (min-width:768px) and (max-width: 1024px) {
@@ -222,13 +222,13 @@ defineProps({
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: rem(20);
     margin-top: rem(10);
 
     @media screen and (max-width: 767px) {
       margin-top: 0;
       justify-content: space-between;
-      gap: 5px;
+      gap: rem(5);
     }
 
     @media (min-width:768px) and (max-width: 1024px) {
@@ -245,9 +245,9 @@ defineProps({
         display: flex;
         align-items: center;
         height: rem(420);
-        border-radius: 7px;
+        border-radius: rem(7);
         background-color: #fffaf036;
-        padding-top: 15px;
+        padding-top: rem(15);
         flex-direction: column;
       }
 

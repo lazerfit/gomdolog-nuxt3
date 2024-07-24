@@ -62,7 +62,9 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const fetchTopPosts = async () => {
-		const { data, error } = await useAsyncData(() => $api.admin.fetchTop());
+		const { data, error } = await useAsyncData('admin-post-top', () =>
+			$api.admin.fetchTop()
+		);
 		if (error.value) {
 			console.log(error.value);
 		}
@@ -73,7 +75,7 @@ export const useAdminStore = defineStore('admin', () => {
 	};
 
 	const fetchAllDeletedPosts = async () => {
-		const { data, error } = await useAsyncData(() =>
+		const { data, error } = await useAsyncData('admin-post-deleted', () =>
 			$api.admin.fetchDeletedPosts()
 		);
 		if (error.value) {

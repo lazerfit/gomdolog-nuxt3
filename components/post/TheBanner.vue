@@ -88,7 +88,7 @@ defineProps({
 
   @media (max-width: 767px) {
     height: 300px;
-    margin: 0 rem(10);
+    margin: 0 rem(20);
   }
 
   .title {
@@ -132,6 +132,10 @@ defineProps({
       border: none;
       padding: 3px;
       font-family: $pretendard, serif;
+
+      @media screen and (max-width: 767px) {
+        width: rem(220);
+      }
 
       &:focus::placeholder {
         opacity: 0;
