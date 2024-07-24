@@ -101,6 +101,9 @@ export default defineNuxtConfig({
 	},
 	routeRules: {
 		'/': { prerender: true },
+		'/post/*': { swr: true },
+		'/category/**': { swr: true },
+		'/post/search/**': { swr: true },
 	},
 	runtimeConfig: {
 		public: {
