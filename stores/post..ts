@@ -150,15 +150,12 @@ export const usePostStore = defineStore('post', () => {
 		);
 
 		if (!data.value) {
-			console.log('data refresh called');
 			await refresh();
 		}
 
 		if (error.value) {
 			console.log(error.value);
 		}
-
-		console.log('cached data returned');
 
 		return computed(() => data.value ?? []);
 	};
