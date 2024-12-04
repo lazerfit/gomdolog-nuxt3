@@ -13,7 +13,7 @@ const headerStore = useHeaderStore();
 useHead({
   title: postStore.post.title,
   meta: [
-    { name: 'description', content: postStore.post.content.replace(/<[^>]*>?/gm, '') },
+    { name: 'description', content: postStore.post.summary ?? postStore.post.content.replace(/<[^>]*>?/gm, '') },
     { name: 'keyword', content: 'spring, java, vue.js, nuxt' },
     { name: 'title', content: postStore.post.title }
   ]
