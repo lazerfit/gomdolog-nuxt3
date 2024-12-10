@@ -5,18 +5,6 @@
   <div class="test" />
   <div class="container">
     <div class="content-wrapper">
-      <div class="sns">
-        <span>
-          <a target="_blank" href="https://github.com/lazerfit">
-            <i class="fa-brands fa-github" />
-          </a>
-        </span>
-        <span>
-          <a target="_blank" href="https://www.linkedin.com/in/ddoddi14/">
-            <i class="fa-brands fa-linkedin" />
-          </a>
-        </span>
-      </div>
       <div class="copywrite">
         @Designed By gomdolog.
       </div>
@@ -79,16 +67,6 @@
 
     @media screen and (max-width: 767px) {
       width: 100%;
-    }
-
-    .sns {
-      span {
-        a {
-          margin-right: rem(5);
-          font-size: rem(20);
-          color: $font-white;
-        }
-      }
     }
 
     .copywrite {
